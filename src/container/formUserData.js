@@ -1,10 +1,11 @@
 import React from "react"
-import Input from "../components/Input"
+import FormikInput from "../components/FormikInput"
 import Wrapper from "../components/Wrapper"
 import PrimaryButton from "../components/PrimaryButton"
 import DatePicker from "../components/DatePicker"
 import { Box, Flex, Heading } from "@chakra-ui/react"
 import { Formik } from "formik"
+import { ValideFields } from "../utils/noMeAcuerdo"
 
 const DatosPersonales = () => {
   return (
@@ -20,35 +21,27 @@ const DatosPersonales = () => {
             correo: "",
           }}
           validate={(values) => {
-            const errors = {}
-            // if (!values.email) {
-            //   errors.email = "Required"
-            // } else if (
-            //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-            // ) {
-            //   errors.email = "Invalid email address"
-            // }
+            const errors = ValideFields(values)
             return errors
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              console.log(values)
-              setSubmitting(false)
-            }, 400)
-          }}
+          onSubmit={(values, { setSubmitting }) => {}}
         >
           {({ isSubmitting }) => (
             <form>
               <Box>
                 <Flex flexDir="column" flexGrow="">
-                  <Input placeholder="Cedula" name="cedula" type="number" />
-                  <Input placeholder="Nombres" name="nombre" />
-                  <Input placeholder="Apellidos" name="apellido" />
-                  <Input placeholder="Telefono" name="telefono" />
-                  <Input placeholder="Correo" name="correo" />
-                  <DatePicker name="date" />
+                  <FormikInput label="Cedula" name="cedula" type="number" />
+                  <FormikInput label="Nombres" name="nombre" />
+                  <FormikInput label="Apellidos" name="apellido" />
+                  <FormikInput label="Telefono" name="telefono" type="number" />
+                  <FormikInput label="Correo" name="correo" />
+                  <DatePicker label="Fecha de nacimiento" name="date" />
                   <Box>
-                    <PrimaryButton type="submit" disabled={isSubmitting}>
+                    <PrimaryButton
+                      type="submit"
+                      disabled={isSubmitting}
+                      isLoading={isSubmitting}
+                    >
                       Submit
                     </PrimaryButton>
                   </Box>
