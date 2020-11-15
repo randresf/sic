@@ -4,13 +4,13 @@ import Wrapper from "../components/Wrapper"
 import PrimaryButton from "../components/PrimaryButton"
 import DatePicker from "../components/DatePicker"
 import { Box, Flex, Heading } from "@chakra-ui/react"
-import { Formik } from "formik"
-import { ValideFields } from "../utils/noMeAcuerdo"
+import { Formik, Form } from "formik"
+import isPersonalDataValid from "../utils/isPersonalDataValid"
 
 const DatosPersonales = () => {
   return (
     <Wrapper variant="small">
-      <Flex alignItems="center" flex={1} p={2} flexDir="column">
+      <Flex alignItems="center" flex={1} p={5} flexDir="column">
         <Heading>Datos Personales</Heading>
         <Formik
           initialValues={{
@@ -21,25 +21,31 @@ const DatosPersonales = () => {
             correo: "",
           }}
           validate={(values) => {
-            const errors = ValideFields(values)
+            const errors = isPersonalDataValid(values)
             return errors
           }}
-          onSubmit={(values, { setSubmitting }) => {}}
+          onSubmit={(values, { setSubmitting }) => {
+            console.log(values)
+          }}
         >
           {({ isSubmitting }) => (
-            <form>
+            <Form style={{ width: "100%" }}>
               <Box>
-                <Flex flexDir="column" flexGrow="">
+                <Flex flexDir="column" flexGrow="" w="100%">
                   <FormikInput label="Cedula" name="cedula" type="number" />
                   <FormikInput label="Nombres" name="nombre" />
                   <FormikInput label="Apellidos" name="apellido" />
                   <FormikInput label="Telefono" name="telefono" type="number" />
                   <FormikInput label="Correo" name="correo" />
-                  <DatePicker label="Fecha de nacimiento" name="date" />
-                  <Box>
+                  <DatePicker
+                    label="Fecha de nacimiento"
+                    name="date"
+                    type="date"
+                  />
+                  <Box mt={3}>
                     <PrimaryButton
                       type="submit"
-                      disabled={isSubmitting}
+                      //disabled={error}
                       isLoading={isSubmitting}
                     >
                       Submit
@@ -47,7 +53,7 @@ const DatosPersonales = () => {
                   </Box>
                 </Flex>
               </Box>
-            </form>
+            </Form>
           )}
         </Formik>
       </Flex>

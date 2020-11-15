@@ -1,4 +1,4 @@
-export const ValideFields = ({
+const isPersonalDataValid = ({
   cedula,
   nombre,
   apellido,
@@ -19,9 +19,11 @@ export const ValideFields = ({
   }
   if (!telefono) {
     errors.telefono = "Required"
-  } else if (telefono.length !== 10 || telefono.length !== 7) {
-    errors.telefono = "telefono incorrecto"
   }
+  // console.log(String(telefono).length)
+  // if (String(telefono).length !== 7 || String(telefono).length !== 10) {
+  //   errors.telefono = "telefono incorrecto"
+  // }
   if (!correo) {
     errors.correo = "Required"
   }
@@ -31,3 +33,5 @@ export const ValideFields = ({
 
   return errors
 }
+
+export default isPersonalDataValid
