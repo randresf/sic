@@ -6,11 +6,12 @@ import {
   FormLabel,
   FormErrorMessage,
 } from "@chakra-ui/react"
+import { FormikType } from "./types"
 
-const WrapperInput = ({ type = "text", name, label, ...props }) => {
+const WrapperInput = ({ type = "text", name = '', label = '', ...props }) => {
   return !name ? null : (
     <Field name={name}>
-      {({ field, form }) => (
+      {({ field, form }: FormikType) => (
         <FormControl isInvalid={form.errors[name] && form.touched[name]}>
           <FormLabel htmlFor={name}>{label}</FormLabel>
           <Input

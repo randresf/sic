@@ -25,7 +25,7 @@ const DatosPersonales = () => {
             const errors = isPersonalDataValid(values)
             return errors
           }}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values) => {
             console.log(values)
           }}
         >
@@ -41,7 +41,6 @@ const DatosPersonales = () => {
                   <DatePicker
                     label="Fecha de nacimiento"
                     name="date"
-                    type="date"
                   />
                   <Box mt={3}>
                     <PrimaryButton

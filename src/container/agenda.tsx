@@ -1,8 +1,9 @@
+import React from 'react'
 import { Box, Flex, Heading, IconButton, Text } from "@chakra-ui/react"
 import { ArrowRightIcon } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
 
-const Agenda = (props) => {
+const Agenda = (props: { data?: any[] }) => {
   return (
     <Box>
       <Heading as="h2" size="md">
@@ -17,7 +18,7 @@ const Agenda = (props) => {
 
 export default Agenda
 
-const crearReunion = (reu) => {
+const crearReunion = (reu: { cupos: number; reservados: number; id: string | number | undefined; titulo: string; fecha: React.ReactNode }) => {
   if (!reu) return null
   if (reu.cupos - reu.reservados === 0) return null
   return (

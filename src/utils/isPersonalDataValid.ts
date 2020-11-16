@@ -1,3 +1,4 @@
+import { meetingType } from '../components/types'
 import MSGS from '../locale/es'
 
 const isPersonalDataValid = ({
@@ -7,8 +8,8 @@ const isPersonalDataValid = ({
   telefono,
   correo,
   date,
-}) => {
-  const errors = {}
+}: meetingType) => {
+  const errors: any = {}
   //required field
   if (!cedula) {
     errors.cedula = MSGS.REQUIRED
@@ -27,7 +28,7 @@ const isPersonalDataValid = ({
   }
   if (!date) {
     errors.date = MSGS.REQUIRED
-  } else if (date.substr(0, 4) >= 2017) {
+  } else if (Number(date.substr(0, 4)) >= 2017) {
     errors.date = "incorrect date"
   }
 
