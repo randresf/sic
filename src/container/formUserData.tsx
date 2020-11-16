@@ -19,6 +19,7 @@ const DatosPersonales = () => {
             apellido: "",
             telefono: "",
             correo: "",
+            date: ""
           }}
           validate={(values) => {
             const errors = isPersonalDataValid(values)
@@ -31,7 +32,7 @@ const DatosPersonales = () => {
           {({ isSubmitting }) => (
             <Form style={{ width: "100%" }}>
               <Box>
-                <Flex flexDir="column" flexGrow="" w="100%">
+                <Flex flexDir="column" w="100%">
                   <FormikInput label="Cedula" name="cedula" type="number" />
                   <FormikInput label="Nombres" name="nombre" />
                   <FormikInput label="Apellidos" name="apellido" />

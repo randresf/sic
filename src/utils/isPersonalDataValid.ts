@@ -1,3 +1,5 @@
+import MSGS from '../locale/es'
+
 const isPersonalDataValid = ({
   cedula,
   nombre,
@@ -9,22 +11,22 @@ const isPersonalDataValid = ({
   const errors = {}
   //required field
   if (!cedula) {
-    errors.cedula = "Required"
+    errors.cedula = MSGS.REQUIRED
   }
   if (!nombre) {
-    errors.nombre = "Required"
+    errors.nombre = MSGS.REQUIRED
   }
   if (!apellido) {
-    errors.apellido = "Required"
+    errors.apellido = MSGS.REQUIRED
   }
   if (!telefono) {
-    errors.telefono = "Required"
+    errors.telefono = MSGS.REQUIRED
   }
   if (!correo) {
-    errors.correo = "Required"
+    errors.correo = MSGS.REQUIRED
   }
   if (!date) {
-    errors.date = "Required"
+    errors.date = MSGS.REQUIRED
   } else if (date.substr(0, 4) >= 2017) {
     errors.date = "incorrect date"
   }

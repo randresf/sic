@@ -6,7 +6,7 @@ const Toggle = () => {
   return (
     <IconButton
       onClick={toggleColorMode}
-      arial-label="toggleDarkMode"
+      aria-label="toggleDarkMode"
       icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
     />
   )
