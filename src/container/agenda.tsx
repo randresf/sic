@@ -1,16 +1,32 @@
-import React from 'react'
+import React from "react"
 import { Box, Flex, Heading, IconButton, Text } from "@chakra-ui/react"
 import { ArrowRightIcon } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
+import { useQuery } from "urql"
+import Loading from "../components/Loading"
 
-const Agenda = (props: { data?: any[] }) => {
+const MeetinsQuery = `
+  query {
+    meetings {
+      id
+      title
+      meetingDate
+      spots
+    }
+  }
+`
+
+const Agenda = () => {
+  const [{ data, fetching, error }] = useQuery({ query: MeetinsQuery })
+  if (fetching) return <Loading loading={fetching} />
   return (
     <Box>
       <Heading as="h2" size="md">
         Proximos eventos:
       </Heading>
       <Flex flex={1} alignItems="center" flexWrap="wrap">
-        {props.data && props.data.map(crearReunion)}
+        {(error || data.meetings.length === 0) && <div>no hay reuniones</div>}
+        {data.meetings && data.meetings.map(crearReunion)}
       </Flex>
     </Box>
   )
@@ -18,9 +34,14 @@ const Agenda = (props: { data?: any[] }) => {
 
 export default Agenda
 
-const crearReunion = (reu: { cupos: number; reservados: number; id: string | number | undefined; titulo: string; fecha: React.ReactNode }) => {
+const crearReunion = (reu: {
+  spots: number
+  reservados: number
+  id: string | number | undefined
+  title: string
+  meetingDate: string
+}) => {
   if (!reu) return null
-  if (reu.cupos - reu.reservados === 0) return null
   return (
     <Flex
       key={reu.id}
@@ -41,13 +62,13 @@ const crearReunion = (reu: { cupos: number; reservados: number; id: string | num
       </Box> */}
 
       <Heading as="h3" size="md">
-        {reu.titulo}
+        {reu.title}
       </Heading>
       <Text as="h3" size="md">
-        fecha: {reu.fecha}
+        fecha: {reu.meetingDate}
       </Text>
       <Text as="h3" size="md">
-        cupos: {reu.cupos - reu.reservados}
+        cupos: {reu.spots}
       </Text>
       <Flex flexDir="row-reverse">
         <Link to="/datos">

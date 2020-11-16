@@ -6,22 +6,30 @@ import ToggleDarkMode from "./components/ToggleDarkMode"
 import { Box, Flex, ListItem, UnorderedList } from "@chakra-ui/react"
 import Wrapper from "./components/Wrapper"
 
-function App() {
+import { createClient, Provider } from "urql"
+
+const urqlClient = createClient({
+  url: "http://localhost:4000/graphql",
+})
+
+const App = () => {
   return (
-    <Router>
-      <NavBar />
-      <hr style={{ marginBottom: "10px", marginTop: "10px" }} />
-      <Wrapper variant="regular">
-        <Switch>
-          <Route exact path="/">
-            <Landing />
-          </Route>
-          <Route exact path="/datos">
-            <DatosPersonales />
-          </Route>
-        </Switch>
-      </Wrapper>
-    </Router>
+    <Provider value={urqlClient}>
+      <Router>
+        <NavBar />
+        <hr style={{ marginBottom: "10px", marginTop: "10px" }} />
+        <Wrapper variant="regular">
+          <Switch>
+            <Route exact path="/">
+              <Landing />
+            </Route>
+            <Route exact path="/datos">
+              <DatosPersonales />
+            </Route>
+          </Switch>
+        </Wrapper>
+      </Router>
+    </Provider>
   )
 }
 
