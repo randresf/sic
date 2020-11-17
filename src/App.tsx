@@ -4,6 +4,7 @@ import Landing from "./pages/Landing"
 import ToggleDarkMode from "./components/ToggleDarkMode"
 import { Box, Flex, ListItem, UnorderedList } from "@chakra-ui/react"
 import Wrapper from "./components/Wrapper"
+import Question from "./container/questions"
 
 import { createClient, Provider } from "urql"
 import UserData from "./pages/UserData"
@@ -25,6 +26,9 @@ const App = () => {
             </Route>
             <Route path="/">
               <Landing />
+            </Route>
+            <Route exact path="/preguntas">
+              <Question />
             </Route>
           </Switch>
         </Wrapper>
