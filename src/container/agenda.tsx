@@ -25,8 +25,10 @@ const Agenda = () => {
         Proximos eventos:
       </Heading>
       <Flex flex={1} alignItems="center" flexWrap="wrap">
-        {(error || data.meetings.length === 0) && <div>no hay reuniones</div>}
-        {data.meetings && data.meetings.map(crearReunion)}
+        {(error || !data || data.meetings?.length === 0) && (
+          <div>no hay reuniones</div>
+        )}
+        {data && data.meetings && data.meetings.map(crearReunion)}
       </Flex>
     </Box>
   )
