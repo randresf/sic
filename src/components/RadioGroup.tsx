@@ -1,7 +1,7 @@
 import React from "react"
 import { Box, Stack, Radio, RadioGroup, Flex } from "@chakra-ui/react"
 
-const WrapperButton = ({ question = "" }) => (
+const WrapperButton = ({ id = 0, question = "" }) => (
   <RadioGroup name="pregunta">
     <Stack spacing={5} direction="row">
       <Flex flexDir="column" w="100%">

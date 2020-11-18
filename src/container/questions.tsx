@@ -5,8 +5,11 @@ import PrimaryButton from "../components/PrimaryButton"
 import RadioGroup from "../components/RadioGroup"
 import { Formik, Form } from "formik"
 import { QUESTIONS } from "../constants/index"
+import { AVISO_PROTECCION_DATOS } from "../constants/index"
 
 const Question = () => {
+  const [value, setValue] = React.useState({})
+
   return (
     <Wrapper variant="small">
       <Flex alignItems="center" flex={1} p={5} flexDir="column">
@@ -23,13 +26,16 @@ const Question = () => {
         >
           {({ isSubmitting }) => (
             <Form style={{ width: "100%" }}>
+              <Box m={4} style={{ textAlign: "center" }}>
+                {AVISO_PROTECCION_DATOS}
+              </Box>
               <Box>
                 <Flex flexDir="column" w="100%">
                   {QUESTIONS && QUESTIONS.map(crearPregunta)}
                   <Box mt={3}>
                     <PrimaryButton
                       type="submit"
-                      //disabled={error}
+                      isDisabled
                       isLoading={isSubmitting}
                     >
                       Continuar
@@ -48,5 +54,5 @@ const Question = () => {
 export default Question
 
 const crearPregunta = (prg: { id: number; question: string }) => {
-  return <RadioGroup question={prg.question}></RadioGroup>
+  return <RadioGroup question={prg.question} id={prg.id}></RadioGroup>
 }
