@@ -1,5 +1,6 @@
 import React from "react"
 import { Box, Stack, Radio, RadioGroup, Flex } from "@chakra-ui/react"
+import { Field, Form } from "formik"
 
 type RadioProps = {
   text: string
@@ -8,15 +9,20 @@ type RadioProps = {
 }
 
 const YesNoRadioGroup = ({ text, name, onChange }: RadioProps) => (
-  <RadioGroup name={name} onChange={onChange}>
-    <Stack spacing={5} direction="row">
-      <Flex flexDir="column" w="100%">
-        <Box m={3}>{text}</Box>
-      </Flex>
-      <Radio value="1">SI</Radio>
-      <Radio value="0">No</Radio>
-    </Stack>
-  </RadioGroup>
+  <Form>
+    <div id="my-radio-group">{text}</div>
+    <div role="group" aria-labelledby="my-radio-group">
+      <label>
+        <Field type="radio" name={text} value="1" />
+        Si
+      </label>
+      <label>
+        <Field type="radio" name={text} value="0" />
+        No
+      </label>
+      <div></div>
+    </div>
+  </Form>
 )
 
 export default YesNoRadioGroup
