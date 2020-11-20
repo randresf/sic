@@ -1,0 +1,7 @@
+mutation updateUser($userId: String!, $input: UserInput!) {
+  updateUser(userId: $userId, data: $input) {
+    errors {
+      message
+    }
+  }
+}

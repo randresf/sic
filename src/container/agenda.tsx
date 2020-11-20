@@ -62,8 +62,11 @@ const crearReunion = (reu: {
         cupos: {reu.spots}
       </Text>
       <Flex flexDir="row-reverse">
-        <Link to="/datos">
-          <IconButton aria-label="reservar" icon={<ArrowRightIcon />} />
+        <Link to={`/datos/${reu.id}`}>
+          <Flex alignItems="center">
+            <Text mr={3}>Reservar</Text>
+            <IconButton aria-label="reservar" icon={<ArrowRightIcon />} />
+          </Flex>
         </Link>
       </Flex>
     </Flex>

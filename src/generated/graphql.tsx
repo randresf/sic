@@ -22,7 +22,7 @@ export type Query = {
 
 export type Meeting = {
   __typename?: "Meeting"
-  id: Scalars["Float"]
+  id: Scalars["String"]
   title: Scalars["String"]
   spots: Scalars["Float"]
   meetingDate: Scalars["String"]
@@ -33,7 +33,7 @@ export type Meeting = {
 
 export type Question = {
   __typename?: "Question"
-  id: Scalars["Float"]
+  id: Scalars["String"]
   questionId: Scalars["String"]
   questionText: Scalars["String"]
   answer: Scalars["String"]
@@ -44,7 +44,9 @@ export type Mutation = {
   createMeeting: Meeting
   registrerQuestion: Question
   user: UserResponse
+  userById: UserResponse
   createUser: UserResponse
+  updateUser: UserResponse
 }
 
 export type MutationCreateMeetingArgs = {
@@ -59,7 +61,16 @@ export type MutationUserArgs = {
   citizenId: Scalars["String"]
 }
 
+export type MutationUserByIdArgs = {
+  userId: Scalars["String"]
+}
+
 export type MutationCreateUserArgs = {
+  data: UserInput
+}
+
+export type MutationUpdateUserArgs = {
+  userId: Scalars["String"]
   data: UserInput
 }
 
@@ -78,12 +89,12 @@ export type QuestionInput = {
 export type UserResponse = {
   __typename?: "UserResponse"
   user?: Maybe<User>
-  errors?: Maybe<ErrorField>
+  errors?: Maybe<Array<ErrorField>>
 }
 
 export type User = {
   __typename?: "User"
-  id: Scalars["Float"]
+  id: Scalars["String"]
   citizenId: Scalars["String"]
   firstName: Scalars["String"]
   lastName: Scalars["String"]
@@ -131,7 +142,35 @@ export type GetUserMutation = { __typename?: "Mutation" } & {
         | "birthDate"
       >
     >
-    errors?: Maybe<{ __typename?: "ErrorField" } & Pick<ErrorField, "message">>
+    errors?: Maybe<
+      Array<{ __typename?: "ErrorField" } & Pick<ErrorField, "message">>
+    >
+  }
+}
+
+export type AddUserMutationVariables = Exact<{
+  input: UserInput
+}>
+
+export type AddUserMutation = { __typename?: "Mutation" } & {
+  createUser: { __typename?: "UserResponse" } & {
+    user?: Maybe<{ __typename?: "User" } & Pick<User, "id">>
+    errors?: Maybe<
+      Array<{ __typename?: "ErrorField" } & Pick<ErrorField, "message">>
+    >
+  }
+}
+
+export type UpdateUserMutationVariables = Exact<{
+  userId: Scalars["String"]
+  input: UserInput
+}>
+
+export type UpdateUserMutation = { __typename?: "Mutation" } & {
+  updateUser: { __typename?: "UserResponse" } & {
+    errors?: Maybe<
+      Array<{ __typename?: "ErrorField" } & Pick<ErrorField, "message">>
+    >
   }
 }
 
@@ -168,6 +207,39 @@ export const GetUserDocument = gql`
 export function useGetUserMutation() {
   return Urql.useMutation<GetUserMutation, GetUserMutationVariables>(
     GetUserDocument
+  )
+}
+export const AddUserDocument = gql`
+  mutation addUser($input: UserInput!) {
+    createUser(data: $input) {
+      user {
+        id
+      }
+      errors {
+        message
+      }
+    }
+  }
+`
+
+export function useAddUserMutation() {
+  return Urql.useMutation<AddUserMutation, AddUserMutationVariables>(
+    AddUserDocument
+  )
+}
+export const UpdateUserDocument = gql`
+  mutation updateUser($userId: String!, $input: UserInput!) {
+    updateUser(userId: $userId, data: $input) {
+      errors {
+        message
+      }
+    }
+  }
+`
+
+export function useUpdateUserMutation() {
+  return Urql.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(
+    UpdateUserDocument
   )
 }
 export const MeetingsDocument = gql`

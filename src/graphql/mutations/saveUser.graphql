@@ -1,0 +1,10 @@
+mutation addUser($input: UserInput!) {
+  createUser(data: $input) {
+    user {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}

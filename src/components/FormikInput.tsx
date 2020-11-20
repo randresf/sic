@@ -15,7 +15,6 @@ const WrapperInput = ({
   placeholder = "",
   ...props
 }) => {
-  console.log(props.value)
   return !name ? null : (
     <Field name={name}>
       {({ field, form }: FormikType) => (
@@ -27,7 +26,7 @@ const WrapperInput = ({
             {...field}
             id={name}
             type={type}
-            placeholder={placeholder || name.toLowerCase()}
+            placeholder={placeholder || label.toLowerCase()}
             {...props}
           />
           <FormErrorMessage>{form.errors[name]}</FormErrorMessage>

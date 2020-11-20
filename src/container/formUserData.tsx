@@ -2,16 +2,25 @@ import React, { useState } from "react"
 import FormikInput from "../components/FormikInput"
 import Wrapper from "../components/Wrapper"
 import PrimaryButton from "../components/PrimaryButton"
-import { Box, Flex, Heading } from "@chakra-ui/react"
+import { Box, Flex, Heading, useToast } from "@chakra-ui/react"
 import { Formik, Form } from "formik"
 import isPersonalDataValid from "../utils/isPersonalDataValid"
 import { getAgeFromDate } from "../utils/getAgeFromDate"
-import { PersonalDataType } from "../components/types"
 import SearchUserField from "../components/SearchUserField"
 import { formatDate } from "../utils/formatDate"
+import { useAddUserMutation, useUpdateUserMutation } from "../generated/graphql"
+import { useHistory, useParams } from "react-router-dom"
 
 const PersonalDataForm = () => {
   const [age, setAge] = useState("")
+  const [userId, setUserId] = useState("")
+  const [, updateUser] = useUpdateUserMutation()
+  const [, saveUser] = useAddUserMutation()
+  const history = useHistory()
+  let { reservationId }: any = useParams()
+  if (!reservationId) history.push("/")
+  const toast = useToast()
+  localStorage.setItem("reservationId", reservationId)
 
   return (
     <Wrapper variant="small">
@@ -23,7 +32,7 @@ const PersonalDataForm = () => {
             citizenId: "",
             firstName: "",
             lastName: "",
-            phone: "",
+            phone: 0,
             email: "",
             birthDate: "",
           }}
@@ -35,8 +44,30 @@ const PersonalDataForm = () => {
             }
             return errors
           }}
-          onSubmit={(values) => {
-            console.log(values)
+          onSubmit={async ({ ...values }) => {
+            let data = null
+            if (userId) {
+              data = await updateUser({ userId, input: { ...values } })
+            } else {
+              data = await saveUser({ input: { ...values } })
+            }
+            if (data.error)
+              return toast({
+                description: data.error.message,
+                title: "ocurrio un error",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              })
+
+            toast({
+              description: "",
+              title: "actualizado correctamente",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            })
+            return history.push(`/questions?id=${userId}`)
           }}
         >
           {({ isSubmitting, setValues }) => (
@@ -44,15 +75,21 @@ const PersonalDataForm = () => {
               <Box>
                 <Flex flexDir="column" w="100%">
                   <SearchUserField
-                    onData={(data) => {
-                      const formatedDate = formatDate(data.birthDate)
-                      setValues({ ...data, birthDate: formatedDate })
+                    onData={({ birthDate, id = "", ...rest }) => {
+                      const formatedDate = formatDate(birthDate)
+                      setValues({ ...rest, birthDate: formatedDate })
+                      setUserId(id)
                     }}
                   />
-                  <FormikInput label="Nombres" name="firstName" />
-                  <FormikInput label="Apellidos" name="lastName" />
-                  <FormikInput label="Telefono" name="phone" type="number" />
-                  <FormikInput label="Correo" name="email" />
+                  <FormikInput label="Nombres" name="firstName" required />
+                  <FormikInput label="Apellidos" name="lastName" required />
+                  <FormikInput
+                    label="Telefono"
+                    name="phone"
+                    type="number"
+                    required
+                  />
+                  <FormikInput label="Correo" name="email" required />
                   <Flex justifyContent="space-around">
                     <FormikInput
                       label="Fecha de nacimiento"
