@@ -7,7 +7,7 @@ import { Box, Flex, ListItem, UnorderedList } from "@chakra-ui/react"
 import Wrapper from "./components/Wrapper"
 
 import { createClient, Provider } from "urql"
-console.log(process.env)
+
 const urqlClient = createClient({
   url: process.env.REACT_APP_API || "http://localhost:4000/graphql",
 })

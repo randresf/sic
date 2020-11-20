@@ -1,54 +1,86 @@
-import React from "react"
+import React, { useState } from "react"
 import FormikInput from "../components/FormikInput"
 import Wrapper from "../components/Wrapper"
 import PrimaryButton from "../components/PrimaryButton"
-import DatePicker from "../components/DatePicker"
 import { Box, Flex, Heading } from "@chakra-ui/react"
 import { Formik, Form } from "formik"
 import isPersonalDataValid from "../utils/isPersonalDataValid"
+import { getAgeFromDate } from "../utils/getAgeFromDate"
+import { PersonalDataType } from "../components/types"
+import SearchUserField from "../components/SearchUserField"
+import { formatDate } from "../utils/formatDate"
 
-const DatosPersonales = () => {
+const PersonalDataForm = () => {
+  const [age, setAge] = useState("")
+
   return (
     <Wrapper variant="small">
       <Flex alignItems="center" flex={1} p={5} flexDir="column">
         <Heading>Datos Personales</Heading>
         <Formik
+          enableReinitialize
           initialValues={{
-            cedula: "",
-            nombre: "",
-            apellido: "",
-            telefono: "",
-            correo: "",
-            date: ""
+            citizenId: "",
+            firstName: "",
+            lastName: "",
+            phone: "",
+            email: "",
+            birthDate: "",
           }}
           validate={(values) => {
             const errors = isPersonalDataValid(values)
+            if (values.birthDate) {
+              const age = getAgeFromDate(values.birthDate)
+              setAge(String(age))
+            }
             return errors
           }}
           onSubmit={(values) => {
             console.log(values)
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setValues }) => (
             <Form style={{ width: "100%" }}>
               <Box>
                 <Flex flexDir="column" w="100%">
-                  <FormikInput label="Cedula" name="cedula" type="number" />
-                  <FormikInput label="Nombres" name="nombre" />
-                  <FormikInput label="Apellidos" name="apellido" />
-                  <FormikInput label="Telefono" name="telefono" type="number" />
-                  <FormikInput label="Correo" name="correo" />
-                  <DatePicker
-                    label="Fecha de nacimiento"
-                    name="date"
+                  <SearchUserField
+                    onData={(data) => {
+                      const formatedDate = formatDate(data.birthDate)
+                      setValues({ ...data, birthDate: formatedDate })
+                    }}
                   />
+                  <FormikInput label="Nombres" name="firstName" />
+                  <FormikInput label="Apellidos" name="lastName" />
+                  <FormikInput label="Telefono" name="phone" type="number" />
+                  <FormikInput label="Correo" name="email" />
+                  <Flex justifyContent="space-around">
+                    <FormikInput
+                      label="Fecha de nacimiento"
+                      name="birthDate"
+                      type="date"
+                      max="2010-12-31"
+                      min="1910-01-01"
+                      placeholder="yyyy-mm-dd"
+                      required
+                      pattern="(?:19|20)\[0-9\]{2}-(?:(?:0\[1-9\]|1\[0-2\])/(?:0\[1-9\]|1\[0-9\]|2\[0-9\])|(?:(?!02)(?:0\[1-9\]|1\[0-2\])/(?:30))|(?:(?:0\[13578\]|1\[02\])-31))"
+                    />
+                    <FormikInput
+                      label="Edad"
+                      name="age"
+                      type="number"
+                      disabled
+                      w="80%"
+                      ml={3}
+                      value={age}
+                    />
+                  </Flex>
                   <Box mt={3}>
                     <PrimaryButton
                       type="submit"
                       //disabled={error}
                       isLoading={isSubmitting}
                     >
-                      Submit
+                      continuar
                     </PrimaryButton>
                   </Box>
                 </Flex>
@@ -61,4 +93,4 @@ const DatosPersonales = () => {
   )
 }
 
-export default DatosPersonales
+export default PersonalDataForm

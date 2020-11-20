@@ -1,21 +1,21 @@
 export type FormikType = {
-  field: any,
+  field: any
   form: {
-    errors: any,
+    errors: any
     touched: any
   }
 }
 
 export type CheckboxPropsType = {
-  text: string,
+  text: string
   color: string
 }
 
-export type meetingType = {
-  cedula: string,
-  nombre: string,
-  apellido: string,
-  telefono: number | string
-  correo: string,
-  date: string
+export type PersonalDataType = {
+  citizenId?: string | undefined
+  firstName: string
+  lastName: string
+  phone: number | string
+  email: string
+  birthDate: string
 }
