@@ -1,45 +1,45 @@
-import { meetingType } from '../components/types'
-import MSGS from '../locale/es'
+import { PersonalDataType } from "../components/types"
+import MSGS from "../locale/es"
 
 const isPersonalDataValid = ({
-  cedula,
-  nombre,
-  apellido,
-  telefono,
-  correo,
-  date,
-}: meetingType) => {
+  citizenId,
+  firstName,
+  lastName,
+  phone,
+  email,
+  birthDate,
+}: PersonalDataType) => {
   const errors: any = {}
   //required field
-  if (!cedula) {
-    errors.cedula = MSGS.REQUIRED
+  if (!citizenId) {
+    errors.citizenId = MSGS.REQUIRED
   }
-  if (!nombre) {
-    errors.nombre = MSGS.REQUIRED
+  if (!firstName) {
+    errors.firstName = MSGS.REQUIRED
   }
-  if (!apellido) {
-    errors.apellido = MSGS.REQUIRED
+  if (!lastName) {
+    errors.lastName = MSGS.REQUIRED
   }
-  if (!telefono) {
-    errors.telefono = MSGS.REQUIRED
+  if (!phone) {
+    errors.phone = MSGS.REQUIRED
   }
-  if (!correo) {
-    errors.correo = MSGS.REQUIRED
+  if (!email) {
+    errors.email = MSGS.REQUIRED
   }
-  if (!date) {
-    errors.date = MSGS.REQUIRED
-  } else if (Number(date.substr(0, 4)) >= 2017) {
-    errors.date = "incorrect date"
+  if (!birthDate) {
+    errors.birthDate = MSGS.REQUIRED
+  } else if (Number(birthDate.substr(0, 4)) >= 2017) {
+    errors.birthDate = MSGS.INCORRECT_VALUE
   }
 
   //exceptions
-  if (String(telefono).length !== 7 && String(telefono).length !== 10) {
-    errors.telefono = "incorrect phone"
+  if (String(phone).length !== 7 && String(phone).length !== 10) {
+    errors.phone = MSGS.INCORRECT_VALUE
   }
 
   const regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i
-  if (!regex.test(correo)) {
-    errors.correo = "incorrect email"
+  if (!regex.test(email)) {
+    errors.email = MSGS.INCORRECT_VALUE
   }
 
   return errors

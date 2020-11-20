@@ -1,0 +1,16 @@
+mutation getUser($citizenId: String!) {
+  user(citizenId: $citizenId) {
+    user {
+      id
+      citizenId
+      lastName
+      firstName
+      phone
+      email
+      birthDate
+    }
+    errors {
+      message
+    }
+  }
+}

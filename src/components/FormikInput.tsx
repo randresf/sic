@@ -8,17 +8,27 @@ import {
 } from "@chakra-ui/react"
 import { FormikType } from "./types"
 
-const WrapperInput = ({ type = "text", name = '', label = '', ...props }) => {
+const WrapperInput = ({
+  type = "text",
+  name = "",
+  label = "",
+  placeholder = "",
+  ...props
+}) => {
+  console.log(props.value)
   return !name ? null : (
     <Field name={name}>
       {({ field, form }: FormikType) => (
-        <FormControl isInvalid={form.errors[name] && form.touched[name]}>
-          <FormLabel htmlFor={name}>{label}</FormLabel>
+        <FormControl isInvalid={form.errors[name] && form.touched[name]} mt={2}>
+          <FormLabel htmlFor={name} {...props}>
+            {label}
+          </FormLabel>
           <Input
             {...field}
             id={name}
             type={type}
-            placeholder={name.toLowerCase()}
+            placeholder={placeholder || name.toLowerCase()}
+            {...props}
           />
           <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
         </FormControl>

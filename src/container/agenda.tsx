@@ -2,22 +2,11 @@ import React from "react"
 import { Box, Flex, Heading, IconButton, Text } from "@chakra-ui/react"
 import { ArrowRightIcon } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
-import { useQuery } from "urql"
 import Loading from "../components/Loading"
-
-const MeetinsQuery = `
-  query {
-    meetings {
-      id
-      title
-      meetingDate
-      spots
-    }
-  }
-`
+import { useMeetingsQuery } from "../generated/graphql"
 
 const Agenda = () => {
-  const [{ data, fetching, error }] = useQuery({ query: MeetinsQuery })
+  const [{ data, fetching, error }] = useMeetingsQuery()
   if (fetching) return <Loading loading={fetching} />
   return (
     <Box>
@@ -38,7 +27,6 @@ export default Agenda
 
 const crearReunion = (reu: {
   spots: number
-  reservados: number
   id: string | number | undefined
   title: string
   meetingDate: string
@@ -51,7 +39,8 @@ const crearReunion = (reu: {
       shadow="md"
       borderWidth={1}
       m={2}
-      minW="250px"
+      w="270px"
+      h="170px"
       flexDir="column"
     >
       {/* <Box mr={3}>

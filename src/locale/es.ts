@@ -1,5 +1,6 @@
 const es = {
-  REQUIRED: 'Requerido'
+  REQUIRED: "campo requerido",
+  INCORRECT_VALUE: "valor incorrecto",
 }
 
 export default es
