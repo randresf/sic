@@ -1,4 +1,3 @@
-import { CheckIcon } from "@chakra-ui/icons"
 import { Stack, InputGroup, InputRightElement } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { useGetUserMutation } from "../generated/graphql"
@@ -9,22 +8,27 @@ type SearchUserFieldProps = {
   onData: (data: any) => void
 }
 
-const SearchUserField = ({ onData }: SearchUserFieldProps) => {
+const SearchUserField = ({ onData, ...props }: SearchUserFieldProps) => {
   const [, searchUser] = useGetUserMutation()
   const [loading, setLoading] = useState(false)
   return (
     <Stack spacing={4}>
       <InputGroup>
         <NormalInput
-          label="Cedula"
-          name="cedula"
+          {...props}
+          required
+          label="Documento"
+          name="citizenId"
           type="number"
           onBlur={async (ev: any) => {
             ev.preventDefault()
             setLoading(true)
             const citizenId = String(ev.target.value)
             const { data } = await searchUser({ citizenId })
-            if (data?.user) onData(data?.user?.user)
+            if (data?.user?.user) {
+              const { __typename, ...rest } = data.user.user
+              onData(rest)
+            }
             setLoading(false)
           }}
         />

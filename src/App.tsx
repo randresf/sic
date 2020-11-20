@@ -20,11 +20,11 @@ const App = () => {
         <hr style={{ marginBottom: "10px", marginTop: "10px" }} />
         <Wrapper variant="regular">
           <Switch>
-            <Route exact path="/">
-              <Landing />
-            </Route>
-            <Route exact path="/datos">
+            <Route exact path="/datos/:reservationId">
               <DatosPersonales />
+            </Route>
+            <Route path="/">
+              <Landing />
             </Route>
           </Switch>
         </Wrapper>
