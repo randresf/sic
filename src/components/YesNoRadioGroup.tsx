@@ -1,28 +1,45 @@
 import React from "react"
-import { Box, Stack, Radio, RadioGroup, Flex } from "@chakra-ui/react"
+import {
+  Box,
+  Stack,
+  Radio,
+  RadioGroup,
+  Flex,
+  NumberIncrementStepperProps,
+} from "@chakra-ui/react"
 import { Field, Form } from "formik"
 
 type RadioProps = {
+  key: number
   text: string
-  name: string
-  onChange: (ev: any) => void
+  name: number
 }
 
-const YesNoRadioGroup = ({ text, name, onChange }: RadioProps) => (
-  <Form>
-    <div id="my-radio-group">{text}</div>
-    <div role="group" aria-labelledby="my-radio-group">
-      <label>
-        <Field type="radio" name={text} value="1" />
-        Si
-      </label>
-      <label>
-        <Field type="radio" name={text} value="0" />
-        No
-      </label>
-      <div></div>
-    </div>
-  </Form>
+const YesNoRadioGroup = ({ text, name, key }: RadioProps) => (
+  <Flex justifyItems="center" key={key}>
+    <Box w="100%" mb={3} id="my-radio-group">
+      {text}
+    </Box>
+    <Flex
+      justifyItems="baseline"
+      w="20%"
+      role="group"
+      aria-labelledby="my-radio-group"
+    >
+      <Box>
+        <label style={{ marginRight: "10px" }}>
+          <Field type="radio" name={name} value="1" />
+          Si
+        </label>
+      </Box>
+      <Box>
+        <label>
+          <Field type="radio" name={name} value="0" />
+          No
+        </label>
+      </Box>
+    </Flex>
+  </Flex>
 )
 
 export default YesNoRadioGroup
