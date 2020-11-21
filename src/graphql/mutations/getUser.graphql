@@ -8,6 +8,11 @@ mutation getUser($citizenId: String!) {
       phone
       email
       birthDate
+      reservations {
+        id
+        qrText
+        meetingId
+      }
     }
     errors {
       message

@@ -17,7 +17,17 @@ export type Scalars = {
 export type Query = {
   __typename?: "Query"
   meetings: Array<Meeting>
+  meeting: MeetingRes
+  meetingsById: Array<Meeting>
   questions: Array<Question>
+}
+
+export type QueryMeetingArgs = {
+  id: Scalars["String"]
+}
+
+export type QueryMeetingsByIdArgs = {
+  ids: Array<Scalars["String"]>
 }
 
 export type Meeting = {
@@ -31,9 +41,22 @@ export type Meeting = {
   isActive: Scalars["Boolean"]
 }
 
+export type MeetingRes = {
+  __typename?: "MeetingRes"
+  meeting: Meeting
+  errors: Array<ErrorField>
+}
+
+export type ErrorField = {
+  __typename?: "ErrorField"
+  field: Scalars["String"]
+  message: Scalars["String"]
+}
+
 export type Question = {
   __typename?: "Question"
   id: Scalars["String"]
+  citizenId: Scalars["String"]
   questionId: Scalars["String"]
   questionText: Scalars["String"]
   answer: Scalars["String"]
@@ -105,12 +128,16 @@ export type User = {
   updatedAt: Scalars["String"]
   email: Scalars["String"]
   birthDate: Scalars["String"]
+  reservations: Array<Reservation>
 }
 
-export type ErrorField = {
-  __typename?: "ErrorField"
-  field: Scalars["String"]
-  message: Scalars["String"]
+export type Reservation = {
+  __typename?: "Reservation"
+  id: Scalars["String"]
+  meetingId: Scalars["String"]
+  createdAt: Scalars["String"]
+  updatedAt: Scalars["String"]
+  qrText: Scalars["String"]
 }
 
 export type UserInput = {
@@ -140,7 +167,14 @@ export type GetUserMutation = { __typename?: "Mutation" } & {
         | "phone"
         | "email"
         | "birthDate"
-      >
+      > & {
+          reservations: Array<
+            { __typename?: "Reservation" } & Pick<
+              Reservation,
+              "id" | "qrText" | "meetingId"
+            >
+          >
+        }
     >
     errors?: Maybe<
       Array<{ __typename?: "ErrorField" } & Pick<ErrorField, "message">>
@@ -185,6 +219,16 @@ export type MeetingsQuery = { __typename?: "Query" } & {
   >
 }
 
+export type GetMeetingsByIdQueryVariables = Exact<{
+  ids: Array<Scalars["String"]>
+}>
+
+export type GetMeetingsByIdQuery = { __typename?: "Query" } & {
+  meetingsById: Array<
+    { __typename?: "Meeting" } & Pick<Meeting, "id" | "meetingDate" | "title">
+  >
+}
+
 export const GetUserDocument = gql`
   mutation getUser($citizenId: String!) {
     user(citizenId: $citizenId) {
@@ -196,6 +240,11 @@ export const GetUserDocument = gql`
         phone
         email
         birthDate
+        reservations {
+          id
+          qrText
+          meetingId
+        }
       }
       errors {
         message
@@ -257,4 +306,22 @@ export function useMeetingsQuery(
   options: Omit<Urql.UseQueryArgs<MeetingsQueryVariables>, "query"> = {}
 ) {
   return Urql.useQuery<MeetingsQuery>({ query: MeetingsDocument, ...options })
+}
+export const GetMeetingsByIdDocument = gql`
+  query getMeetingsById($ids: [String!]!) {
+    meetingsById(ids: $ids) {
+      id
+      meetingDate
+      title
+    }
+  }
+`
+
+export function useGetMeetingsByIdQuery(
+  options: Omit<Urql.UseQueryArgs<GetMeetingsByIdQueryVariables>, "query"> = {}
+) {
+  return Urql.useQuery<GetMeetingsByIdQuery>({
+    query: GetMeetingsByIdDocument,
+    ...options,
+  })
 }

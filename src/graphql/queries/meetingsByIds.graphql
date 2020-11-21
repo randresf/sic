@@ -1,0 +1,7 @@
+query getMeetingsById($ids: [String!]!) {
+  meetingsById(ids: $ids) {
+    id
+    meetingDate
+    title
+  }
+}
