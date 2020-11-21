@@ -41,7 +41,7 @@ const NavBar = () => {
       </Box>
       <UnorderedList styleType="none">
         <ListItem>
-          <Link to="/">Home</Link>
+          <Link to="/">Inicio</Link>
         </ListItem>
       </UnorderedList>
     </Flex>
