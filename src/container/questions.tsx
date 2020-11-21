@@ -1,6 +1,6 @@
 import React from "react"
 import Wrapper from "../components/Wrapper"
-import { Box, Flex, Heading } from "@chakra-ui/react"
+import { Box, Flex, Heading, useToast } from "@chakra-ui/react"
 import PrimaryButton from "../components/PrimaryButton"
 import YesNoRadioGroup from "../components/YesNoRadioGroup"
 import ModalError from "../components/ModalError"
@@ -15,9 +15,11 @@ import { useSaveQuestionMutation } from "../generated/graphql"
 const Question = () => {
   const [error, setError] = React.useState(true)
   const history = useHistory()
+  const toast = useToast()
   const [, saveQuestion] = useSaveQuestionMutation()
   let { userId }: any = useParams()
-  if (!userId) history.push("/")
+  const citizenId = localStorage.getItem("citizenId")
+  if (!userId || !citizenId) history.push("/")
 
   const validate = (values: any) => {
     const arrValue = Object.values(values)
@@ -51,12 +53,21 @@ const Question = () => {
           }}
           onSubmit={async (values: any) => {
             const params = Object.keys(values).map((key) => ({
-              citizenId: "1",
-              questionId: "1",
-              answer: "1",
+              citizenId: citizenId || "",
+              questionId: key,
+              answer: values[key],
             }))
-            const res = await saveQuestion({ questions: values })
-            console.log(res)
+            const res = await saveQuestion({ questions: params })
+            if (res.error) {
+              return toast({
+                description: res.error.message,
+                title: "ocurrio un error",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              })
+            }
+            history.push("/contactDetalis")
           }}
         >
           {({ isSubmitting }) => (

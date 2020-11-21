@@ -24,14 +24,11 @@ const App = () => {
             <Route exact path="/datos/:reservationId">
               <UserData />
             </Route>
-            <Route exact path="/preguntas/:userId">
+            <Route exact path="/questions/:userId">
               <Question />
             </Route>
             <Route path="/">
               <Landing />
-            </Route>
-            <Route exact path="/preguntas">
-              <Question />
             </Route>
           </Switch>
         </Wrapper>

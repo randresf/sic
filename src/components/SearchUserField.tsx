@@ -28,6 +28,8 @@ const SearchUserField = ({ onData, ...props }: SearchUserFieldProps) => {
             if (data?.user?.user) {
               const { __typename, ...rest } = data.user.user
               onData(rest)
+            } else {
+              onData({ citizenId })
             }
             setLoading(false)
           }}

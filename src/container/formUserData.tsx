@@ -65,19 +65,30 @@ const PersonalDataForm = () => {
           duration: 3000,
           isClosable: true,
         })
-        return history.push(`/questions?id=${userId}`)
+        localStorage.setItem("citizenId", values.citizenId)
+        return history.push(`/questions/${userId}`)
       }}
     >
-      {({ isSubmitting, setValues }) => (
+      {({ isSubmitting, setValues, values }) => (
         <Form style={{ width: "100%" }}>
           <Box>
             <Flex flexDir="column" w="100%">
               <SearchUserField
-                onData={({ birthDate, id = "", reservations, ...rest }) => {
-                  const formatedDate = formatDate(birthDate)
-                  setValues({ ...rest, birthDate: formatedDate })
-                  if (reservations) setReservations(reservations)
-                  setUserId(id)
+                onData={({
+                  citizenId,
+                  birthDate,
+                  id = "",
+                  reservations,
+                  ...rest
+                }) => {
+                  if (id) {
+                    const formatedDate = formatDate(birthDate)
+                    setValues({ ...rest, birthDate: formatedDate })
+                    if (reservations) setReservations(reservations)
+                    setUserId(id)
+                  } else {
+                    setValues({ ...values, citizenId })
+                  }
                 }}
               />
               <FormikInput label="Nombres" name="firstName" required />
