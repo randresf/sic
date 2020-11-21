@@ -1,12 +1,12 @@
 import React from "react"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import Landing from "./pages/Landing"
-import DatosPersonales from "./container/formUserData"
 import ToggleDarkMode from "./components/ToggleDarkMode"
 import { Box, Flex, ListItem, UnorderedList } from "@chakra-ui/react"
 import Wrapper from "./components/Wrapper"
 
 import { createClient, Provider } from "urql"
+import UserData from "./pages/UserData"
 
 const urqlClient = createClient({
   url: process.env.REACT_APP_API || "http://localhost:4000/graphql",
@@ -21,7 +21,7 @@ const App = () => {
         <Wrapper variant="regular">
           <Switch>
             <Route exact path="/datos/:reservationId">
-              <DatosPersonales />
+              <UserData />
             </Route>
             <Route path="/">
               <Landing />
