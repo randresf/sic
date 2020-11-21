@@ -24,6 +24,9 @@ const App = () => {
             <Route exact path="/datos/:reservationId">
               <UserData />
             </Route>
+            <Route exact path="/preguntas/:userId">
+              <Question />
+            </Route>
             <Route path="/">
               <Landing />
             </Route>
