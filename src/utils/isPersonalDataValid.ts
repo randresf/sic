@@ -14,6 +14,9 @@ const isPersonalDataValid = ({
   if (!citizenId) {
     errors.citizenId = MSGS.REQUIRED
   }
+  if (String(citizenId).length < 7) {
+    errors.citizenId = MSGS.INCORRECT_VALUE
+  }
   if (!firstName) {
     errors.firstName = MSGS.REQUIRED
   }
