@@ -2,7 +2,7 @@ import { Stack, InputGroup, InputRightElement } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { useGetUserMutation } from "../generated/graphql"
 import Loading from "./Loading"
-import NormalInput from "./NormalInput"
+import FormikInput from "./FormikInput"
 
 type SearchUserFieldProps = {
   onData: (data: any) => void
@@ -11,10 +11,11 @@ type SearchUserFieldProps = {
 const SearchUserField = ({ onData, ...props }: SearchUserFieldProps) => {
   const [, searchUser] = useGetUserMutation()
   const [loading, setLoading] = useState(false)
+
   return (
     <Stack spacing={4}>
       <InputGroup>
-        <NormalInput
+        <FormikInput
           {...props}
           required
           label="Documento"
