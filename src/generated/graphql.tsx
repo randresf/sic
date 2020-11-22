@@ -55,17 +55,15 @@ export type ErrorField = {
 
 export type Question = {
   __typename?: "Question"
-  id: Scalars["String"]
   citizenId: Scalars["String"]
   questionId: Scalars["String"]
-  questionText: Scalars["String"]
   answer: Scalars["String"]
 }
 
 export type Mutation = {
   __typename?: "Mutation"
   createMeeting: Meeting
-  registrerQuestion: Question
+  registrerQuestion: QuestionResponse
   user: UserResponse
   userById: UserResponse
   createUser: UserResponse
@@ -77,7 +75,7 @@ export type MutationCreateMeetingArgs = {
 }
 
 export type MutationRegistrerQuestionArgs = {
-  data: QuestionInput
+  questions: Array<QuestionType>
 }
 
 export type MutationUserArgs = {
@@ -103,9 +101,15 @@ export type MeetingInput = {
   meetingDate: Scalars["String"]
 }
 
-export type QuestionInput = {
+export type QuestionResponse = {
+  __typename?: "QuestionResponse"
+  error: Scalars["String"]
+  saved: Scalars["Boolean"]
+}
+
+export type QuestionType = {
+  citizenId: Scalars["String"]
   questionId: Scalars["String"]
-  questionText: Scalars["String"]
   answer: Scalars["String"]
 }
 
@@ -182,6 +186,17 @@ export type GetUserMutation = { __typename?: "Mutation" } & {
   }
 }
 
+export type SaveQuestionMutationVariables = Exact<{
+  questions: Array<QuestionType>
+}>
+
+export type SaveQuestionMutation = { __typename?: "Mutation" } & {
+  registrerQuestion: { __typename?: "QuestionResponse" } & Pick<
+    QuestionResponse,
+    "error" | "saved"
+  >
+}
+
 export type AddUserMutationVariables = Exact<{
   input: UserInput
 }>
@@ -256,6 +271,20 @@ export const GetUserDocument = gql`
 export function useGetUserMutation() {
   return Urql.useMutation<GetUserMutation, GetUserMutationVariables>(
     GetUserDocument
+  )
+}
+export const SaveQuestionDocument = gql`
+  mutation saveQuestion($questions: [QuestionType!]!) {
+    registrerQuestion(questions: $questions) {
+      error
+      saved
+    }
+  }
+`
+
+export function useSaveQuestionMutation() {
+  return Urql.useMutation<SaveQuestionMutation, SaveQuestionMutationVariables>(
+    SaveQuestionDocument
   )
 }
 export const AddUserDocument = gql`

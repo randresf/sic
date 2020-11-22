@@ -1,0 +1,6 @@
+mutation saveQuestion($questions: [QuestionType!]!) {
+  registrerQuestion(questions: $questions) {
+    error
+    saved
+  }
+}

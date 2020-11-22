@@ -1,13 +1,17 @@
 import React, { useState } from "react"
 import FormikInput from "../components/FormikInput"
 import PrimaryButton from "../components/PrimaryButton"
-import { Box, Flex, Heading, useToast } from "@chakra-ui/react"
+import { Box, Flex, useToast } from "@chakra-ui/react"
 import { Formik, Form } from "formik"
 import isPersonalDataValid from "../utils/isPersonalDataValid"
 import { getAgeFromDate } from "../utils/getAgeFromDate"
 import SearchUserField from "../components/SearchUserField"
 import { formatDate } from "../utils/formatDate"
-import { useAddUserMutation, useUpdateUserMutation } from "../generated/graphql"
+import {
+  useAddUserMutation,
+  useGetUserMutation,
+  useUpdateUserMutation,
+} from "../generated/graphql"
 import { useHistory, useParams } from "react-router-dom"
 import ReservationsList from "./reservationsList"
 
@@ -15,6 +19,8 @@ const PersonalDataForm = () => {
   const [age, setAge] = useState("")
   const [userId, setUserId] = useState("")
   const [reservations, setReservations] = useState([])
+  const [, searchUser] = useGetUserMutation()
+  // const [loading, setLoading] = useState(false)
   const [, updateUser] = useUpdateUserMutation()
   const [, saveUser] = useAddUserMutation()
   const history = useHistory()
@@ -22,6 +28,30 @@ const PersonalDataForm = () => {
   if (!reservationId) history.push("/")
   const toast = useToast()
   localStorage.setItem("reservationId", reservationId)
+
+  const onBlurCitizenField = (cb: any) => async (ev: any) => {
+    ev.preventDefault()
+    //setLoading(true)
+    const citizenId = String(ev.target.value)
+    const { data } = await searchUser({ citizenId })
+    if (data?.user?.user) {
+      const {
+        __typename,
+        birthDate,
+        id,
+        reservations: prevRes,
+        ...rest
+      } = data.user.user
+      const formatedDate = formatDate(birthDate)
+      cb({ ...rest, birthDate: formatedDate })
+      const usrReservations: any = prevRes
+      if (usrReservations) setReservations(usrReservations)
+      setUserId(id)
+    } else {
+      cb({ citizenId })
+    }
+    //setLoading(false)
+  }
 
   return (
     <Formik
@@ -40,6 +70,7 @@ const PersonalDataForm = () => {
           const age = getAgeFromDate(values.birthDate)
           setAge(String(age))
         }
+        console.log(errors)
         return errors
       }}
       onSubmit={async ({ ...values }) => {
@@ -65,20 +96,18 @@ const PersonalDataForm = () => {
           duration: 3000,
           isClosable: true,
         })
-        return history.push(`/questions?id=${userId}`)
+        localStorage.setItem("citizenId", values.citizenId)
+        return history.push(`/questions/${userId}`)
       }}
     >
-      {({ isSubmitting, setValues }) => (
+      {({ isSubmitting, setValues, values }) => (
         <Form style={{ width: "100%" }}>
           <Box>
             <Flex flexDir="column" w="100%">
-              <SearchUserField
-                onData={({ birthDate, id = "", reservations, ...rest }) => {
-                  const formatedDate = formatDate(birthDate)
-                  setValues({ ...rest, birthDate: formatedDate })
-                  if (reservations) setReservations(reservations)
-                  setUserId(id)
-                }}
+              <FormikInput
+                onBlur={onBlurCitizenField(setValues)}
+                label="Documento"
+                name="citizenId"
               />
               <FormikInput label="Nombres" name="firstName" required />
               <FormikInput label="Apellidos" name="lastName" required />
