@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import FormikInput from "../components/FormikInput"
 import PrimaryButton from "../components/PrimaryButton"
-import { Box, Flex, Heading, useToast } from "@chakra-ui/react"
+import { Box, Flex, useToast } from "@chakra-ui/react"
 import { Formik, Form } from "formik"
 import isPersonalDataValid from "../utils/isPersonalDataValid"
 import { getAgeFromDate } from "../utils/getAgeFromDate"

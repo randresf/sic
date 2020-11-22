@@ -1,13 +1,6 @@
 import React from "react"
-import {
-  Box,
-  Stack,
-  Radio,
-  RadioGroup,
-  Flex,
-  NumberIncrementStepperProps,
-} from "@chakra-ui/react"
-import { Field, Form } from "formik"
+import { Box, Flex } from "@chakra-ui/react"
+import { Field } from "formik"
 
 type RadioProps = {
   key: number
