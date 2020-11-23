@@ -2,7 +2,7 @@ import { PersonalDataType } from "../components/types"
 import MSGS from "../locale/es"
 
 const isPersonalDataValid = ({
-  citizenId,
+  document,
   firstName,
   lastName,
   phone,
@@ -11,11 +11,11 @@ const isPersonalDataValid = ({
 }: PersonalDataType) => {
   const errors: any = {}
   //required field
-  if (!citizenId) {
-    errors.citizenId = MSGS.REQUIRED
+  if (!document) {
+    errors.document = MSGS.REQUIRED
   }
-  if (String(citizenId).length < 7) {
-    errors.citizenId = MSGS.INCORRECT_VALUE
+  if (String(document).length < 7) {
+    errors.document = MSGS.INCORRECT_VALUE
   }
   if (!firstName) {
     errors.firstName = MSGS.REQUIRED

@@ -55,7 +55,7 @@ export type ErrorField = {
 
 export type Question = {
   __typename?: "Question"
-  citizenId: Scalars["String"]
+  id: Scalars["String"]
   questionId: Scalars["String"]
   answer: Scalars["String"]
 }
@@ -75,11 +75,12 @@ export type MutationCreateMeetingArgs = {
 }
 
 export type MutationRegistrerQuestionArgs = {
+  userId: Scalars["String"]
   questions: Array<QuestionType>
 }
 
 export type MutationUserArgs = {
-  citizenId: Scalars["String"]
+  document: Scalars["String"]
 }
 
 export type MutationUserByIdArgs = {
@@ -108,7 +109,6 @@ export type QuestionResponse = {
 }
 
 export type QuestionType = {
-  citizenId: Scalars["String"]
   questionId: Scalars["String"]
   answer: Scalars["String"]
 }
@@ -122,7 +122,7 @@ export type UserResponse = {
 export type User = {
   __typename?: "User"
   id: Scalars["String"]
-  citizenId: Scalars["String"]
+  document: Scalars["String"]
   firstName: Scalars["String"]
   lastName: Scalars["String"]
   phone: Scalars["Float"]
@@ -145,7 +145,7 @@ export type Reservation = {
 }
 
 export type UserInput = {
-  citizenId: Scalars["String"]
+  document: Scalars["String"]
   firstName: Scalars["String"]
   lastName: Scalars["String"]
   phone: Scalars["Float"]
@@ -165,7 +165,7 @@ export type GetUserMutation = { __typename?: "Mutation" } & {
       { __typename?: "User" } & Pick<
         User,
         | "id"
-        | "citizenId"
+        | "document"
         | "lastName"
         | "firstName"
         | "phone"
@@ -188,6 +188,7 @@ export type GetUserMutation = { __typename?: "Mutation" } & {
 
 export type SaveQuestionMutationVariables = Exact<{
   questions: Array<QuestionType>
+  userId: Scalars["String"]
 }>
 
 export type SaveQuestionMutation = { __typename?: "Mutation" } & {
@@ -246,10 +247,10 @@ export type GetMeetingsByIdQuery = { __typename?: "Query" } & {
 
 export const GetUserDocument = gql`
   mutation getUser($citizenId: String!) {
-    user(citizenId: $citizenId) {
+    user(document: $citizenId) {
       user {
         id
-        citizenId
+        document
         lastName
         firstName
         phone
@@ -274,8 +275,8 @@ export function useGetUserMutation() {
   )
 }
 export const SaveQuestionDocument = gql`
-  mutation saveQuestion($questions: [QuestionType!]!) {
-    registrerQuestion(questions: $questions) {
+  mutation saveQuestion($questions: [QuestionType!]!, $userId: String!) {
+    registrerQuestion(questions: $questions, userId: $userId) {
       error
       saved
     }

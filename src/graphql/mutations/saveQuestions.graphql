@@ -1,5 +1,5 @@
-mutation saveQuestion($questions: [QuestionType!]!) {
-  registrerQuestion(questions: $questions) {
+mutation saveQuestion($questions: [QuestionType!]!, $userId: String!) {
+  registrerQuestion(questions: $questions, userId: $userId) {
     error
     saved
   }

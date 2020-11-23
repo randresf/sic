@@ -5,7 +5,6 @@ import { Box, Flex, useToast } from "@chakra-ui/react"
 import { Formik, Form } from "formik"
 import isPersonalDataValid from "../utils/isPersonalDataValid"
 import { getAgeFromDate } from "../utils/getAgeFromDate"
-import SearchUserField from "../components/SearchUserField"
 import { formatDate } from "../utils/formatDate"
 import {
   useAddUserMutation,
@@ -48,7 +47,7 @@ const PersonalDataForm = () => {
       if (usrReservations) setReservations(usrReservations)
       setUserId(id)
     } else {
-      cb({ citizenId })
+      cb({ document })
     }
     //setLoading(false)
   }
@@ -57,7 +56,7 @@ const PersonalDataForm = () => {
     <Formik
       enableReinitialize
       initialValues={{
-        citizenId: "",
+        document: "",
         firstName: "",
         lastName: "",
         phone: 0,
@@ -96,7 +95,7 @@ const PersonalDataForm = () => {
           duration: 3000,
           isClosable: true,
         })
-        localStorage.setItem("citizenId", values.citizenId)
+        localStorage.setItem("document", values.document)
         return history.push(`/questions/${userId}`)
       }}
     >
@@ -107,7 +106,7 @@ const PersonalDataForm = () => {
               <FormikInput
                 onBlur={onBlurCitizenField(setValues)}
                 label="Documento"
-                name="citizenId"
+                name="document"
               />
               <FormikInput label="Nombres" name="firstName" required />
               <FormikInput label="Apellidos" name="lastName" required />

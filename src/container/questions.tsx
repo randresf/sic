@@ -15,8 +15,7 @@ const Question = () => {
   const toast = useToast()
   const [, saveQuestion] = useSaveQuestionMutation()
   let { userId }: any = useParams()
-  const citizenId = localStorage.getItem("citizenId")
-  if (!userId || !citizenId) history.push("/")
+  if (!userId) history.push("/")
 
   const validate = (values: any) => {
     const arrValue = Object.values(values)
@@ -50,11 +49,10 @@ const Question = () => {
           }}
           onSubmit={async (values: any) => {
             const params = Object.keys(values).map((key) => ({
-              citizenId: citizenId || "",
               questionId: key,
               answer: values[key],
             }))
-            const res = await saveQuestion({ questions: params })
+            const res = await saveQuestion({ questions: params, userId })
             if (res.error) {
               return toast({
                 description: res.error.message,
@@ -80,13 +78,13 @@ const Question = () => {
                       />
                     ))}
                   <Box mt={3}>
-                    {error ? (
-                      <PrimaryButton disabled type="submit">
-                        Continuar
-                      </PrimaryButton>
-                    ) : (
-                      <PrimaryButton type="submit">Continuar</PrimaryButton>
-                    )}
+                    <PrimaryButton
+                      type="submit"
+                      disabled={error}
+                      isLoading={isSubmitting}
+                    >
+                      Continuar
+                    </PrimaryButton>
                   </Box>
                 </Flex>
               </Box>
