@@ -3,31 +3,23 @@ export const LIMITE_RESERVA_POR_MES = 2
 export const QUESTIONS = [
   {
     id: 1,
-    question: "Hipertensión arterial",
+    question:
+      "¿Ha presentado alguna de estas enfermedades: Hipertensión arterial, diabetes, enfermedades cardiovasculares o cerebrovasculares, cáncer, enfermedades pulmonares, asma, síntomas de gripa, tos o malestar general?",
   },
+
   {
     id: 2,
-    question: "Diabetes",
+    question:
+      "¿Ha presentado alguno de los siguientes síntomas relacionados con el COVID-19 durante los últimos 15 días: Dolor de cabeza, garganta, dolor muscular, dificultad respiratoria, tos seca?",
   },
   {
     id: 3,
-    question: "enfermedades cardiovasculares o cerebrovasculares",
+    question:
+      "¿Ha tenido contacto con personas que hayan regresado del exterior en los últimos 20 dias y/o familiares o amigos que hayan sido diagnosticados con COVID-19?",
   },
   {
     id: 4,
-    question: "cancer",
-  },
-  {
-    id: 5,
-    question: "Enfermedades pulmonares",
-  },
-  {
-    id: 6,
-    question: "Asma",
-  },
-  {
-    id: 7,
-    question: "Sintomas de gripa, tos, malestar general",
+    question: "¿Presenta fiebre o una temperatura superior a 37,5°c?",
   },
 ]
 

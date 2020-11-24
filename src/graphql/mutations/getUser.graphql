@@ -1,8 +1,8 @@
 mutation getUser($citizenId: String!) {
-  user(citizenId: $citizenId) {
+  user(document: $citizenId) {
     user {
       id
-      citizenId
+      document
       lastName
       firstName
       phone

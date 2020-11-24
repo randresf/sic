@@ -12,7 +12,7 @@ export type CheckboxPropsType = {
 }
 
 export type PersonalDataType = {
-  citizenId?: string | undefined
+  document?: string | undefined
   firstName: string
   lastName: string
   phone: number | string

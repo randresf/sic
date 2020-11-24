@@ -45,7 +45,13 @@ const NavBar = () => {
       </Box>
       <UnorderedList styleType="none">
         <ListItem>
-          <Link to="/">Inicio</Link>
+          <Link to="/">
+            <Box>
+              CENTRO DE FE Y ESPERANZA DE BELLO / REGISTRO DE ASISTENCIA A LAS
+              REUNIONES
+            </Box>
+            Revisa muy bien fecha y la hora de la reunion que vas a seleccionar
+          </Link>
         </ListItem>
       </UnorderedList>
     </Flex>
