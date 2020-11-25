@@ -1,49 +1,69 @@
 import React from "react"
 import Wrapper from "../components/Wrapper"
-import { Box, Flex, Heading, useToast, Text } from "@chakra-ui/react"
+import {
+  Box,
+  Flex,
+  Heading,
+  useToast,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react"
 import PrimaryButton from "../components/PrimaryButton"
 import YesNoRadioGroup from "../components/YesNoRadioGroup"
 import { Formik, Form } from "formik"
 import { QUESTIONS } from "../constants/index"
 import { AVISO_PROTECCION_DATOS } from "../constants/index"
+import { TITULO_AVISO_MODAL } from "../constants/index"
+import { MENSAJE_NO_INGRESO } from "../constants/index"
 import { useParams, useHistory } from "react-router-dom"
 import { useSaveQuestionMutation } from "../generated/graphql"
+import { useUpdateContactUserMutation } from "../generated/graphql"
 import FormikInput from "../components/FormikInput"
 import MSGS from "../locale/es"
+import ModalWrapper from "../components/ModalError"
 
 const Question = () => {
+  const { onClose } = useDisclosure()
   const [error, setError] = React.useState(false)
+  const [errorIncomplete, setErrorIncomplete] = React.useState(true)
   const history = useHistory()
   const toast = useToast()
   const [, saveQuestion] = useSaveQuestionMutation()
+  const [, updateContactUser] = useUpdateContactUserMutation()
   let { userId }: any = useParams()
   if (!userId) history.push("/")
 
-  const validateValues = (values: any) => {
-    const regex = /^[0-9,]*$/
-    const valideQuestions = regex.test(Object.keys(values).toString())
-    console.log(valideQuestions)
+  const validateQuestions = async (values: any) => {
+    const { emergencyPhone, emergencyContact, ...questions } = values
 
-    if (valideQuestions) {
-      const arrValue = Object.values(values)
-      const q = arrValue.find((value) => value === "1")
-      if (QUESTIONS.length !== arrValue.length || q) {
-        setError(true)
-        return false
-      }
-      setError(false)
-      return true
+    const arrValue = Object.values(questions)
+    const q = arrValue.find((value) => value === "1")
+    if (QUESTIONS.length !== arrValue.length) {
+      await setErrorIncomplete(true)
     } else {
+      await setErrorIncomplete(false)
+      if (q) {
+        setError(true)
+      }
     }
   }
 
-  const validatePhone = (phone: any) => {
+  const validateInputs = (values: any) => {
+    const { emergencyPhone, emergencyContact } = values
     const errors: any = {}
-    if (!phone) {
-      errors.phone = MSGS.REQUIRED
+
+    if (!emergencyPhone) {
+      errors.emergencyPhone = MSGS.REQUIRED
     }
-    if (String(phone).length !== 7 && String(phone).length !== 10) {
-      errors.phone = MSGS.INCORRECT_VALUE
+    if (
+      String(emergencyPhone).length !== 7 &&
+      String(emergencyPhone).length !== 10
+    ) {
+      errors.emergencyPhone = MSGS.INCORRECT_VALUE
+    }
+
+    if (!emergencyContact) {
+      errors.emergencyContact = MSGS.REQUIRED
     }
 
     return errors
@@ -65,37 +85,63 @@ const Question = () => {
         </Heading>
         <Formik
           initialValues={{
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            emergencyContact: "",
-            emergencyPhone: 0,
+            emergenceContact: "",
+            contactNumber: "",
           }}
           validate={(values) => {
-            validateValues(values)
-            const errors = validatePhone(values.emergencyPhone)
-            console.log(errors)
+            const errors = validateInputs(values)
             return errors
           }}
           onSubmit={async (values: any) => {
-            const params = Object.keys(values).map((key) => ({
-              userId: userId || "",
+            console.log(values)
+            await validateQuestions(values)
+
+            if (errorIncomplete) {
+              return toast({
+                description: "responda todas las preguntas por favor",
+                title: "ocurrio un error",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              })
+            }
+
+            const { emergenceContact, contactNumber, ...questions } = values
+            const contactData = { emergenceContact, contactNumber }
+            const resEmergencyContact = await updateContactUser({
+              userId,
+              contactData,
+            })
+            if (resEmergencyContact.error) {
+              return toast({
+                description: resEmergencyContact.error.message,
+                title: "ocurrio un error",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              })
+            }
+
+            const params = Object.keys(questions).map((key) => ({
               questionId: key,
               answer: values[key],
             }))
             console.log(params)
-            // const res = await saveQuestion({ questions: params })
-            // if (res.error) {
-            //   return toast({
-            //     description: res.error.message,
-            //     title: "ocurrio un error",
-            //     status: "error",
-            //     duration: 3000,
-            //     isClosable: true,
-            //   })
-            // }
-            // history.push("/contactDetalis")
+            const res = await saveQuestion({
+              questions: params,
+              userId: userId || String,
+            })
+            console.log(res.error)
+            if (res.error) {
+              return toast({
+                description: res.error.message,
+                title: "ocurrio un error",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              })
+            }
+            history.push("/contactDetalis")
           }}
         >
           {({ isSubmitting }) => (
@@ -103,13 +149,13 @@ const Question = () => {
               <Flex mb={5} justifyContent="space-around">
                 <FormikInput
                   label="Contacto de emergencia"
-                  name="emergencyContact"
+                  name="emergenceContact"
                   w="90%"
                   required
                 />
                 <FormikInput
                   label="Numero de contacto"
-                  name="emergencyPhone"
+                  name="contactNumber"
                   type="number"
                   required
                 />
@@ -129,8 +175,8 @@ const Question = () => {
                     ))}
                   <Box mt={3}>
                     {error ? (
-                      <PrimaryButton disabled type="submit">
-                        Continuar
+                      <PrimaryButton isdisabled type="submit">
+                        Confirmar reserva
                       </PrimaryButton>
                     ) : (
                       <PrimaryButton type="submit">
@@ -143,6 +189,12 @@ const Question = () => {
             </Form>
           )}
         </Formik>
+        <ModalWrapper
+          titulo={TITULO_AVISO_MODAL}
+          contenido={MENSAJE_NO_INGRESO}
+          isOpen={error}
+          onClose={onClose}
+        ></ModalWrapper>
       </Flex>
     </Wrapper>
   )
