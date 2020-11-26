@@ -1,7 +1,5 @@
-mutation yarn($userId: String!, $contactData: userContactType!) {
-  ContactUser(userId: $userId, contactData: $contactData) {
-    errors {
-      message
-    }
+mutation updateContactUser($userId: String!, $contactData: userContactType!) {
+  updateContactUser(userId: $userId, contactData: $contactData) {
+    userId
   }
 }

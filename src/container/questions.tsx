@@ -38,10 +38,10 @@ const Question = () => {
 
     const arrValue = Object.values(questions)
     const q = arrValue.find((value) => value === "1")
-    if (QUESTIONS.length !== arrValue.length) {
-      await setErrorIncomplete(true)
+    if (QUESTIONS.length !== arrValue.length - 2) {
+      setErrorIncomplete(true)
     } else {
-      await setErrorIncomplete(false)
+      setErrorIncomplete(false)
       if (q) {
         setError(true)
       }
@@ -49,21 +49,21 @@ const Question = () => {
   }
 
   const validateInputs = (values: any) => {
-    const { emergencyPhone, emergencyContact } = values
+    const { contactNumber, emergenceContact } = values
     const errors: any = {}
 
-    if (!emergencyPhone) {
+    if (!contactNumber) {
       errors.emergencyPhone = MSGS.REQUIRED
     }
     if (
-      String(emergencyPhone).length !== 7 &&
-      String(emergencyPhone).length !== 10
+      String(contactNumber).length !== 7 &&
+      String(contactNumber).length !== 10
     ) {
-      errors.emergencyPhone = MSGS.INCORRECT_VALUE
+      errors.contactNumber = MSGS.INCORRECT_VALUE
     }
 
-    if (!emergencyContact) {
-      errors.emergencyContact = MSGS.REQUIRED
+    if (!emergenceContact) {
+      errors.emergenceContact = MSGS.REQUIRED
     }
 
     return errors
@@ -93,9 +93,7 @@ const Question = () => {
             return errors
           }}
           onSubmit={async (values: any) => {
-            console.log(values)
-            await validateQuestions(values)
-
+            validateQuestions(values)
             if (errorIncomplete) {
               return toast({
                 description: "responda todas las preguntas por favor",
@@ -107,11 +105,13 @@ const Question = () => {
             }
 
             const { emergenceContact, contactNumber, ...questions } = values
+
             const contactData = { emergenceContact, contactNumber }
             const resEmergencyContact = await updateContactUser({
               userId,
               contactData,
             })
+
             if (resEmergencyContact.error) {
               return toast({
                 description: resEmergencyContact.error.message,
@@ -126,12 +126,10 @@ const Question = () => {
               questionId: key,
               answer: values[key],
             }))
-            console.log(params)
             const res = await saveQuestion({
               questions: params,
               userId: userId || String,
             })
-            console.log(res.error)
             if (res.error) {
               return toast({
                 description: res.error.message,
@@ -141,7 +139,14 @@ const Question = () => {
                 isClosable: true,
               })
             }
-            history.push("/contactDetalis")
+            toast({
+              description: "",
+              title: "guardado correctamente",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            })
+            history.push(`/contactDetalis/${userId}`)
           }}
         >
           {({ isSubmitting }) => (

@@ -69,7 +69,6 @@ const PersonalDataForm = () => {
           const age = getAgeFromDate(values.birthDate)
           setAge(String(age))
         }
-        console.log(errors)
         return errors
       }}
       onSubmit={async ({ ...values }) => {

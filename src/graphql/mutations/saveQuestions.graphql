@@ -1,6 +1,5 @@
 mutation saveQuestion($questions: [QuestionType!]!, $userId: String!) {
   registrerQuestion(questions: $questions, userId: $userId) {
-    error
     saved
   }
 }
