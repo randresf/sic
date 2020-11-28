@@ -1,0 +1,6 @@
+fragment MeetingData on Meeting {
+  id
+  title
+  meetingDate
+  spots
+}

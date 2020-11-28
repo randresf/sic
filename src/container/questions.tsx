@@ -25,7 +25,6 @@ import ModalWrapper from "../components/ModalError"
 const Question = () => {
   const { onClose } = useDisclosure()
   const [error, setError] = React.useState(false)
-  const [errorIncomplete, setErrorIncomplete] = React.useState(true)
   const history = useHistory()
   const toast = useToast()
   const [, saveQuestion] = useSaveQuestionMutation()
@@ -38,14 +37,10 @@ const Question = () => {
 
     const arrValue = Object.values(questions)
     const q = arrValue.find((value) => value === "1")
-    if (QUESTIONS.length !== arrValue.length - 2) {
-      setErrorIncomplete(true)
-    } else {
-      setErrorIncomplete(false)
-      if (q) {
-        setError(true)
-      }
-    }
+    // -2 since we got two field from contact
+    if (QUESTIONS.length !== arrValue.length - 2 || q)
+      return { question: "error" }
+    return {}
   }
 
   const validateInputs = (values: any) => {
@@ -89,23 +84,12 @@ const Question = () => {
             contactNumber: "",
           }}
           validate={(values) => {
-            const errors = validateInputs(values)
+            const errors = validateQuestions(values) || validateInputs(values)
+            setError(Object.keys(errors).length !== 0)
             return errors
           }}
           onSubmit={async (values: any) => {
-            validateQuestions(values)
-            if (errorIncomplete) {
-              return toast({
-                description: "responda todas las preguntas por favor",
-                title: "ocurrio un error",
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-              })
-            }
-
             const { emergenceContact, contactNumber, ...questions } = values
-
             const contactData = { emergenceContact, contactNumber }
             const resEmergencyContact = await updateContactUser({
               userId,
@@ -115,7 +99,7 @@ const Question = () => {
             if (resEmergencyContact.error) {
               return toast({
                 description: resEmergencyContact.error.message,
-                title: "ocurrio un error",
+                title: "no se pudo guardar el contactio de emergencia",
                 status: "error",
                 duration: 3000,
                 isClosable: true,
@@ -128,25 +112,18 @@ const Question = () => {
             }))
             const res = await saveQuestion({
               questions: params,
-              userId: userId || String,
+              userId: userId,
             })
             if (res.error) {
               return toast({
                 description: res.error.message,
-                title: "ocurrio un error",
+                title: "",
                 status: "error",
                 duration: 3000,
                 isClosable: true,
               })
             }
-            toast({
-              description: "",
-              title: "guardado correctamente",
-              status: "success",
-              duration: 3000,
-              isClosable: true,
-            })
-            history.push(`/contactDetalis/${userId}`)
+            history.push(`/confirm/${userId}`)
           }}
         >
           {({ isSubmitting }) => (
@@ -170,14 +147,7 @@ const Question = () => {
                   Responde cuidadosamente las siguientes preguntas:
                 </Text>
                 <Flex flexDir="column" w="100%">
-                  {QUESTIONS &&
-                    QUESTIONS.map((prg) => (
-                      <YesNoRadioGroup
-                        key={prg.id}
-                        name={prg.id}
-                        text={prg.question}
-                      />
-                    ))}
+                  {QUESTIONS && <YesNoRadioGroup questions={QUESTIONS} />}
                   <Box mt={3}>
                     <PrimaryButton
                       type="submit"

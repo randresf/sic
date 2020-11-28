@@ -8,6 +8,8 @@ import Question from "./container/questions"
 
 import { createClient, Provider } from "urql"
 import UserData from "./pages/UserData"
+import ReservationData from "./pages/Reservation"
+import Confirm from "./pages/Confirm"
 
 const urqlClient = createClient({
   url: process.env.REACT_APP_API || "http://localhost:4000/graphql",
@@ -21,11 +23,17 @@ const App = () => {
         <hr style={{ marginBottom: "10px", marginTop: "10px" }} />
         <Wrapper variant="regular">
           <Switch>
-            <Route exact path="/datos/:reservationId">
+            <Route exact path="/datos/:meetingId">
               <UserData />
             </Route>
             <Route exact path="/questions/:userId">
               <Question />
+            </Route>
+            <Route exact path="/reservation/:reservationId">
+              <ReservationData />
+            </Route>
+            <Route exact path="/confirm/:userId">
+              <Confirm />
             </Route>
             <Route path="/">
               <Landing />
@@ -43,17 +51,9 @@ const NavBar = () => {
       <Box>
         <ToggleDarkMode />
       </Box>
-      <UnorderedList styleType="none">
-        <ListItem>
-          <Link to="/">
-            <Box>
-              CENTRO DE FE Y ESPERANZA DE BELLO / REGISTRO DE ASISTENCIA A LAS
-              REUNIONES
-            </Box>
-            Revisa muy bien fecha y la hora de la reunion que vas a seleccionar
-          </Link>
-        </ListItem>
-      </UnorderedList>
+      <Box ml={3}>
+        <Link to="/">Inicio</Link>
+      </Box>
     </Flex>
   )
 }

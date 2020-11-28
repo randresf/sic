@@ -1,0 +1,18 @@
+fragment UserData on User {
+  id
+  document
+  lastName
+  firstName
+  phone
+  email
+  birthDate
+  reservations {
+    id
+    qrText
+    meetingId
+    meeting {
+      title
+      meetingDate
+    }
+  }
+}

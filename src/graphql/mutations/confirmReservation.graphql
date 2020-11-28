@@ -1,0 +1,10 @@
+mutation confirmReservation($meetingId: String!, $userId: String!) {
+  addReservation(data: { userId: $userId, meetingId: $meetingId }) {
+    errors {
+      message
+    }
+    reservation {
+      id
+    }
+  }
+}

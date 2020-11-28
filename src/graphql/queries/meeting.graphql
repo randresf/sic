@@ -1,0 +1,10 @@
+query getMeeting($id: String!) {
+  meeting(id: $id) {
+    meeting {
+      ...MeetingData
+    }
+    errors {
+      message
+    }
+  }
+}

@@ -6,11 +6,7 @@ import { Formik, Form } from "formik"
 import isPersonalDataValid from "../utils/isPersonalDataValid"
 import { getAgeFromDate } from "../utils/getAgeFromDate"
 import { formatDate } from "../utils/formatDate"
-import {
-  useAddUserMutation,
-  useGetUserMutation,
-  useUpdateUserMutation,
-} from "../generated/graphql"
+import { useSaveUserMutation, useGetUserMutation } from "../generated/graphql"
 import { useHistory, useParams } from "react-router-dom"
 import ReservationsList from "./reservationsList"
 
@@ -20,18 +16,25 @@ const PersonalDataForm = () => {
   const [reservations, setReservations] = useState([])
   const [, searchUser] = useGetUserMutation()
   // const [loading, setLoading] = useState(false)
-  const [, updateUser] = useUpdateUserMutation()
-  const [, saveUser] = useAddUserMutation()
+  const [, saveUser] = useSaveUserMutation()
   const history = useHistory()
-  let { reservationId }: any = useParams()
-  if (!reservationId) history.push("/")
+  let { meetingId }: any = useParams()
+  if (!meetingId) history.push("/")
   const toast = useToast()
-  localStorage.setItem("reservationId", reservationId)
+  localStorage.setItem("meetingId", meetingId)
 
   const onBlurCitizenField = (cb: any) => async (ev: any) => {
     ev.preventDefault()
     //setLoading(true)
     const citizenId = String(ev.target.value)
+    cb({
+      document: citizenId,
+      firstName: "",
+      lastName: "",
+      phone: 0,
+      email: "",
+      birthDate: "",
+    })
     const { data } = await searchUser({ citizenId })
     if (data?.user?.user) {
       const {
@@ -72,15 +75,10 @@ const PersonalDataForm = () => {
         return errors
       }}
       onSubmit={async ({ ...values }) => {
-        let data = null
-        if (userId) {
-          data = await updateUser({ userId, input: { ...values } })
-        } else {
-          data = await saveUser({ input: { ...values } })
-        }
-        if (data.error)
+        let response = await saveUser({ input: { ...values }, userId })
+        if (response.error)
           return toast({
-            description: data.error.message,
+            description: response.error.message,
             title: "ocurrio un error",
             status: "error",
             duration: 3000,
@@ -94,7 +92,9 @@ const PersonalDataForm = () => {
           duration: 3000,
           isClosable: true,
         })
-        return history.push(`/questions/${userId}`)
+        return history.push(
+          `/questions/${userId || response.data?.saveUser.user?.id}`
+        )
       }}
     >
       {({ isSubmitting, setValues, values }) => (
@@ -146,7 +146,11 @@ const PersonalDataForm = () => {
                     continuar
                   </PrimaryButton>
                 ) : (
-                  <ReservationsList reservations={reservations} />
+                  <ReservationsList
+                    reservations={reservations}
+                    userId={userId}
+                    cb={onBlurCitizenField}
+                  />
                 )}
               </Box>
             </Flex>
