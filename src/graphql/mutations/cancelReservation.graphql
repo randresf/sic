@@ -1,0 +1,3 @@
+mutation cancelReservation($reservationId: String!, $userId: String!) {
+  cancelReservation(reservationId: $reservationId, userId: $userId)
+}

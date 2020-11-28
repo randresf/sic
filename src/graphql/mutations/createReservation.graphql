@@ -1,0 +1,15 @@
+mutation addReservation($input: ReservationType!) {
+  addReservation(data: $input) {
+    reservation {
+      id
+      qrText
+      meeting {
+        id
+        title
+        meetingDate
+    }
+    errors {
+      message
+    }
+  }
+}

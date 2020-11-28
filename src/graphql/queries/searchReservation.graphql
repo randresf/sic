@@ -1,0 +1,16 @@
+query searchReservation($reservationId: String!) {
+  searchReservation(reservationId: $reservationId) {
+    id
+    qrText
+    citizen {
+      document
+      firstName
+      lastName
+    }
+    meeting {
+      id
+      title
+      meetingDate
+    }
+  }
+}

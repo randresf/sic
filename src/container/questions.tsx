@@ -179,15 +179,13 @@ const Question = () => {
                       />
                     ))}
                   <Box mt={3}>
-                    {error ? (
-                      <PrimaryButton isdisabled type="submit">
-                        Confirmar reserva
-                      </PrimaryButton>
-                    ) : (
-                      <PrimaryButton type="submit">
-                        Confirmar reserva
-                      </PrimaryButton>
-                    )}
+                    <PrimaryButton
+                      type="submit"
+                      disabled={error}
+                      isLoading={isSubmitting}
+                    >
+                      Continuar
+                    </PrimaryButton>
                   </Box>
                 </Flex>
               </Box>
