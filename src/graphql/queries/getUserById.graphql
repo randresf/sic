@@ -1,5 +1,5 @@
-mutation getUser($citizenId: String!) {
-  user(document: $citizenId) {
+query getUserById($userId: String!) {
+  userById(userId: $userId) {
     user {
       ...UserData
     }

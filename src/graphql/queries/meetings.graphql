@@ -1,8 +1,5 @@
 query Meetings {
   meetings {
-    id
-    title
-    meetingDate
-    spots
+    ...MeetingData
   }
 }

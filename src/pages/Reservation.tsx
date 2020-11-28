@@ -1,14 +1,15 @@
 import { Flex, Heading } from "@chakra-ui/react"
 import React from "react"
-import { useHistory, useParams } from "react-router-dom"
+import { useHistory, useLocation, useParams } from "react-router-dom"
 import Wrapper from "../components/Wrapper"
 import ReservationView from "../container/reservation"
 import queryString from "query-string"
 
-const ReservationData = (props: any) => {
+const ReservationData = () => {
   const history = useHistory()
+  const location = useLocation()
   let { reservationId }: any = useParams()
-  const { external } = queryString.parse(props.location.search)
+  const { external = false } = queryString.parse(location.search)
   if (!reservationId) history.push("/")
   return (
     <Wrapper variant="small">

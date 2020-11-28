@@ -1,5 +1,5 @@
-mutation addUser($input: UserInput!) {
-  createUser(data: $input) {
+mutation saveUser($input: UserInput!, $userId: String) {
+  saveUser(data: $input, userId: $userId) {
     user {
       id
     }
