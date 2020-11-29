@@ -52,7 +52,7 @@ const NavBar = () => {
         <ToggleDarkMode />
       </Box>
       <Box ml={3}>
-        <Link to="/">Inicio</Link>
+        <Link to="/"><img src="%PUBLIC_URL%/logo192.png"></img></Link>
       </Box>
     </Flex>
   )

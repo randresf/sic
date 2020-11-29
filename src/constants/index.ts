@@ -32,3 +32,11 @@ export const TITULO_AVISO_MODAL = "AVISO"
 
 export const MENSAJE_NO_INGRESO =
   "Si una de las opciones anteriores fue dada como un si, no permite continuar"
+
+export const MENSAJE_DE_CONFIRMACION =
+ "Lleva esta confirmación impresa o en tu celular, puedes volver a obtenerla ingresando a este enlace y escribiendo tu cedula, teléfono y edad." +
+ "Si no vas a asistir recuerda cancelar esta reservación." +
+ "Recuera llegar con 30 minutos de anticipación." +
+ "Esta reserva será valida hasta 20 minutos después de haber iniciado la reunión a la cual te inscribiste. Pasado este tiempo ya no podrás ingresar," +
+ "puesto que la duración total del evento es de tan solo una hora"
+ 
