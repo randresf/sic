@@ -53,11 +53,7 @@ const NavBar = () => {
       </Box>
       <Box ml={3}>
         <Link to="/">
-          <img
-            style={{ width: "20%" }}
-            src="https://dnsic.com.co/logo192.png"
-            alt="logo"
-          />
+          <img style={{ width: "20%" }} src="/logo192.png" alt="logo" />
         </Link>
       </Box>
     </Flex>

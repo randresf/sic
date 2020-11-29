@@ -67,18 +67,6 @@ const ReservationsList = ({
                 <Text size="sm">({r.meeting.meetingDate})</Text>
               </Link>
             </Center>
-
-            <Center w="20%">
-              {saving ? (
-                <Loading loading={saving} />
-              ) : (
-                <IconButton
-                  aria-label="cancel"
-                  icon={<DeleteIcon />}
-                  onClick={() => onCancel(r.id)}
-                />
-              )}
-            </Center>
           </WrapItem>
         ))}
       </Wrap>
