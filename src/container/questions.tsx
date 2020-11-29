@@ -136,7 +136,7 @@ const Question = () => {
                   required
                 />
                 <FormikInput
-                  label="Numero de contacto"
+                  label="Número de contacto"
                   name="contactNumber"
                   type="number"
                   required

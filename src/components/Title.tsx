@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Flex } from "@chakra-ui/react"
+import { Box, Flex, Text } from "@chakra-ui/react"
 
 export const Title = () => (
   <Flex
@@ -9,11 +9,14 @@ export const Title = () => (
     mt={2}
     mb={2}
   >
-    <Box>
-      DE FE Y ESPERANZA DE BELLO / REGISTRO DE ASISTENCIA A LAS REUNIONES
+    <Box d="flex">
+      <Text style={{ color: "#dc6d6d" }}>
+        CENTRO DE FE Y ESPERANZA DE BELLO
+      </Text>
+      / REGISTRO DE ASISTENCIA A LAS REUNIONES
     </Box>
     <Box>
-      Revisa muy bien fecha y la hora de la reunion que vas a seleccionar
+      Revisa muy bien fecha y la hora de la reunión que vas a seleccionar
     </Box>
   </Flex>
 )

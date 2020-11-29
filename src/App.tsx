@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import Landing from "./pages/Landing"
 import ToggleDarkMode from "./components/ToggleDarkMode"
-import { Box, Flex, ListItem, UnorderedList } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import Wrapper from "./components/Wrapper"
 import Question from "./container/questions"
 
@@ -52,7 +52,13 @@ const NavBar = () => {
         <ToggleDarkMode />
       </Box>
       <Box ml={3}>
-        <Link to="/"><img src="%PUBLIC_URL%/logo192.png"></img></Link>
+        <Link to="/">
+          <img
+            style={{ width: "20%" }}
+            src="https://dnsic.com.co/logo192.png"
+            alt="logo"
+          />
+        </Link>
       </Box>
     </Flex>
   )
