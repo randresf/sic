@@ -11,7 +11,7 @@ const Agenda = () => {
   return (
     <Box>
       <Heading as="h2" size="md">
-        Proximos eventos:
+        Próximos eventos:
       </Heading>
       <Flex flex={1} alignItems="center" flexWrap="wrap">
         {(error || !data || data.meetings?.length === 0) && (

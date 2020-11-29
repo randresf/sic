@@ -49,6 +49,7 @@ const Confirm = () => {
         title: "error al confirmar",
         description: res.error.message,
       })
+    localStorage.setItem("userId", userId)
     history.push(`/reservation/${res.data?.addReservation.reservation?.id}`)
   }
 
@@ -56,19 +57,52 @@ const Confirm = () => {
     <Wrapper variant="small">
       <Flex w="100%" alignItems="center" flexDir="column">
         <Heading as="h3">{meet?.title}</Heading>
-        <Box>Fecha: {meet?.meetingDate}</Box>
-        <Box>cupos: {meet?.spots}</Box>
-        <Box>
-          Usuario: {objUser?.firstName} {objUser?.lastName}
-        </Box>
-        <Box>
-          <Text>Por favor confirme la informacion antes de proceder</Text>
-        </Box>
-        <Flex>
-          <Button onClick={() => history.replace("/")}>cancelar</Button>
-          <WrapperButton onClick={onConfirm} disabled={confirming}>
+        <Flex flexDir="column">
+          <Box>
+            <Heading as="h4" size="md">
+              Usuario:
+            </Heading>{" "}
+            {objUser?.firstName} {objUser?.lastName}
+          </Box>
+          <Box>
+            <Heading as="h4" size="md">
+              Documento:
+            </Heading>{" "}
+            {objUser?.document}
+          </Box>
+          <Box>
+            <Heading as="h4" size="md">
+              Contacto:
+            </Heading>{" "}
+            {objUser?.phone}
+          </Box>
+          <Box>
+            <Heading as="h4" size="md">
+              Correo:
+            </Heading>{" "}
+            {objUser?.email}
+          </Box>
+          <Box>
+            <Heading as="h4" size="md">
+              Fecha:
+            </Heading>
+            {meet?.meetingDate}
+          </Box>
+          <Box>
+            <Heading as="h4" size="md">
+              Cupos disponibles:
+            </Heading>
+            {meet?.spots}
+          </Box>
+          <Box mt={3}>
+            <Text>Por favor confirme la información antes de proceder</Text>
+          </Box>
+        </Flex>
+        <Flex mt={3}>
+          <WrapperButton mr={3} onClick={onConfirm} disabled={confirming}>
             confirmar
           </WrapperButton>
+          <Button onClick={() => history.replace("/")}>cancelar</Button>
           <Loading loading={confirming} />
         </Flex>
       </Flex>
