@@ -6,9 +6,13 @@ import {
   Heading,
   useDisclosure,
   useToast,
+  Stack,
 } from "@chakra-ui/react"
 import Loading from "../components/Loading"
-import { useSearchReservationQuery } from "../generated/graphql"
+import {
+  useSearchReservationQuery,
+  useCancelReservationMutation,
+} from "../generated/graphql"
 import { useLocation, useHistory } from "react-router-dom"
 import queryString from "querystring"
 import { MENSAJE_DE_CONFIRMACION } from "../constants/index"
@@ -16,7 +20,6 @@ import { TITULO_AVISO_MODAL } from "../constants/index"
 import { MENSAJE_DE_CANCELAR_RESERVA } from "../constants/index"
 import WrapperButton from "../components/PrimaryButton"
 import ModalConfirmWrapper from "../components/ModalConfirm"
-import { useCancelReservationMutation } from "../generated/graphql"
 import PDF from "../components/DownloadPdf"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 
@@ -33,7 +36,7 @@ const ReservationView = ({ reservationId }: any) => {
   const userId = localStorage.getItem("userId") || ""
   const location = useLocation()
 
-  const { ["?external"]: external } = queryString.parse(location.search)
+  const { "?external": external } = queryString.parse(location.search)
   const onCancel = async () => {
     setLoading(true)
     const res = await cancelReserve({ reservationId, userId })
@@ -88,7 +91,7 @@ const ReservationView = ({ reservationId }: any) => {
           </Box>
         </Flex>
       ) : null}
-      <Loading loading={fetching} />
+      <Loading loading={saving || fetching} />
       {error && <div>{error.message}</div>}
     </Box>
   ) : (
@@ -124,28 +127,34 @@ const ReservationView = ({ reservationId }: any) => {
             <Text>{MENSAJE_DE_CONFIRMACION}</Text>
           </Box>
           <Box mt={3}>
-            <PDFDownloadLink
-              style={{ marginRight: "20px" }}
-              document={
-                <PDF
-                  firstName={reser.citizen.firstName}
-                  lastName={reser.citizen.lastName}
-                  qrText={reser.qrText}
-                  document={reser.citizen.document}
-                  title={reser.meeting.title}
-                  meetingDate={reser.meeting.meetingDate}
-                  confirmationMessage={MENSAJE_DE_CONFIRMACION}
-                ></PDF>
-              }
-              fileName="reserva.pdf"
-            >
-              {({ blob, url, loading, error }) =>
-                loading ? "Cargando documento..." : "Descargar reserva"
-              }
-            </PDFDownloadLink>
-            <WrapperButton border="2px" borderColor="red.500" onClick={onOpen}>
-              Cancelar reserva
-            </WrapperButton>
+            <Stack direction="row" spacing={3}>
+              <WrapperButton onClick={onOpen}>cancelar</WrapperButton>
+              <PDFDownloadLink
+                style={{ marginRight: "20px" }}
+                document={
+                  <PDF
+                    firstName={reser.citizen.firstName}
+                    lastName={reser.citizen.lastName}
+                    qrText={reser.qrText}
+                    document={reser.citizen.document}
+                    title={reser.meeting.title}
+                    meetingDate={reser.meeting.meetingDate}
+                    confirmationMessage={MENSAJE_DE_CONFIRMACION}
+                  ></PDF>
+                }
+                fileName={`reservaAforo_${reser.meeting.id}.pdf`}
+              >
+                {({ blob, url, loading, error }) => (
+                  <WrapperButton
+                    colorScheme="teal"
+                    onClick={onOpen}
+                    isLoading={loading}
+                  >
+                    {loading ? "cargando.." : "descargar"}
+                  </WrapperButton>
+                )}
+              </PDFDownloadLink>
+            </Stack>
           </Box>
           <ModalConfirmWrapper
             title={TITULO_AVISO_MODAL}
@@ -156,7 +165,7 @@ const ReservationView = ({ reservationId }: any) => {
           ></ModalConfirmWrapper>
         </Flex>
       ) : null}
-      <Loading loading={fetching} />
+      <Loading loading={fetching || saving} />
       {error && <div>{error.message}</div>}
     </Box>
   )

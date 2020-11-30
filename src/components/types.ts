@@ -19,3 +19,5 @@ export type PersonalDataType = {
   email: string
   birthDate: string
 }
+
+export type DefaultFun = (param: any) => void
