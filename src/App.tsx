@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import Landing from "./pages/Landing"
 import ToggleDarkMode from "./components/ToggleDarkMode"
-import { Box, Flex } from "@chakra-ui/react"
+import { Box, Flex, Heading, Text } from "@chakra-ui/react"
 import Wrapper from "./components/Wrapper"
 import Question from "./container/questions"
 
@@ -13,6 +13,7 @@ import Confirm from "./pages/Confirm"
 
 const urqlClient = createClient({
   url: process.env.REACT_APP_API || "http://localhost:4000/graphql",
+  requestPolicy: "network-only",
 })
 
 const App = () => {
@@ -47,16 +48,29 @@ const App = () => {
 
 const NavBar = () => {
   return (
-    <Flex alignItems="center" p={2}>
-      <Box>
-        <ToggleDarkMode />
-      </Box>
-      <Box ml={3}>
-        <Link to="/">
-          <img style={{ width: "20%" }} src="/logo192.png" alt="logo" />
-        </Link>
-      </Box>
-    </Flex>
+    <Box style={{ position: "sticky" }}>
+      <Flex alignItems="center" p={2} flexWrap="wrap">
+        <Box flexGrow={0}>
+          <ToggleDarkMode />
+        </Box>
+        <Box flexGrow={0} ml={3} w="100px">
+          <Link to="/">
+            <Flex align="center">
+              <img style={{ width: "40px" }} src="/logo192.png" alt="logo" />
+              <Text ml={2}>Inicio</Text>
+            </Flex>
+          </Link>
+        </Box>
+        <Flex flexDir="column" align="initial" flexGrow={1} ml={3}>
+          <Heading as="h2" size="md" style={{ color: "#dc6d6d" }}>
+            CENTRO DE FE Y ESPERANZA DE BELLO
+          </Heading>
+          <Heading as="h6" size="sm">
+            REGISTRO DE ASISTENCIA A LAS REUNIONES
+          </Heading>
+        </Flex>
+      </Flex>
+    </Box>
   )
 }
 

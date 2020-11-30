@@ -1,9 +1,9 @@
-import { Box, Button, Flex, Heading, Text, useToast } from "@chakra-ui/react"
+import { Box, Flex, Heading, Text, useToast } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import Loading from "../components/Loading"
-import WrapperButton from "../components/PrimaryButton"
 import Wrapper from "../components/Wrapper"
+import YesNoButtonGroup from "../components/YesNoButtonGroup"
 import {
   useGetMeetingQuery,
   useGetUserByIdQuery,
@@ -41,15 +41,14 @@ const Confirm = () => {
     setConfirming(true)
     const res = await confirm({ userId, meetingId })
     setConfirming(false)
-    if (res.error)
+    if (res.data?.addReservation.errors)
       return toast({
         status: "error",
         duration: 3000,
         isClosable: true,
         title: "error al confirmar",
-        description: res.error.message,
+        description: res.data.addReservation.errors[0].message,
       })
-    localStorage.setItem("userId", userId)
     history.push(`/reservation/${res.data?.addReservation.reservation?.id}`)
   }
 
@@ -99,10 +98,11 @@ const Confirm = () => {
           </Box>
         </Flex>
         <Flex mt={3}>
-          <WrapperButton mr={3} onClick={onConfirm} disabled={confirming}>
-            confirmar
-          </WrapperButton>
-          <Button onClick={() => history.replace("/")}>cancelar</Button>
+          <YesNoButtonGroup
+            onNo={() => history.replace("/")}
+            onYes={onConfirm}
+            yesProps={{ disabled: confirming }}
+          />
           <Loading loading={confirming} />
         </Flex>
       </Flex>
