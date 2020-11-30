@@ -145,11 +145,7 @@ const ReservationView = ({ reservationId }: any) => {
                 fileName={`reservaAforo_${reser.meeting.id}.pdf`}
               >
                 {({ blob, url, loading, error }) => (
-                  <WrapperButton
-                    colorScheme="teal"
-                    onClick={onCancel}
-                    isLoading={loading}
-                  >
+                  <WrapperButton colorScheme="teal" isLoading={loading}>
                     {loading ? "cargando.." : "descargar"}
                   </WrapperButton>
                 )}
