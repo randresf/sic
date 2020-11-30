@@ -147,7 +147,7 @@ const ReservationView = ({ reservationId }: any) => {
                 {({ blob, url, loading, error }) => (
                   <WrapperButton
                     colorScheme="teal"
-                    onClick={onOpen}
+                    onClick={onCancel}
                     isLoading={loading}
                   >
                     {loading ? "cargando.." : "descargar"}
