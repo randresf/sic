@@ -37,12 +37,7 @@ const ModalConfirmWrapper = ({
         </ModalBody>
 
         <ModalFooter>
-          <WrapperButton
-            border="2px"
-            borderColor="red.500"
-            mr={3}
-            onClick={action}
-          >
+          <WrapperButton mr={3} fontSize={14} onClick={action}>
             Cancelar reserva
           </WrapperButton>
           <WrapperButton onClick={onClose}>Cerrar</WrapperButton>
