@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Flex } from "@chakra-ui/react"
+import { Box, Center, Flex, background } from "@chakra-ui/react"
 import { Field } from "formik"
 import { v4 } from "uuid"
 
@@ -15,24 +15,21 @@ const YesNoRadioGroup = ({ questions }: RadioProps) => {
           <Box w="100%" mb={3} id="my-radio-group">
             {question}
           </Box>
-          <Flex
-            justifyItems="baseline"
-            w="20%"
-            role="group"
-            aria-labelledby="my-radio-group"
-          >
-            <Box>
-              <label style={{ marginRight: "10px" }}>
-                <Field type="radio" name={id} value="1" />
-                Si
-              </label>
-            </Box>
-            <Box>
-              <label>
-                <Field type="radio" name={id} value="0" />
-                No
-              </label>
-            </Box>
+          <Flex role="group" aria-labelledby="my-radio-group" ml={5}>
+            <Center>
+              <Box>
+                <label style={{ marginRight: "10px" }}>
+                  <Field type="radio" name={id} value="1" />
+                  Si
+                </label>
+              </Box>
+              <Box>
+                <label>
+                  <Field type="radio" name={id} value="0" />
+                  No
+                </label>
+              </Box>
+            </Center>
           </Flex>
         </Flex>
       ))}

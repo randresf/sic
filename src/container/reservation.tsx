@@ -7,6 +7,7 @@ import {
   useDisclosure,
   useToast,
   Stack,
+  Center,
 } from "@chakra-ui/react"
 import Loading from "../components/Loading"
 import {
@@ -98,7 +99,7 @@ const ReservationView = ({ reservationId }: any) => {
     <Box>
       {reser ? (
         <Flex flexDir="column" alignItems="center">
-          <Heading mt={2} mb={2} as="h3" size="lg">
+          <Heading mt={2} mb={3} as="h3" size="lg">
             Bienvenid@ {reser.citizen.firstName} {reser.citizen.lastName}
           </Heading>
           <Box m="auto">
@@ -109,21 +110,39 @@ const ReservationView = ({ reservationId }: any) => {
             />
           </Box>
 
-          <Box>
-            <Box mt={2} mb={3}>
-              <Heading as="h4" size="md">
-                Documento:
-              </Heading>
-              {reser.citizen.document}
-              <Heading as="h4" size="md">
-                Reunion reservada:
-              </Heading>
-              {reser.meeting.title}
-              <Heading as="h4" size="md">
-                Fecha :
-              </Heading>
-              {reser.meeting.meetingDate}
-            </Box>
+          <Box mt={3} mb={3}>
+            <Flex flexDir="column" mt={2} mb={3}>
+              <Flex mb={2} flexDir="row">
+                <Center>
+                  <Heading as="h4" size="md">
+                    Documento:
+                  </Heading>
+                  <Text fontSize="md" ml={15}>
+                    {reser.citizen.document}
+                  </Text>
+                </Center>
+              </Flex>
+              <Flex mb={2} flexDir="row">
+                <Center>
+                  <Heading as="h4" size="md">
+                    Reunion reservada:
+                  </Heading>
+                  <Text fontSize="md" ml={15}>
+                    {reser.meeting.title}
+                  </Text>
+                </Center>
+              </Flex>
+              <Flex mb={2} flexDir="row">
+                <Center>
+                  <Heading as="h4" size="md">
+                    Fecha :
+                  </Heading>
+                  <Text fontSize="md" ml={15}>
+                    {reser.meeting.meetingDate}
+                  </Text>
+                </Center>
+              </Flex>
+            </Flex>
             <Text>{MENSAJE_DE_CONFIRMACION}</Text>
           </Box>
           <Box mt={3}>
