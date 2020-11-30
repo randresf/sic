@@ -28,12 +28,13 @@ export const AVISO_PROTECCION_DATOS =
   "nos comprometemos a maneterlos completamente a salvo, a ser transparentes sobre los datos que recopilamos " +
   "y a garantizar los derechos que te asisten para controlar dicha información"
 
-export const TITULO_AVISO_MODAL = "AVISO"
+export const TITULO_AVISO_MODAL = "IMPORTANTE:"
 
 export const MENSAJE_DE_CANCELAR_RESERVA = "Esta seguro de cancelar la reserva?"
 
 export const MENSAJE_NO_INGRESO =
-  "Debido a las respuestas dadas anteriormente y por seguridad suya y de los asistentes no se podrá realizar la reserva"
+  "No puedes asistir a nuestro servicio porque no cumples con las condiciones minimas de seguridad. " +
+  "Te invitamos a que te conectes a nuestro servicio a través del canal de YouTube"
 
 export const MENSAJE_DE_CONFIRMACION =
   "Lleva esta confirmación impresa o en tu celular, puede volver a obtenerla ingresando al enlace de esta página" +

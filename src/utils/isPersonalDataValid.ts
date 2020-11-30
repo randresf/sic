@@ -26,9 +26,9 @@ const isPersonalDataValid = ({
   if (!phone) {
     errors.phone = MSGS.REQUIRED
   }
-  if (!email) {
-    errors.email = MSGS.REQUIRED
-  }
+  // if (!email) {
+  //   errors.email = MSGS.REQUIRED
+  // }
   if (!birthDate) {
     errors.birthDate = MSGS.REQUIRED
   } else if (Number(birthDate.substr(0, 4)) >= 2017) {
