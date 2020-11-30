@@ -149,7 +149,11 @@ const PersonalDataForm = () => {
                     reservations={reservations}
                     userId={userId}
                     meetingId={meetingId}
-                    cb={onBlurCitizenField(setValues)}
+                    cb={() => {
+                      onBlurCitizenField(setValues)({
+                        target: { value: values.document },
+                      })
+                    }}
                   />
                 </Box>
               </Flex>

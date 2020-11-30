@@ -17,13 +17,12 @@ import { useCancelReservationMutation } from "../generated/graphql"
 import MSGS from "../locale/es"
 import { v4 } from "uuid"
 import Loading from "../components/Loading"
-import { DefaultFun } from "../components/types"
 
 type ReservationListProps = {
   reservations: any
   userId: string
   meetingId: string
-  cb: DefaultFun
+  cb: () => void
 }
 
 const ReservationsList = ({
@@ -46,7 +45,6 @@ const ReservationsList = ({
   }, [reservations, meetingId])
 
   const onCancel = async (reservationId: string) => {
-    console.log("clicked")
     setLoading(true)
     const res = await cancelReserve({ reservationId, userId })
     setLoading(false)
@@ -66,7 +64,7 @@ const ReservationsList = ({
       status: "success",
     })
     const newReserv = usrReserv.filter(({ id }: any) => id !== reservationId)
-    cb({ target: { value: userId } })
+    cb()
     return setReservations(newReserv)
   }
 
