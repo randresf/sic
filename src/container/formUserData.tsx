@@ -137,15 +137,14 @@ const PersonalDataForm = () => {
                 />
               </Flex>
               <Box mt={3}>
-                {reservations && reservations.length < 2 ? (
-                  <PrimaryButton
-                    type="submit"
-                    //disabled={error}
-                    isLoading={isSubmitting}
-                  >
-                    continuar
-                  </PrimaryButton>
-                ) : (
+                <PrimaryButton
+                  type="submit"
+                  disabled={reservations.length >= 2}
+                  isLoading={isSubmitting}
+                >
+                  continuar
+                </PrimaryButton>
+                {userId && (
                   <ReservationsList
                     reservations={reservations}
                     userId={userId}

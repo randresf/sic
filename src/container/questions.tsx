@@ -66,7 +66,7 @@ const Question = () => {
 
   return (
     <Wrapper variant="small">
-      <Flex w="120%" alignItems="center" flex={1} p={5} flexDir="column">
+      <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
         <Heading>Formulario salud</Heading>
 
         <Heading
