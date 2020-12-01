@@ -45,12 +45,12 @@ const isPersonalDataValid = ({
     errors.email = MSGS.INCORRECT_VALUE
   }
 
-  const docRegex = /^[A-Za-z0-9]+$/g
+  const docRegex = /^[A-Za-z0-9*]+$/g
   if (document && !docRegex.test(document)) {
     errors.document = MSGS.INCORRECT_VALUE
   }
 
-  const textRegex = /^[a-zA-Z]+(([',. -*][a-zA-Z ])?[a-zA-Z]*)*$/g
+  const textRegex = /^[a-zA-Z*]+(([',. -*][a-zA-Z ])?[a-zA-Z]*)*$/g
   if (firstName && !textRegex.test(firstName)) {
     errors.firstName = MSGS.INCORRECT_VALUE
   }
