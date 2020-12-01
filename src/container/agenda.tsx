@@ -61,14 +61,16 @@ const crearReunion = (reu: {
       <Text as="h3" size="md">
         cupos: {reu.spots}
       </Text>
-      <Flex flexDir="row-reverse">
-        <Link to={`/datos/${reu.id}`}>
-          <Flex alignItems="center">
-            <Text mr={3}>Reservar</Text>
-            <IconButton aria-label="reservar" icon={<ArrowRightIcon />} />
-          </Flex>
-        </Link>
-      </Flex>
+      {String(reu.spots) !== "0" && (
+        <Flex flexDir="row-reverse">
+          <Link to={`/datos/${reu.id}`}>
+            <Flex alignItems="center">
+              <Text mr={3}>Reservar</Text>
+              <IconButton aria-label="reservar" icon={<ArrowRightIcon />} />
+            </Flex>
+          </Link>
+        </Flex>
+      )}
     </Flex>
   )
 }
