@@ -7,9 +7,9 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  Link,
 } from "@chakra-ui/react"
 import React from "react"
-import { Link } from "react-router-dom"
 
 type ModalProps = {
   titulo: string
@@ -25,10 +25,15 @@ const ModalWrapper = ({ titulo, contenido, isOpen, onClose }: ModalProps) => {
       <ModalContent>
         <ModalHeader>{titulo}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>{contenido}</ModalBody>
+        <ModalBody>
+          {contenido}{" "}
+          <Link href="https://www.youtube.com/c/cfebello">
+            https://www.youtube.com/c/cfebello
+          </Link>
+        </ModalBody>
         <ModalFooter>
           <Button onClick={onClose}>
-            <Link to="/">Close</Link>
+            <Link href="/">Close</Link>
           </Button>
         </ModalFooter>
       </ModalContent>

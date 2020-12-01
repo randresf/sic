@@ -25,6 +25,7 @@ import ModalWrapper from "../components/ModalError"
 const Question = () => {
   const { onClose } = useDisclosure()
   const [error, setError] = React.useState(false)
+  const [errorInco, setErrorInco] = React.useState(true)
   const history = useHistory()
   const toast = useToast()
   const [, saveQuestion] = useSaveQuestionMutation()
@@ -37,10 +38,15 @@ const Question = () => {
 
     const arrValue = Object.values(questions)
     const q = arrValue.find((value) => value === "1")
-    // -2 since we got two field from contact
-    if (QUESTIONS.length !== arrValue.length - 2 || q)
-      return { question: "error" }
-    return {}
+    if (QUESTIONS.length !== arrValue.length - 2) {
+      return setErrorInco(true)
+    } else {
+      setErrorInco(false)
+    }
+    if (q) {
+      setError(true)
+    }
+    return setErrorInco(false)
   }
 
   const validateInputs = (values: any) => {
@@ -69,13 +75,7 @@ const Question = () => {
       <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
         <Heading>Formulario salud</Heading>
 
-        <Heading
-          as="h5"
-          size="sm"
-          mb={6}
-          mt={6}
-          style={{ textAlign: "center" }}
-        >
+        <Heading as="h5" size="sm" mb={6} mt={6}>
           {AVISO_PROTECCION_DATOS}
         </Heading>
         <Formik
@@ -84,8 +84,11 @@ const Question = () => {
             contactNumber: "",
           }}
           validate={(values) => {
-            const errors = validateQuestions(values) || validateInputs(values)
-            setError(Object.keys(errors).length !== 0)
+            const errors = validateInputs(values)
+            validateQuestions(values)
+            //
+            //
+
             return errors
           }}
           onSubmit={async (values: any) => {
@@ -100,6 +103,16 @@ const Question = () => {
               return toast({
                 description: resEmergencyContact.error.message,
                 title: "no se pudo guardar el contactio de emergencia",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+              })
+            }
+
+            if (errorInco) {
+              return toast({
+                description: "",
+                title: "Por favor complete todas las preguntas",
                 status: "error",
                 duration: 3000,
                 isClosable: true,

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, useToast } from "@chakra-ui/react"
+import { Box, Center, Flex, Heading, Text, useToast } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import Loading from "../components/Loading"
@@ -55,46 +55,74 @@ const Confirm = () => {
   return (
     <Wrapper variant="small">
       <Flex w="100%" alignItems="center" flexDir="column">
-        <Heading as="h3">{meet?.title}</Heading>
+        <Heading mb={5} as="h3">
+          {meet?.title}
+        </Heading>
         <Flex flexDir="column">
-          <Box>
-            <Heading as="h4" size="md">
-              Usuario:
-            </Heading>{" "}
-            {objUser?.firstName} {objUser?.lastName}
-          </Box>
-          <Box>
-            <Heading as="h4" size="md">
-              Documento:
-            </Heading>{" "}
-            {objUser?.document}
-          </Box>
-          <Box>
-            <Heading as="h4" size="md">
-              Contacto:
-            </Heading>{" "}
-            {objUser?.phone}
-          </Box>
-          <Box>
-            <Heading as="h4" size="md">
-              Correo:
-            </Heading>{" "}
-            {objUser?.email}
-          </Box>
-          <Box>
-            <Heading as="h4" size="md">
-              Fecha:
-            </Heading>
-            {meet?.meetingDate}
-          </Box>
-          <Box>
-            <Heading as="h4" size="md">
-              Cupos disponibles:
-            </Heading>
-            {meet?.spots}
-          </Box>
+          <Flex mb={2} flexDir="row">
+            <Center>
+              <Heading as="h4" size="md">
+                Usuario:
+              </Heading>{" "}
+              <Text fontSize="md" ml={15}>
+                {objUser?.firstName} {objUser?.lastName}
+              </Text>
+            </Center>
+          </Flex>
+          <Flex mb={2} flexDir="row">
+            <Center>
+              <Heading as="h4" size="md">
+                Documento:
+              </Heading>{" "}
+              <Text fontSize="md" ml={15}>
+                {objUser?.document}
+              </Text>
+            </Center>
+          </Flex>
+          <Flex mb={2} flexDir="row">
+            <Center>
+              <Heading as="h4" size="md">
+                Contacto:
+              </Heading>{" "}
+              <Text fontSize="md" ml={15}>
+                {objUser?.phone}
+              </Text>
+            </Center>
+          </Flex>
+          <Flex mb={2} flexDir="row">
+            <Center>
+              <Heading as="h4" size="md">
+                Correo:
+              </Heading>{" "}
+              <Text fontSize="md" ml={15}>
+                {objUser?.email}
+              </Text>
+            </Center>
+          </Flex>
+          <Flex mb={2} flexDir="row">
+            <Center>
+              <Heading as="h4" size="md">
+                Fecha:
+              </Heading>
+              <Text fontSize="md" ml={15}>
+                {meet?.meetingDate}
+              </Text>
+            </Center>
+          </Flex>
+          <Flex mb={2} flexDir="row">
+            <Center>
+              <Heading as="h4" size="md">
+                Cupos disponibles:
+              </Heading>
+              <Text fontSize="md" ml={15}>
+                {meet?.spots}
+              </Text>
+            </Center>
+          </Flex>
           <Box mt={3}>
-            <Text>Por favor confirme la información antes de proceder</Text>
+            <Text fontSize="md">
+              Por favor revise la información antes de proceder
+            </Text>
           </Box>
         </Flex>
         <Flex mt={3}>
