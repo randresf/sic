@@ -120,7 +120,7 @@ const Confirm = () => {
             </Center>
           </Flex>
           <Box mt={3}>
-            <Text fontSize="md">
+            <Text fontSize="md" style={{ color: "#dc6d6d" }}>
               Por favor revise la información antes de proceder
             </Text>
           </Box>

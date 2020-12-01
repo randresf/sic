@@ -1,6 +1,6 @@
 const es = {
   REQUIRED: "campo requerido",
-  INCORRECT_VALUE: "valor incorrecto",
+  INCORRECT_VALUE: "formato incorrecto",
   RESERVATIONS_HEADING: "Reservas",
 }
 

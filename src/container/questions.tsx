@@ -1,13 +1,6 @@
 import React from "react"
 import Wrapper from "../components/Wrapper"
-import {
-  Box,
-  Flex,
-  Heading,
-  useToast,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react"
+import { Box, Flex, Heading, useToast, Text } from "@chakra-ui/react"
 import PrimaryButton from "../components/PrimaryButton"
 import YesNoRadioGroup from "../components/YesNoRadioGroup"
 import { Formik, Form } from "formik"
@@ -23,7 +16,6 @@ import MSGS from "../locale/es"
 import ModalWrapper from "../components/ModalError"
 
 const Question = () => {
-  const { onClose } = useDisclosure()
   const [error, setError] = React.useState(false)
   const [errorInco, setErrorInco] = React.useState(true)
   const history = useHistory()
@@ -32,6 +24,11 @@ const Question = () => {
   const [, updateContactUser] = useUpdateContactUserMutation()
   let { userId }: any = useParams()
   if (!userId) history.push("/")
+
+  const onClose = () => {
+    setError(false)
+    history.push("/")
+  }
 
   const validateQuestions = async (values: any) => {
     const { emergencyPhone, emergencyContact, ...questions } = values
@@ -163,11 +160,20 @@ const Question = () => {
                   {QUESTIONS && <YesNoRadioGroup questions={QUESTIONS} />}
                   <Box mt={3}>
                     <PrimaryButton
+                      mr={3}
+                      onClick={() => {
+                        history.goBack()
+                      }}
+                    >
+                      volver
+                    </PrimaryButton>
+                    <PrimaryButton
                       type="submit"
                       disabled={error}
                       isLoading={isSubmitting}
+                      colorScheme="teal"
                     >
-                      Continuar
+                      continuar
                     </PrimaryButton>
                   </Box>
                 </Flex>

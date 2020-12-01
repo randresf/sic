@@ -10,10 +10,12 @@ import { useSaveUserMutation, useGetUserMutation } from "../generated/graphql"
 import { useHistory, useParams } from "react-router-dom"
 import ReservationsList from "./reservationsList"
 import Loading from "../components/Loading"
+import { blurText } from "../utils/truncate"
 
 const PersonalDataForm = () => {
   const [age, setAge] = useState("")
   const [userId, setUserId] = useState("")
+  const [userExists, setExist] = useState(false)
   const [reservations, setReservations] = useState([])
   const [, searchUser] = useGetUserMutation()
   const [loading, setLoading] = useState(false)
@@ -31,17 +33,13 @@ const PersonalDataForm = () => {
   const onBlurCitizenField = (cb: any) => async (ev: any) => {
     setLoading(true)
     const citizenId = String(ev.target.value)
-    cb({
-      document: citizenId,
-      firstName: "",
-      lastName: "",
-      phone: 0,
-      email: "",
-      birthDate: "",
-    })
     const { data } = await searchUser({ citizenId })
     if (data?.user?.user) {
+      setExist(true)
       const {
+        document,
+        firstName,
+        lastName,
         __typename,
         birthDate,
         id,
@@ -49,18 +47,22 @@ const PersonalDataForm = () => {
         ...rest
       } = data.user.user
       const formatedDate = formatDate(birthDate)
-      cb({ ...rest, birthDate: formatedDate })
+      cb({
+        document: blurText(document),
+        firstName: blurText(firstName),
+        lastName: blurText(lastName),
+        ...rest,
+        birthDate: formatedDate,
+      })
       const usrReservations: any = prevRes
       if (usrReservations) setReservations(usrReservations)
       setUserId(id)
-    } else {
-      cb({ document: citizenId })
     }
     setLoading(false)
   }
 
   return (
-    <Box>
+    <Box minW="300px">
       <Loading loading={loading} />
       <Formik
         enableReinitialize
@@ -103,9 +105,21 @@ const PersonalDataForm = () => {
                   onBlur={onBlurCitizenField(setValues)}
                   label="Documento"
                   name="document"
+                  disabled={userExists}
+                  required
                 />
-                <FormikInput label="Nombres" name="firstName" required />
-                <FormikInput label="Apellidos" name="lastName" required />
+                <FormikInput
+                  label="Nombres"
+                  name="firstName"
+                  required
+                  disabled={userExists}
+                />
+                <FormikInput
+                  label="Apellidos"
+                  name="lastName"
+                  required
+                  disabled={userExists}
+                />
                 <FormikInput
                   label="Telefono"
                   name="phone"
@@ -114,16 +128,18 @@ const PersonalDataForm = () => {
                 />
                 <FormikInput label="Correo" name="email" required />
                 <Flex justifyContent="space-around">
-                  <FormikInput
-                    label="Fecha de nacimiento"
-                    name="birthDate"
-                    type="date"
-                    max="2010-12-31"
-                    min="1910-01-01"
-                    placeholder="yyyy-mm-dd"
-                    required
-                    pattern="(?:19|20)\[0-9\]{2}-(?:(?:0\[1-9\]|1\[0-2\])/(?:0\[1-9\]|1\[0-9\]|2\[0-9\])|(?:(?!02)(?:0\[1-9\]|1\[0-2\])/(?:30))|(?:(?:0\[13578\]|1\[02\])-31))"
-                  />
+                  {!userExists && (
+                    <FormikInput
+                      label="Fecha de nacimiento"
+                      name="birthDate"
+                      type="date"
+                      max="2010-12-31"
+                      min="1910-01-01"
+                      placeholder="yyyy-mm-dd"
+                      required
+                      pattern="(?:19|20)\[0-9\]{2}-(?:(?:0\[1-9\]|1\[0-2\])/(?:0\[1-9\]|1\[0-9\]|2\[0-9\])|(?:(?!02)(?:0\[1-9\]|1\[0-2\])/(?:30))|(?:(?:0\[13578\]|1\[02\])-31))"
+                    />
+                  )}
                   <FormikInput
                     label="Edad"
                     name="age"

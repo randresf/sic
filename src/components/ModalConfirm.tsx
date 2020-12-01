@@ -12,7 +12,7 @@ import React from "react"
 import WrapperButton from "./PrimaryButton"
 
 type ModalProps = {
-  title: string
+  title?: string
   content: string
   isOpen: boolean
   onClose: any
@@ -20,7 +20,7 @@ type ModalProps = {
 }
 
 const ModalConfirmWrapper = ({
-  title,
+  title = "",
   content,
   onClose,
   isOpen,
@@ -37,10 +37,9 @@ const ModalConfirmWrapper = ({
         </ModalBody>
 
         <ModalFooter>
-          <WrapperButton mr={3} fontSize={14} onClick={action}>
-            Cancelar reserva
+          <WrapperButton fontSize={14} onClick={action} colorScheme="teal">
+            cancelar
           </WrapperButton>
-          <WrapperButton onClick={onClose}>Cerrar</WrapperButton>
         </ModalFooter>
       </ModalContent>
     </Modal>

@@ -25,11 +25,15 @@ import PDF from "../components/DownloadPdf"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 
 const ReservationView = ({ reservationId }: any) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const [saving, setLoading] = useState(false)
   const history = useHistory()
   const toast = useToast()
   const [, cancelReserve] = useCancelReservationMutation()
+
+  const [isOpen, setOpen] = useState(false)
+  const onClose = () => {
+    setOpen(false)
+  }
 
   const [{ data, fetching, error }] = useSearchReservationQuery({
     variables: { reservationId },
@@ -66,7 +70,7 @@ const ReservationView = ({ reservationId }: any) => {
   return external ? (
     <Box>
       {reser ? (
-        <Flex flexDir="column" alignItems="center">
+        <Flex flexDir="column" alignItems="center" flexWrap="wrap">
           <Heading mt={2} mb={2} as="h3" size="lg">
             Realizada por {reser.citizen.firstName} {reser.citizen.lastName}
           </Heading>
@@ -88,7 +92,7 @@ const ReservationView = ({ reservationId }: any) => {
             </Box>
           </Box>
           <Box mt={3}>
-            <WrapperButton>Confirmar asistencia</WrapperButton>
+            <WrapperButton colorScheme="teal">confirmar</WrapperButton>
           </Box>
         </Flex>
       ) : null}
@@ -147,7 +151,9 @@ const ReservationView = ({ reservationId }: any) => {
           </Box>
           <Box mt={3}>
             <Stack direction="row" spacing={3}>
-              <WrapperButton onClick={onOpen}>cancelar</WrapperButton>
+              <WrapperButton onClick={() => setOpen(true)}>
+                cancelar
+              </WrapperButton>
               <PDFDownloadLink
                 style={{ marginRight: "20px" }}
                 document={
@@ -172,7 +178,6 @@ const ReservationView = ({ reservationId }: any) => {
             </Stack>
           </Box>
           <ModalConfirmWrapper
-            title={TITULO_AVISO_MODAL}
             content={MENSAJE_DE_CANCELAR_RESERVA}
             onClose={onClose}
             isOpen={isOpen}
