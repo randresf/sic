@@ -4,7 +4,6 @@ import {
   Flex,
   Text,
   Heading,
-  useDisclosure,
   useToast,
   Stack,
   Center,
@@ -17,7 +16,6 @@ import {
 import { useLocation, useHistory } from "react-router-dom"
 import queryString from "querystring"
 import { MENSAJE_DE_CONFIRMACION } from "../constants/index"
-import { TITULO_AVISO_MODAL } from "../constants/index"
 import { MENSAJE_DE_CANCELAR_RESERVA } from "../constants/index"
 import WrapperButton from "../components/PrimaryButton"
 import ModalConfirmWrapper from "../components/ModalConfirm"

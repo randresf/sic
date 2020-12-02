@@ -45,7 +45,7 @@ const isPersonalDataValid = ({
     errors.email = MSGS.INCORRECT_VALUE
   }
 
-  const docRegex = /^[A-Za-z0-9*]+$/g
+  const docRegex = /^[0-9*]+$/g
   if (document && !docRegex.test(document)) {
     errors.document = MSGS.INCORRECT_VALUE
   }
