@@ -5,13 +5,12 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  Link,
 } from "@chakra-ui/react"
 import React from "react"
 
 type ModalProps = {
   titulo: string
-  contenido: string
+  contenido: any
   isOpen: boolean
   onClose: any
 }
@@ -23,16 +22,7 @@ const ModalWrapper = ({ titulo, contenido, isOpen, onClose }: ModalProps) => {
       <ModalContent>
         <ModalHeader textAlign="center">{titulo}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody mb={3}>
-          {contenido}
-          <Link
-            href="https://www.youtube.com/c/cfebello"
-            target="_blank"
-            style={{ color: "#62ade2" }}
-          >
-            cfebello
-          </Link>
-        </ModalBody>
+        <ModalBody mb={3}>{contenido}</ModalBody>
       </ModalContent>
     </Modal>
   )

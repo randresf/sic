@@ -7,6 +7,7 @@ import {
   useToast,
   Stack,
   Center,
+  ModalFooter,
 } from "@chakra-ui/react"
 import Loading from "../components/Loading"
 import {
@@ -18,9 +19,9 @@ import queryString from "querystring"
 import { MENSAJE_DE_CONFIRMACION } from "../constants/index"
 import { MENSAJE_DE_CANCELAR_RESERVA } from "../constants/index"
 import WrapperButton from "../components/PrimaryButton"
-import ModalConfirmWrapper from "../components/ModalConfirm"
 import PDF from "../components/DownloadPdf"
 import { PDFDownloadLink } from "@react-pdf/renderer"
+import ModalWrapper from "../components/ModalWrapper"
 
 const ReservationView = ({ reservationId }: any) => {
   const [saving, setLoading] = useState(false)
@@ -40,6 +41,7 @@ const ReservationView = ({ reservationId }: any) => {
   const location = useLocation()
 
   const { "?external": external } = queryString.parse(location.search)
+
   const onCancel = async () => {
     setLoading(true)
     const res = await cancelReserve({ reservationId, userId })
@@ -90,7 +92,9 @@ const ReservationView = ({ reservationId }: any) => {
             </Box>
           </Box>
           <Box mt={3}>
-            <WrapperButton colorScheme="teal">confirmar</WrapperButton>
+            <WrapperButton onClick={onCancel} colorScheme="teal">
+              confirmar
+            </WrapperButton>
           </Box>
         </Flex>
       ) : null}
@@ -175,12 +179,25 @@ const ReservationView = ({ reservationId }: any) => {
               </PDFDownloadLink>
             </Stack>
           </Box>
-          <ModalConfirmWrapper
-            content={MENSAJE_DE_CANCELAR_RESERVA}
+          <ModalWrapper
+            titulo=""
+            contenido={
+              <>
+                {MENSAJE_DE_CANCELAR_RESERVA}
+                <ModalFooter>
+                  <WrapperButton
+                    fontSize={14}
+                    onClick={onCancel}
+                    colorScheme="teal"
+                  >
+                    cancelar
+                  </WrapperButton>
+                </ModalFooter>
+              </>
+            }
             onClose={onClose}
             isOpen={isOpen}
-            action={onCancel}
-          ></ModalConfirmWrapper>
+          ></ModalWrapper>
         </Flex>
       ) : null}
       <Loading loading={fetching || saving} />

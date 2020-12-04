@@ -8,12 +8,12 @@ import { QUESTIONS } from "../constants/index"
 import { AVISO_PROTECCION_DATOS } from "../constants/index"
 import { TITULO_AVISO_MODAL } from "../constants/index"
 import { MENSAJE_NO_INGRESO } from "../constants/index"
-import { useParams, useHistory } from "react-router-dom"
+import { useParams, useHistory, Link } from "react-router-dom"
 import { useSaveQuestionMutation } from "../generated/graphql"
 import { useUpdateContactUserMutation } from "../generated/graphql"
 import FormikInput from "../components/FormikInput"
 import MSGS from "../locale/es"
-import ModalWrapper from "../components/ModalError"
+import ModalWrapper from "../components/ModalWrapper"
 
 const Question = () => {
   const [error, setError] = React.useState(false)
@@ -183,7 +183,18 @@ const Question = () => {
         </Formik>
         <ModalWrapper
           titulo={TITULO_AVISO_MODAL}
-          contenido={MENSAJE_NO_INGRESO}
+          contenido={
+            <>
+              {MENSAJE_NO_INGRESO}
+              <Link
+                to="https://www.youtube.com/c/cfebello"
+                target="_blank"
+                style={{ color: "#62ade2" }}
+              >
+                cfebello
+              </Link>
+            </>
+          }
           isOpen={error}
           onClose={onClose}
         ></ModalWrapper>

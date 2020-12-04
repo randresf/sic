@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Center, Flex, background } from "@chakra-ui/react"
+import { Box, Center, Flex } from "@chakra-ui/react"
 import { Field } from "formik"
 import { v4 } from "uuid"
 
