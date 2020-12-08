@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react"
 import React from "react"
 import { useHistory, useLocation, useParams } from "react-router-dom"
 import Wrapper from "../components/Wrapper"
