@@ -17,6 +17,7 @@ import { useCancelReservationMutation } from "../generated/graphql"
 import MSGS from "../locale/es"
 import { v4 } from "uuid"
 import Loading from "../components/Loading"
+import { formatDate } from "../utils/formatDate"
 
 type ReservationListProps = {
   reservations: any
@@ -88,7 +89,7 @@ const ReservationsList = ({
             <Center w="80%" mr={4}>
               <Link to={`/reservation/${r.id}`}>
                 {r.meeting.title}
-                <Text size="sm">({r.meeting.meetingDate})</Text>
+                <Text size="sm">{formatDate(r.meeting.meetingDate)}</Text>
               </Link>
             </Center>
             <Center>
