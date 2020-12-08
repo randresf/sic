@@ -5,7 +5,7 @@ import { Box, Flex, useToast } from "@chakra-ui/react"
 import { Formik, Form } from "formik"
 import isPersonalDataValid from "../utils/isPersonalDataValid"
 import { getAgeFromDate } from "../utils/getAgeFromDate"
-import { formatDate } from "../utils/formatDate"
+import { formatAgeDate } from "../utils/formatDate"
 import { useSaveUserMutation, useGetUserMutation } from "../generated/graphql"
 import { useHistory, useParams } from "react-router-dom"
 import ReservationsList from "./reservationsList"
@@ -46,7 +46,7 @@ const PersonalDataForm = () => {
         reservations: prevRes,
         ...rest
       } = data.user.user
-      const formatedDate = formatDate(birthDate)
+      const formatedDate = formatAgeDate(birthDate)
       cb({
         document: blurText(document),
         firstName: blurText(firstName),

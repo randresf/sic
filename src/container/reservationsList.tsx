@@ -80,7 +80,7 @@ const ReservationsList = ({
           </Text>
         </Box>
       )}
-      <Heading as="h3" size="md">
+      <Heading as="h3" size="md" mt={3}>
         {MSGS.RESERVATIONS_HEADING}
       </Heading>
       <Wrap>

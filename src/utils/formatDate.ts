@@ -14,3 +14,5 @@ moment.locale("es", {
 
 export const formatDate = (strDate: string) =>
   moment(strDate).format(`dddd Do MMMM, h:mm a`)
+
+export const formatAgeDate = (strDate: string) => moment(strDate).format("YYYY-MM-DD")
