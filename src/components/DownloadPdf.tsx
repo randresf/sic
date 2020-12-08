@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer"
+import { formatDate } from "../utils/formatDate"
 
 type pdfProps = {
   firstName: string
@@ -77,7 +78,7 @@ const PDF = ({
           <Image src={qrText} style={styles.image} />
           <Text>Documento: {document}</Text>
           <Text>Reunión reservada: {title}</Text>
-          <Text>Fecha: {meetingDate}</Text>
+          <Text>Fecha: {formatDate(meetingDate)}</Text>
           <Text style={styles.paragraph}>{confirmationMessage}</Text>
         </View>
       </Page>

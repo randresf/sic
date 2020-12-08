@@ -22,6 +22,7 @@ import WrapperButton from "../components/PrimaryButton"
 import PDF from "../components/DownloadPdf"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 import ModalWrapper from "../components/ModalWrapper"
+import { formatDate } from "../utils/formatDate"
 
 const ReservationView = ({ reservationId }: any) => {
   const [saving, setLoading] = useState(false)
@@ -88,7 +89,7 @@ const ReservationView = ({ reservationId }: any) => {
               <Heading as="h4" size="md">
                 Fecha :
               </Heading>
-              {reser.meeting.meetingDate}
+              {formatDate(reser.meeting.meetingDate)}
             </Box>
           </Box>
           <Box mt={3}>
@@ -144,7 +145,7 @@ const ReservationView = ({ reservationId }: any) => {
                     Fecha :
                   </Heading>
                   <Text fontSize="md" ml={15}>
-                    {reser.meeting.meetingDate}
+                    {formatDate(reser.meeting.meetingDate)}
                   </Text>
                 </Center>
               </Flex>

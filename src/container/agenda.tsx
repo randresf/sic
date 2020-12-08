@@ -16,7 +16,6 @@ import FormikInput from "../components/FormikInput"
 import { Form, Formik } from "formik"
 import { useGetUserMutation } from "../generated/graphql"
 import ReservationsList from "./reservationsList"
-import { format } from "path"
 import { formatDate } from "../utils/formatDate"
 
 const Agenda = () => {
@@ -73,8 +72,8 @@ const Agenda = () => {
             initialValues={{
               document: "",
             }}
-            validate={(values) => { }}
-            onSubmit={async ({ ...values }) => { }}
+            validate={(values) => {}}
+            onSubmit={async ({ ...values }) => {}}
           >
             {({ isSubmitting, setValues, values }) => (
               <Form>
@@ -103,17 +102,17 @@ const Agenda = () => {
                   {reservations.length === 0 ? (
                     <Text>no se encontraron reservas</Text>
                   ) : (
-                      <ReservationsList
-                        reservations={reservations}
-                        userId={userId}
-                        meetingId={meetingId}
-                        cb={() => {
-                          searchReservation(setValues)({
-                            target: { value: values.document },
-                          })
-                        }}
-                      />
-                    )}
+                    <ReservationsList
+                      reservations={reservations}
+                      userId={userId}
+                      meetingId={meetingId}
+                      cb={() => {
+                        searchReservation(setValues)({
+                          target: { value: values.document },
+                        })
+                      }}
+                    />
+                  )}
                 </Box>
               </Form>
             )}
