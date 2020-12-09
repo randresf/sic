@@ -23,6 +23,7 @@ import PDF from "../components/DownloadPdf"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 import ModalWrapper from "../components/ModalWrapper"
 import { formatDate } from "../utils/formatDate"
+import moment from "moment"
 
 const ReservationView = ({ reservationId }: any) => {
   const [saving, setLoading] = useState(false)
@@ -154,9 +155,12 @@ const ReservationView = ({ reservationId }: any) => {
           </Box>
           <Box mt={3}>
             <Stack direction="row" spacing={3}>
-              <WrapperButton onClick={() => setOpen(true)}>
-                cancelar
-              </WrapperButton>
+              {formatDate(reser.meeting.meetingDate) <
+                moment().format(`dddd Do MMMM, h:mm a`) && (
+                <WrapperButton onClick={() => setOpen(true)}>
+                  cancelar
+                </WrapperButton>
+              )}
               <PDFDownloadLink
                 style={{ marginRight: "20px" }}
                 document={

@@ -18,6 +18,7 @@ import MSGS from "../locale/es"
 import { v4 } from "uuid"
 import Loading from "../components/Loading"
 import { formatDate } from "../utils/formatDate"
+import moment from "moment"
 
 type ReservationListProps = {
   reservations: any
@@ -48,6 +49,7 @@ const ReservationsList = ({
   const onCancel = async (reservationId: string) => {
     setLoading(true)
     const res = await cancelReserve({ reservationId, userId })
+
     setLoading(false)
     if (res.error)
       return toast({
@@ -101,13 +103,16 @@ const ReservationsList = ({
                 icon={<SearchIcon />}
                 mr={3}
               />
-              <IconButton
-                onClick={() => {
-                  onCancel(r.id)
-                }}
-                aria-label="cancelar"
-                icon={<DeleteIcon />}
-              />
+              {formatDate(r.meeting.meetingDate) <
+                moment().format(`dddd Do MMMM, h:mm a`) && (
+                <IconButton
+                  onClick={() => {
+                    onCancel(r.id)
+                  }}
+                  aria-label="cancelar"
+                  icon={<DeleteIcon />}
+                />
+              )}
             </Center>
           </WrapItem>
         ))}
