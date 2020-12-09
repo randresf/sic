@@ -151,7 +151,7 @@ const PersonalDataForm = () => {
                   />
                 </Flex>
                 <Box mt={3}>
-                  {reservations && reservations.length < 2 && !booked && (
+                  {reservations && reservations.length < 3 && !booked && (
                     <PrimaryButton
                       type="submit"
                       //disabled={error}

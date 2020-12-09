@@ -9,6 +9,7 @@ import {
   useGetUserByIdQuery,
   useConfirmReservationMutation,
 } from "../generated/graphql"
+import { formatDate } from "../utils/formatDate"
 import useValidUser from "../utils/validUserInfo"
 
 const Confirm = () => {
@@ -105,7 +106,7 @@ const Confirm = () => {
                 Fecha:
               </Heading>
               <Text fontSize="md" ml={15}>
-                {meet?.meetingDate}
+                {formatDate(meet?.meetingDate || "")}
               </Text>
             </Center>
           </Flex>
