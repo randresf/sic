@@ -190,8 +190,7 @@ const ReservationView = ({ reservationId }: any) => {
           </Box>
           <Box mt={3}>
             <Stack direction="row" spacing={3}>
-              {formatDate(reser.meeting.meetingDate) <
-                moment().format(`dddd Do MMMM, h:mm a`) && (
+              {moment(reser.meeting.meetingDate).utc() >= moment().utc() && (
                 <WrapperButton
                   id={RESERVATION_VIEW.btnOpenModalCancelReserve}
                   onClick={() => setOpen(true)}

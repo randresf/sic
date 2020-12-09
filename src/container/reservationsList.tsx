@@ -74,7 +74,11 @@ const ReservationsList = ({
   if (saving) return <Loading loading={saving} />
   if (usrReserv.length === 0) return null
   return (
-    <Flex flexDir="column" flexWrap="wrap" id={RESERVATIONS_LIST.reservationSection}>
+    <Flex
+      flexDir="column"
+      flexWrap="wrap"
+      id={RESERVATIONS_LIST.reservationSection}
+    >
       {booked && (
         <Box>
           <Text fontStyle="italic" p={2} id={RESERVATIONS_LIST.note}>
@@ -90,8 +94,12 @@ const ReservationsList = ({
           <WrapItem id={r.id} className={RESERVATIONS_LIST.reservationItem}>
             <Center w="80%" mr={4}>
               <Link to={`/reservation/${r.id}`} id={RESERVATIONS_LIST.link}>
-                <Text id={RESERVATIONS_LIST.meetingTitle}>{r.meeting.title}</Text>
-                <Text size="sm" id={RESERVATIONS_LIST.meetingDate}>{formatDate(r.meeting.meetingDate)}</Text>
+                <Text id={RESERVATIONS_LIST.meetingTitle}>
+                  {r.meeting.title}
+                </Text>
+                <Text size="sm" id={RESERVATIONS_LIST.meetingDate}>
+                  {formatDate(r.meeting.meetingDate)}
+                </Text>
               </Link>
             </Center>
             <Center>
@@ -104,8 +112,7 @@ const ReservationsList = ({
                 id={RESERVATIONS_LIST.btnOpenReservation}
                 mr={3}
               />
-              {formatDate(r.meeting.meetingDate) <
-                moment().format(`dddd Do MMMM, h:mm a`) && (
+              {moment(r.meeting.meetingDate).utc() >= moment().utc() && (
                 <IconButton
                   onClick={() => {
                     onCancel(r.id)
