@@ -12,7 +12,7 @@ export const Title = () => (
   >
     <Box>
       <Heading as="h3" size="md" id={MEETINGS_LIST.topTitle}>
-        Revisa muy bien fecha y la hora de la reunión que vas a seleccionar
+        Revisa muy bien la fecha y hora de la reunión que vas a seleccionar
       </Heading>
     </Box>
   </Flex>

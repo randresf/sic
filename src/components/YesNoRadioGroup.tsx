@@ -13,7 +13,7 @@ const YesNoRadioGroup = ({ questions }: RadioProps) => {
     <Box>
       {questions.map(({ question, id }) => (
         <Flex justifyItems="center" key={v4()}>
-          <Box w="100%" mb={3} id={QUESTIONS_FORM.questionText}>
+          <Box w="100%" mb={3} className={QUESTIONS_FORM.questionText}>
             {question}
           </Box>
           <Flex role="group" aria-labelledby="my-radio-group" ml={5}>
@@ -21,7 +21,7 @@ const YesNoRadioGroup = ({ questions }: RadioProps) => {
               <Box>
                 <label style={{ marginRight: "10px" }}>
                   <Field
-                    id={QUESTIONS_FORM.responseYes}
+                    className={QUESTIONS_FORM.responseYes}
                     type="radio"
                     name={id}
                     value="1"
@@ -32,7 +32,7 @@ const YesNoRadioGroup = ({ questions }: RadioProps) => {
               <Box>
                 <label>
                   <Field
-                    id={QUESTIONS_FORM.responseNo}
+                    className={QUESTIONS_FORM.responseNo}
                     type="radio"
                     name={id}
                     value="0"

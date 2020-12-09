@@ -50,6 +50,7 @@ const Question = () => {
   const validateInputs = (values: any) => {
     const { contactNumber, emergenceContact } = values
     const errors: any = {}
+    const regex = /^[A-Z]+$/i
 
     if (!contactNumber) {
       errors.emergencyPhone = MSGS.REQUIRED
@@ -63,6 +64,9 @@ const Question = () => {
 
     if (!emergenceContact) {
       errors.emergenceContact = MSGS.REQUIRED
+    }
+    if (!regex.test(emergenceContact)) {
+      errors.emergenceContact = MSGS.INCORRECT_VALUE
     }
 
     return errors

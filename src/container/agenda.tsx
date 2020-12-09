@@ -104,7 +104,9 @@ const Agenda = () => {
                 </Box>
                 <Box mt={3}>
                   {reservations.length === 0 ? (
-                    <Text id={MEETINGS_LIST.noResults}>no se encontraron reservas</Text>
+                    <Text id={MEETINGS_LIST.noResults}>
+                      no se encontraron reservas
+                    </Text>
                   ) : (
                     <ReservationsList
                       reservations={reservations}
@@ -157,21 +159,28 @@ const crearReunion = (reu: {
         />
       </Box> */}
 
-      <Heading as="h3" size="md" id={MEETINGS_LIST.meetingTitle}>
+      <Heading as="h3" size="md" className={MEETINGS_LIST.meetingTitle}>
         {reu.title}
       </Heading>
-      <Text as="h3" size="md" id={MEETINGS_LIST.meetingDate}>
+      <Text as="h3" size="md" className={MEETINGS_LIST.meetingDate}>
         fecha: {formatDate(reu.meetingDate)}
       </Text>
-      <Text as="h3" size="md" id={MEETINGS_LIST.spots}>
+      <Text as="h3" size="md" className={MEETINGS_LIST.spots}>
         cupos: {reu.spots}
       </Text>
       {String(reu.spots) !== "0" && (
         <Flex flexDir="row-reverse">
-          <Link to={`/datos/${reu.id}`} id={MEETINGS_LIST.linkCitizenForm}>
+          <Link
+            to={`/datos/${reu.id}`}
+            className={MEETINGS_LIST.linkCitizenForm}
+          >
             <Flex alignItems="center">
               <Text mr={3}>Reservar</Text>
-              <IconButton id={MEETINGS_LIST.btnReserve} aria-label="reservar" icon={<ArrowRightIcon />} />
+              <IconButton
+                className={MEETINGS_LIST.btnReserve}
+                aria-label="reservar"
+                icon={<ArrowRightIcon />}
+              />
             </Flex>
           </Link>
         </Flex>
