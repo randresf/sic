@@ -9,6 +9,7 @@ import {
   useGetUserByIdQuery,
   useConfirmReservationMutation,
 } from "../generated/graphql"
+import { CONFIRM_RESERVATION } from "../ui/formIds"
 import { formatDate } from "../utils/formatDate"
 import useValidUser from "../utils/validUserInfo"
 
@@ -56,72 +57,76 @@ const Confirm = () => {
   return (
     <Wrapper variant="small">
       <Flex w="100%" alignItems="center" flexDir="column">
-        <Heading mb={5} as="h3">
+        <Heading id={CONFIRM_RESERVATION.meetTitle} mb={5} as="h3">
           {meet?.title}
         </Heading>
         <Flex flexDir="column">
           <Flex mb={2} flexDir="row">
             <Center>
-              <Heading as="h4" size="md">
+              <Heading id={CONFIRM_RESERVATION.userTitle} as="h4" size="md">
                 Usuario:
               </Heading>{" "}
-              <Text fontSize="md" ml={15}>
+              <Text id={CONFIRM_RESERVATION.fullnameUser} fontSize="md" ml={15}>
                 {objUser?.firstName} {objUser?.lastName}
               </Text>
             </Center>
           </Flex>
           <Flex mb={2} flexDir="row">
             <Center>
-              <Heading as="h4" size="md">
+              <Heading id={CONFIRM_RESERVATION.documentTitle} as="h4" size="md">
                 Documento:
               </Heading>{" "}
-              <Text fontSize="md" ml={15}>
+              <Text id={CONFIRM_RESERVATION.documentUser} fontSize="md" ml={15}>
                 {objUser?.document}
               </Text>
             </Center>
           </Flex>
           <Flex mb={2} flexDir="row">
             <Center>
-              <Heading as="h4" size="md">
+              <Heading id={CONFIRM_RESERVATION.contactTitle} as="h4" size="md">
                 Contacto:
               </Heading>{" "}
-              <Text fontSize="md" ml={15}>
+              <Text id={CONFIRM_RESERVATION.contactUser} fontSize="md" ml={15}>
                 {objUser?.phone}
               </Text>
             </Center>
           </Flex>
           <Flex mb={2} flexDir="row">
             <Center>
-              <Heading as="h4" size="md">
+              <Heading id={CONFIRM_RESERVATION.emailTitle} as="h4" size="md">
                 Correo:
               </Heading>{" "}
-              <Text fontSize="md" ml={15}>
+              <Text id={CONFIRM_RESERVATION.emailUser} fontSize="md" ml={15}>
                 {objUser?.email}
               </Text>
             </Center>
           </Flex>
           <Flex mb={2} flexDir="row">
             <Center>
-              <Heading as="h4" size="md">
+              <Heading id={CONFIRM_RESERVATION.dateTitle} as="h4" size="md">
                 Fecha:
               </Heading>
-              <Text fontSize="md" ml={15}>
+              <Text id={CONFIRM_RESERVATION.dateUser} fontSize="md" ml={15}>
                 {formatDate(meet?.meetingDate || "")}
               </Text>
             </Center>
           </Flex>
           <Flex mb={2} flexDir="row">
             <Center>
-              <Heading as="h4" size="md">
+              <Heading id={CONFIRM_RESERVATION.spotsTitle} as="h4" size="md">
                 Cupos disponibles:
               </Heading>
-              <Text fontSize="md" ml={15}>
+              <Text id={CONFIRM_RESERVATION.spotsUser} fontSize="md" ml={15}>
                 {meet?.spots}
               </Text>
             </Center>
           </Flex>
           <Box mt={3}>
-            <Text fontSize="md" style={{ color: "#dc6d6d" }}>
+            <Text
+              id={CONFIRM_RESERVATION.confirmDates}
+              fontSize="md"
+              style={{ color: "#dc6d6d" }}
+            >
               Por favor revise la información antes de proceder
             </Text>
           </Box>
