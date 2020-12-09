@@ -14,6 +14,7 @@ import { useUpdateContactUserMutation } from "../generated/graphql"
 import FormikInput from "../components/FormikInput"
 import MSGS from "../locale/es"
 import ModalWrapper from "../components/ModalWrapper"
+import { QUESTION_VIEW } from "../ui/formIds"
 
 const Question = () => {
   const [error, setError] = React.useState(false)
@@ -70,9 +71,15 @@ const Question = () => {
   return (
     <Wrapper variant="small">
       <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
-        <Heading>Formulario salud</Heading>
+        <Heading id={QUESTION_VIEW.formTitle}>Formulario salud</Heading>
 
-        <Heading as="h5" size="sm" mb={6} mt={6}>
+        <Heading
+          id={QUESTION_VIEW.formparagraph}
+          as="h5"
+          size="sm"
+          mb={6}
+          mt={6}
+        >
           {AVISO_PROTECCION_DATOS}
         </Heading>
         <Formik
@@ -140,12 +147,14 @@ const Question = () => {
             <Form style={{ width: "100%" }}>
               <Flex mb={5} justifyContent="space-around">
                 <FormikInput
+                  id={QUESTION_VIEW.emergenceContact}
                   label="Contacto de emergencia"
                   name="emergenceContact"
                   w="90%"
                   required
                 />
                 <FormikInput
+                  id={QUESTION_VIEW.contactNumber}
                   label="Número de contacto"
                   name="contactNumber"
                   type="number"
@@ -153,13 +162,14 @@ const Question = () => {
                 />
               </Flex>
               <Box>
-                <Text mt={5} mb={3}>
+                <Text id={QUESTION_VIEW.notice} mt={5} mb={3}>
                   Responde cuidadosamente las siguientes preguntas:
                 </Text>
                 <Flex flexDir="column" w="100%">
                   {QUESTIONS && <YesNoRadioGroup questions={QUESTIONS} />}
                   <Box mt={3}>
                     <PrimaryButton
+                      id={QUESTION_VIEW.btnGoBack}
                       mr={3}
                       onClick={() => {
                         history.goBack()
@@ -168,6 +178,7 @@ const Question = () => {
                       volver
                     </PrimaryButton>
                     <PrimaryButton
+                      id={QUESTION_VIEW.btnSubmit}
                       type="submit"
                       disabled={error}
                       isLoading={isSubmitting}
@@ -187,6 +198,7 @@ const Question = () => {
             <>
               {MENSAJE_NO_INGRESO}
               <Link
+                id={QUESTION_VIEW.linkNoEntry}
                 to="https://www.youtube.com/c/cfebello"
                 target="_blank"
                 style={{ color: "#62ade2" }}

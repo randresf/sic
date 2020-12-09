@@ -2,6 +2,7 @@ import React from "react"
 import { Box, Center, Flex } from "@chakra-ui/react"
 import { Field } from "formik"
 import { v4 } from "uuid"
+import { QUESTIONS_FORM } from "../ui/formIds"
 
 type RadioProps = {
   questions: { id: number; question: string }[]
@@ -12,20 +13,30 @@ const YesNoRadioGroup = ({ questions }: RadioProps) => {
     <Box>
       {questions.map(({ question, id }) => (
         <Flex justifyItems="center" key={v4()}>
-          <Box w="100%" mb={3} id="my-radio-group">
+          <Box w="100%" mb={3} id={QUESTIONS_FORM.questionText}>
             {question}
           </Box>
           <Flex role="group" aria-labelledby="my-radio-group" ml={5}>
             <Center>
               <Box>
                 <label style={{ marginRight: "10px" }}>
-                  <Field type="radio" name={id} value="1" />
+                  <Field
+                    id={QUESTIONS_FORM.responseYes}
+                    type="radio"
+                    name={id}
+                    value="1"
+                  />
                   Si
                 </label>
               </Box>
               <Box>
                 <label>
-                  <Field type="radio" name={id} value="0" />
+                  <Field
+                    id={QUESTIONS_FORM.responseNo}
+                    type="radio"
+                    name={id}
+                    value="0"
+                  />
                   No
                 </label>
               </Box>

@@ -24,6 +24,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer"
 import ModalWrapper from "../components/ModalWrapper"
 import { formatDate } from "../utils/formatDate"
 import moment from "moment"
+import { RESERVATION_VIEW } from "../ui/formIds"
 
 const ReservationView = ({ reservationId }: any) => {
   const [saving, setLoading] = useState(false)
@@ -73,28 +74,33 @@ const ReservationView = ({ reservationId }: any) => {
     <Box>
       {reser ? (
         <Flex flexDir="column" alignItems="center" flexWrap="wrap">
-          <Heading mt={2} mb={2} as="h3" size="lg">
-            Realizada por {reser.citizen.firstName} {reser.citizen.lastName}
+          <Heading id={RESERVATION_VIEW.title} mt={2} mb={2} as="h3" size="lg">
+            Reserva realizada por {reser.citizen.firstName}{" "}
+            {reser.citizen.lastName}
           </Heading>
 
           <Box>
             <Box mt={2} mb={3}>
-              <Heading as="h4" size="md">
+              <Heading id={RESERVATION_VIEW.document} as="h4" size="md">
                 Documento:
               </Heading>
               {reser.citizen.document}
-              <Heading as="h4" size="md">
+              <Heading id={RESERVATION_VIEW.meetigTitle} as="h4" size="md">
                 Reunión reservada:
               </Heading>
               {reser.meeting.title}
-              <Heading as="h4" size="md">
+              <Heading id={RESERVATION_VIEW.meetingDate} as="h4" size="md">
                 Fecha :
               </Heading>
               {formatDate(reser.meeting.meetingDate)}
             </Box>
           </Box>
           <Box mt={3}>
-            <WrapperButton onClick={onCancel} colorScheme="teal">
+            <WrapperButton
+              id={RESERVATION_VIEW.confirmBtn}
+              onClick={onCancel}
+              colorScheme="teal"
+            >
               confirmar
             </WrapperButton>
           </Box>
@@ -107,11 +113,18 @@ const ReservationView = ({ reservationId }: any) => {
     <Box>
       {reser ? (
         <Flex flexDir="column" alignItems="center">
-          <Heading mt={2} mb={3} as="h3" size="lg">
+          <Heading
+            id={RESERVATION_VIEW.welcome}
+            mt={2}
+            mb={3}
+            as="h3"
+            size="lg"
+          >
             Bienvenid@ {reser.citizen.firstName} {reser.citizen.lastName}
           </Heading>
           <Box m="auto">
             <img
+              id={RESERVATION_VIEW.qrCode}
               src={reser.qrText}
               alt="qr"
               style={{ width: "210px", height: "210px", objectFit: "cover" }}
@@ -122,42 +135,67 @@ const ReservationView = ({ reservationId }: any) => {
             <Flex flexDir="column" mt={2} mb={3}>
               <Flex mb={2} flexDir="row">
                 <Center>
-                  <Heading as="h4" size="md">
+                  <Heading
+                    id={RESERVATION_VIEW.reservationTitleDocument}
+                    as="h4"
+                    size="md"
+                  >
                     Documento:
                   </Heading>
-                  <Text fontSize="md" ml={15}>
+                  <Text
+                    id={RESERVATION_VIEW.userDocument}
+                    fontSize="md"
+                    ml={15}
+                  >
                     {reser.citizen.document}
                   </Text>
                 </Center>
               </Flex>
               <Flex mb={2} flexDir="row">
                 <Center>
-                  <Heading as="h4" size="md">
+                  <Heading
+                    id={RESERVATION_VIEW.reservationTitlemeeting}
+                    as="h4"
+                    size="md"
+                  >
                     Reunion reservada:
                   </Heading>
-                  <Text fontSize="md" ml={15}>
+                  <Text id={RESERVATION_VIEW.userMeeting} fontSize="md" ml={15}>
                     {reser.meeting.title}
                   </Text>
                 </Center>
               </Flex>
               <Flex mb={2} flexDir="row">
                 <Center>
-                  <Heading as="h4" size="md">
+                  <Heading
+                    id={RESERVATION_VIEW.reservationTitleDate}
+                    as="h4"
+                    size="md"
+                  >
                     Fecha :
                   </Heading>
-                  <Text fontSize="md" ml={15}>
+                  <Text
+                    id={RESERVATION_VIEW.reservationUserDate}
+                    fontSize="md"
+                    ml={15}
+                  >
                     {formatDate(reser.meeting.meetingDate)}
                   </Text>
                 </Center>
               </Flex>
             </Flex>
-            <Text>{MENSAJE_DE_CONFIRMACION}</Text>
+            <Text id={RESERVATION_VIEW.msgConfirm}>
+              {MENSAJE_DE_CONFIRMACION}
+            </Text>
           </Box>
           <Box mt={3}>
             <Stack direction="row" spacing={3}>
               {formatDate(reser.meeting.meetingDate) <
                 moment().format(`dddd Do MMMM, h:mm a`) && (
-                <WrapperButton onClick={() => setOpen(true)}>
+                <WrapperButton
+                  id={RESERVATION_VIEW.btnOpenModalCancelReserve}
+                  onClick={() => setOpen(true)}
+                >
                   cancelar
                 </WrapperButton>
               )}
@@ -177,7 +215,11 @@ const ReservationView = ({ reservationId }: any) => {
                 fileName={`reservaAforo_${reser.meeting.id}.pdf`}
               >
                 {({ blob, url, loading, error }) => (
-                  <WrapperButton colorScheme="teal" isLoading={loading}>
+                  <WrapperButton
+                    id={RESERVATION_VIEW.btnDownLoadPdf}
+                    colorScheme="teal"
+                    isLoading={loading}
+                  >
                     {loading ? "cargando.." : "descargar"}
                   </WrapperButton>
                 )}
@@ -191,6 +233,7 @@ const ReservationView = ({ reservationId }: any) => {
                 {MENSAJE_DE_CANCELAR_RESERVA}
                 <ModalFooter>
                   <WrapperButton
+                    id={RESERVATION_VIEW.btnCancelReserve}
                     fontSize={14}
                     onClick={onCancel}
                     colorScheme="teal"
