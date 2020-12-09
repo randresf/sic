@@ -25,5 +25,25 @@ export const RESERVATIONS_LIST = {
 }
 
 export const MEETINGS_LIST = {
-  title: "lbl-",
+  title: "lbl-meetings-title",
+  topTitle: "lbl-top-title",
+  noMeetings: "lbl-no-meetings",
+  searchOrClean: "btn-search-clean",
+  searchSection: "search-section",
+  document: "input-document",
+  btnSearch: "btn-search",
+  noResults: "lbl-no-results",
+  meetingCard: "meeting-card",
+  meetingTitle: "lbl-meeting-title",
+  meetingDate: "lbl-meeting-date",
+  spots: "lbl-meeting-spots",
+  linkCitizenForm: "link-citizen-form",
+  btnReserve: "btn-reserve",
+}
+
+export const NAVABAR_LIST = {
+  darkMode: "btn-dark-mode",
+  logo: "link-home",
+  headerTitle: "lbl-header-title",
+  subTitle: "lbl-sub-title",
 }

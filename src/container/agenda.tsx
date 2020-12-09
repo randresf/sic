@@ -17,6 +17,7 @@ import { Form, Formik } from "formik"
 import { useGetUserMutation } from "../generated/graphql"
 import ReservationsList from "./reservationsList"
 import { formatDate } from "../utils/formatDate"
+import { MEETINGS_LIST } from "../ui/formIds"
 
 const Agenda = () => {
   const [{ data, fetching, error }] = useMeetingsQuery()
@@ -44,12 +45,12 @@ const Agenda = () => {
   if (fetching) return <Loading loading={fetching} />
   return (
     <Box>
-      <Heading as="h2" size="md">
+      <Heading as="h2" size="md" id={MEETINGS_LIST.title}>
         Próximos eventos:
       </Heading>
       <Flex flex={1} alignItems="center" flexWrap="wrap">
         {(error || !data || data.meetings?.length === 0) && (
-          <div>no hay reuniones</div>
+          <div id={MEETINGS_LIST.noMeetings}>no hay reuniones</div>
         )}
         {data && data.meetings && data.meetings.map(crearReunion)}
       </Flex>
@@ -60,13 +61,14 @@ const Agenda = () => {
             setInput(!showInput)
             setReservations([])
           }}
+          id={MEETINGS_LIST.searchOrClean}
         >
           {showInput ? "volver" : "consultar reservas"}
         </Button>
       </Box>
 
       {showInput && (
-        <Box ml={3} mt={3}>
+        <Box ml={3} mt={3} id={MEETINGS_LIST.searchSection}>
           <Formik
             enableReinitialize
             initialValues={{
@@ -85,6 +87,7 @@ const Agenda = () => {
                         label="Documento"
                         name="document"
                         required
+                        id={MEETINGS_LIST.document}
                       ></FormikInput>
 
                       <IconButton
@@ -93,6 +96,7 @@ const Agenda = () => {
                         type="submit"
                         onClick={searchReservation(setValues)}
                         isLoading={isSubmitting}
+                        id={MEETINGS_LIST.btnSearch}
                         ml={5}
                       />
                     </Flex>
@@ -100,7 +104,7 @@ const Agenda = () => {
                 </Box>
                 <Box mt={3}>
                   {reservations.length === 0 ? (
-                    <Text>no se encontraron reservas</Text>
+                    <Text id={MEETINGS_LIST.noResults}>no se encontraron reservas</Text>
                   ) : (
                     <ReservationsList
                       reservations={reservations}
@@ -142,6 +146,7 @@ const crearReunion = (reu: {
       w="270px"
       h="170px"
       flexDir="column"
+      className={MEETINGS_LIST.meetingCard}
     >
       {/* <Box mr={3}>
         <CheckboxWrapper
@@ -152,21 +157,21 @@ const crearReunion = (reu: {
         />
       </Box> */}
 
-      <Heading as="h3" size="md">
+      <Heading as="h3" size="md" id={MEETINGS_LIST.meetingTitle}>
         {reu.title}
       </Heading>
-      <Text as="h3" size="md">
+      <Text as="h3" size="md" id={MEETINGS_LIST.meetingDate}>
         fecha: {formatDate(reu.meetingDate)}
       </Text>
-      <Text as="h3" size="md">
+      <Text as="h3" size="md" id={MEETINGS_LIST.spots}>
         cupos: {reu.spots}
       </Text>
       {String(reu.spots) !== "0" && (
         <Flex flexDir="row-reverse">
-          <Link to={`/datos/${reu.id}`}>
+          <Link to={`/datos/${reu.id}`} id={MEETINGS_LIST.linkCitizenForm}>
             <Flex alignItems="center">
               <Text mr={3}>Reservar</Text>
-              <IconButton aria-label="reservar" icon={<ArrowRightIcon />} />
+              <IconButton id={MEETINGS_LIST.btnReserve} aria-label="reservar" icon={<ArrowRightIcon />} />
             </Flex>
           </Link>
         </Flex>

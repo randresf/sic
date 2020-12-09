@@ -10,6 +10,7 @@ import { createClient, Provider } from "urql"
 import UserData from "./pages/UserData"
 import ReservationData from "./pages/Reservation"
 import Confirm from "./pages/Confirm"
+import { NAVABAR_LIST } from "./ui/formIds"
 
 const urqlClient = createClient({
   url: process.env.REACT_APP_API || "http://localhost:4000/graphql",
@@ -54,7 +55,7 @@ const NavBar = () => {
           <ToggleDarkMode />
         </Box>
         <Box flexGrow={0} ml={3} w="100px">
-          <Link to="/">
+          <Link to="/" id={NAVABAR_LIST.logo}>
             <Flex align="center">
               <img style={{ width: "40px" }} src="/logo192.png" alt="logo" />
               <Text ml={2}>Inicio</Text>
@@ -62,10 +63,10 @@ const NavBar = () => {
           </Link>
         </Box>
         <Flex flexDir="column" align="initial" flexGrow={1} ml={3}>
-          <Heading as="h2" size="md" style={{ color: "#dc6d6d" }}>
+          <Heading as="h2" size="md" style={{ color: "#dc6d6d" }} id={NAVABAR_LIST.headerTitle}>
             CENTRO DE FE Y ESPERANZA DE BELLO
           </Heading>
-          <Heading as="h6" size="sm">
+          <Heading as="h6" size="sm" id={NAVABAR_LIST.subTitle}>
             REGISTRO DE ASISTENCIA A LAS REUNIONES
           </Heading>
         </Flex>

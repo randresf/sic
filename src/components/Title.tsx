@@ -1,5 +1,6 @@
 import React from "react"
 import { Box, Flex, Heading } from "@chakra-ui/react"
+import { MEETINGS_LIST } from "../ui/formIds"
 
 export const Title = () => (
   <Flex
@@ -10,7 +11,7 @@ export const Title = () => (
     mb={2}
   >
     <Box>
-      <Heading as="h3" size="md">
+      <Heading as="h3" size="md" id={MEETINGS_LIST.topTitle}>
         Revisa muy bien fecha y la hora de la reunión que vas a seleccionar
       </Heading>
     </Box>
