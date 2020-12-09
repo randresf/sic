@@ -15,10 +15,10 @@ import { Link, useHistory } from "react-router-dom"
 // import Loading from "../components/Loading"
 import { useCancelReservationMutation } from "../generated/graphql"
 import MSGS from "../locale/es"
-import { v4 } from "uuid"
 import Loading from "../components/Loading"
 import { formatDate } from "../utils/formatDate"
 import moment from "moment"
+import { RESERVATIONS_LIST } from "../ui/formIds"
 
 type ReservationListProps = {
   reservations: any
@@ -74,33 +74,34 @@ const ReservationsList = ({
   if (saving) return <Loading loading={saving} />
   if (usrReserv.length === 0) return null
   return (
-    <Flex flexDir="column" flexWrap="wrap">
+    <Flex flexDir="column" flexWrap="wrap" id={RESERVATIONS_LIST.reservationSection}>
       {booked && (
         <Box>
-          <Text fontStyle="italic" p={2}>
+          <Text fontStyle="italic" p={2} id={RESERVATIONS_LIST.note}>
             Nota: el usuario ya tiene esta reunion reservada
           </Text>
         </Box>
       )}
-      <Heading as="h3" size="md" mt={3}>
+      <Heading as="h3" size="md" mt={3} id={RESERVATIONS_LIST.title}>
         {MSGS.RESERVATIONS_HEADING}
       </Heading>
-      <Wrap>
+      <Wrap className={RESERVATIONS_LIST.reservationItem}>
         {usrReserv?.map((r: any) => (
-          <WrapItem key={v4()}>
+          <WrapItem id={r.id} className={RESERVATIONS_LIST.reservationItem}>
             <Center w="80%" mr={4}>
-              <Link to={`/reservation/${r.id}`}>
-                {r.meeting.title}
-                <Text size="sm">{formatDate(r.meeting.meetingDate)}</Text>
+              <Link to={`/reservation/${r.id}`} id={RESERVATIONS_LIST.link}>
+                <Text id={RESERVATIONS_LIST.meetingTitle}>{r.meeting.title}</Text>
+                <Text size="sm" id={RESERVATIONS_LIST.meetingDate}>{formatDate(r.meeting.meetingDate)}</Text>
               </Link>
             </Center>
             <Center>
               <IconButton
-                aria-label="Search reservation"
+                aria-label="Open reservation"
                 onClick={() => {
                   history.push(`/reservation/${r.id}`)
                 }}
                 icon={<SearchIcon />}
+                id={RESERVATIONS_LIST.btnOpenReservation}
                 mr={3}
               />
               {formatDate(r.meeting.meetingDate) <
@@ -110,6 +111,7 @@ const ReservationsList = ({
                     onCancel(r.id)
                   }}
                   aria-label="cancelar"
+                  id={RESERVATIONS_LIST.btnCancelReservation}
                   icon={<DeleteIcon />}
                 />
               )}

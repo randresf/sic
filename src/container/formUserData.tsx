@@ -11,6 +11,7 @@ import { useHistory, useParams } from "react-router-dom"
 import ReservationsList from "./reservationsList"
 import Loading from "../components/Loading"
 import { blurText } from "../utils/truncate"
+import { CITIZEN_FORM } from "../ui/formIds"
 
 const PersonalDataForm = () => {
   const [age, setAge] = useState("")
@@ -106,27 +107,31 @@ const PersonalDataForm = () => {
                   label="Documento"
                   name="document"
                   disabled={userExists}
+                  id={CITIZEN_FORM.document}
                   required
                 />
                 <FormikInput
                   label="Nombres"
                   name="firstName"
-                  required
+                  required 
+                  id={CITIZEN_FORM.firstName}
                   disabled={userExists}
                 />
                 <FormikInput
                   label="Apellidos"
                   name="lastName"
-                  required
+                  required 
+                  id={CITIZEN_FORM.lastName}
                   disabled={userExists}
                 />
                 <FormikInput
                   label="Telefono"
                   name="phone"
                   type="number"
-                  required
+                  required 
+                  id={CITIZEN_FORM.phone}
                 />
-                <FormikInput label="Correo" name="email" required />
+                <FormikInput label="Correo" name="email" required id={CITIZEN_FORM.email} />
                 <Flex justifyContent="space-around">
                   {!userExists && (
                     <FormikInput
@@ -137,6 +142,7 @@ const PersonalDataForm = () => {
                       min="1910-01-01"
                       placeholder="yyyy-mm-dd"
                       required
+                      id={CITIZEN_FORM.birthDate}
                       pattern="(?:19|20)\[0-9\]{2}-(?:(?:0\[1-9\]|1\[0-2\])/(?:0\[1-9\]|1\[0-9\]|2\[0-9\])|(?:(?!02)(?:0\[1-9\]|1\[0-2\])/(?:30))|(?:(?:0\[13578\]|1\[02\])-31))"
                     />
                   )}
@@ -148,6 +154,7 @@ const PersonalDataForm = () => {
                     w="80%"
                     ml={3}
                     value={age}
+                    id={CITIZEN_FORM.age}
                   />
                 </Flex>
                 <Box mt={3}>
@@ -156,6 +163,7 @@ const PersonalDataForm = () => {
                       type="submit"
                       //disabled={error}
                       isLoading={isSubmitting}
+                      id={CITIZEN_FORM.submit}
                     >
                       continuar
                     </PrimaryButton>

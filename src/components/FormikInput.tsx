@@ -13,21 +13,22 @@ const WrapperInput = ({
   name = "",
   label = "",
   placeholder = "",
+  id = "",
   ...props
 }) => {
   return !name ? null : (
     <Field name={name}>
       {({ field, form }: FormikType) => (
         <FormControl isInvalid={form.errors[name] && form.touched[name]} mt={2}>
-          <FormLabel htmlFor={name} {...props}>
+          <FormLabel id={`lbl-${id}`} htmlFor={id} {...props}>
             {label}
           </FormLabel>
           <Input
             {...field}
-            id={name}
             type={type}
             placeholder={placeholder || label.toLowerCase()}
             {...props}
+            id={id}
           />
           <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
         </FormControl>
