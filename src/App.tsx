@@ -11,6 +11,7 @@ import UserData from "./pages/UserData"
 import ReservationData from "./pages/Reservation"
 import Confirm from "./pages/Confirm"
 import { NAVABAR_LIST } from "./ui/formIds"
+import Login from "./pages/Login"
 
 const urqlClient = createClient({
   url: process.env.REACT_APP_API || "http://localhost:4000/graphql",
@@ -36,6 +37,9 @@ const App = () => {
             </Route>
             <Route exact path="/confirm/:userId">
               <Confirm />
+            </Route>
+            <Route exact path="/authentication">
+              <Login />
             </Route>
             <Route path="/">
               <Landing />
@@ -63,7 +67,12 @@ const NavBar = () => {
           </Link>
         </Box>
         <Flex flexDir="column" align="initial" flexGrow={1} ml={3}>
-          <Heading as="h2" size="md" style={{ color: "#dc6d6d" }} id={NAVABAR_LIST.headerTitle}>
+          <Heading
+            as="h2"
+            size="md"
+            style={{ color: "#dc6d6d" }}
+            id={NAVABAR_LIST.headerTitle}
+          >
             CENTRO DE FE Y ESPERANZA DE BELLO
           </Heading>
           <Heading as="h6" size="sm" id={NAVABAR_LIST.subTitle}>
