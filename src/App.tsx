@@ -63,7 +63,12 @@ const NavBar = () => {
           </Link>
         </Box>
         <Flex flexDir="column" align="initial" flexGrow={1} ml={3}>
-          <Heading as="h2" size="md" style={{ color: "#dc6d6d" }} id={NAVABAR_LIST.headerTitle}>
+          <Heading
+            as="h2"
+            size="md"
+            style={{ color: "#dc6d6d" }}
+            id={NAVABAR_LIST.headerTitle}
+          >
             CENTRO DE FE Y ESPERANZA DE BELLO
           </Heading>
           <Heading as="h6" size="sm" id={NAVABAR_LIST.subTitle}>

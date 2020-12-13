@@ -17,7 +17,6 @@ import { useCancelReservationMutation } from "../generated/graphql"
 import MSGS from "../locale/es"
 import Loading from "../components/Loading"
 import { formatDate } from "../utils/formatDate"
-import moment from "moment"
 import { RESERVATIONS_LIST } from "../ui/formIds"
 import CancelReservation from "../components/CancelReservation"
 
