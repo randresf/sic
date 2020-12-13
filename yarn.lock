@@ -3121,12 +3121,20 @@
     "@typescript-eslint/types" "4.8.0"
     eslint-visitor-keys "^2.0.0"
 
-"@urql/core@^1.15.1":
-  version "1.15.1"
-  resolved "https://registry.npmjs.org/@urql/core/-/core-1.15.1.tgz"
-  integrity sha512-a05ablx/aKNCUc9dEbx0GvE28UC0sJ1FmfsSfmJNqecYlYeb4XvSQW4FLVy0e/MjQeB9op/weiVIEw+za2ssGw==
+"@urql/core@>=1.16.1", "@urql/core@^1.15.1":
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/@urql/core/-/core-1.16.1.tgz#a41487dd4436cbdc92fce714c6c1fc04315761d3"
+  integrity sha512-lcEMCS/rB+ug7jKSRDVZIsqNhZxRooTNa1kHfvSjJT2k4SXDyPmjNSfXBUJF2pDJmvv9EIKl9Tk0AF1CvG3Q/g==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.0"
+    wonka "^4.0.14"
+
+"@urql/exchange-graphcache@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@urql/exchange-graphcache/-/exchange-graphcache-3.3.3.tgz#bfd94899f52c8046d1b2e52caf4a3ccee623bb87"
+  integrity sha512-xkKvSN18bLsl6ldf64A7r2ibdoUwBlNJxog3cCyffktAgG3E1yuKbKs/qZELPsIQIEFPvTpC/gqCpBbJ7+0YRA==
+  dependencies:
+    "@urql/core" ">=1.16.1"
     wonka "^4.0.14"
 
 "@webassemblyjs/ast@1.9.0":
@@ -4734,12 +4742,12 @@ color-convert@^2.0.1:
   dependencies:
     color-name "~1.1.4"
 
-color-name@1.1.3, color-name@^1.0.0:
+color-name@1.1.3:
   version "1.1.3"
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.3.tgz"
   integrity sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=
 
-color-name@~1.1.4:
+color-name@^1.0.0, color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
@@ -12212,12 +12220,12 @@ rxjs@^6.3.3, rxjs@^6.6.0:
   dependencies:
     tslib "^1.9.0"
 
-safe-buffer@5.1.2, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
+safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
-safe-buffer@^5.2.0, safe-buffer@~5.2.0:
+safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@^5.2.0, safe-buffer@~5.2.0:
   version "5.2.1"
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==

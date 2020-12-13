@@ -10,6 +10,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 export type Query = {
@@ -20,6 +22,7 @@ export type Query = {
   questions: Array<Question>;
   searchReservation: ReservationResponse;
   userById: UserResponse;
+  heartBeat?: Maybe<Admin>;
 };
 
 
@@ -47,11 +50,12 @@ export type Meeting = {
   id: Scalars['String'];
   title: Scalars['String'];
   spots: Scalars['Float'];
-  meetingDate: Scalars['String'];
+  meetingDate: Scalars['DateTime'];
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   isActive: Scalars['Boolean'];
 };
+
 
 export type MeetingRes = {
   __typename?: 'MeetingRes';
@@ -112,9 +116,23 @@ export type UserResponse = {
   userId: Scalars['String'];
 };
 
+export type Admin = {
+  __typename?: 'Admin';
+  id: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  phone: Scalars['Float'];
+  email: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  isActive: Scalars['Boolean'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  createMeeting: Meeting;
+  saveMeeting: MeetingRes;
   registrerQuestion: QuestionResponse;
   addReservation: ReservationResponse;
   cancelReservation: Scalars['Boolean'];
@@ -122,10 +140,16 @@ export type Mutation = {
   createUser: UserResponse;
   saveUser: UserResponse;
   updateContactUser: UserResponse;
+  login: LoginResponse;
+  logout: Scalars['Boolean'];
+  register: LoginResponse;
+  addPlace: PlaceResponse;
+  updatePlace: PlaceResponse;
 };
 
 
-export type MutationCreateMeetingArgs = {
+export type MutationSaveMeetingArgs = {
+  meetingId?: Maybe<Scalars['String']>;
   data: MeetingInput;
 };
 
@@ -168,10 +192,34 @@ export type MutationUpdateContactUserArgs = {
   userId: Scalars['String'];
 };
 
+
+export type MutationLoginArgs = {
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
+
+export type MutationRegisterArgs = {
+  options: AdminInput;
+};
+
+
+export type MutationAddPlaceArgs = {
+  data: PlaceInput;
+  idOrg: Scalars['String'];
+};
+
+
+export type MutationUpdatePlaceArgs = {
+  data: PlaceInput;
+  idPlace: Scalars['String'];
+};
+
 export type MeetingInput = {
   title: Scalars['String'];
   spots: Scalars['Float'];
   meetingDate: Scalars['String'];
+  place: Scalars['String'];
 };
 
 export type QuestionResponse = {
@@ -206,6 +254,44 @@ export type UserContactType = {
   emergenceContact: Scalars['String'];
 };
 
+export type LoginResponse = {
+  __typename?: 'LoginResponse';
+  errors?: Maybe<Array<ErrorField>>;
+  admin?: Maybe<Admin>;
+};
+
+export type AdminInput = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  phone: Scalars['Float'];
+  email: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
+  organizationId: Scalars['String'];
+};
+
+export type PlaceResponse = {
+  __typename?: 'PlaceResponse';
+  errors?: Maybe<Array<ErrorField>>;
+  place?: Maybe<Place>;
+};
+
+export type Place = {
+  __typename?: 'Place';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  address: Scalars['String'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  isActive: Scalars['Boolean'];
+};
+
+export type PlaceInput = {
+  name: Scalars['String'];
+  address: Scalars['String'];
+  isActive?: Maybe<Scalars['Boolean']>;
+};
+
 export type MeetingDataFragment = (
   { __typename?: 'Meeting' }
   & Pick<Meeting, 'id' | 'title' | 'meetingDate' | 'spots'>
@@ -222,6 +308,25 @@ export type UserDataFragment = (
       & Pick<Meeting, 'title' | 'meetingDate'>
     ) }
   )> }
+);
+
+export type AddAdminMutationVariables = Exact<{
+  data: AdminInput;
+}>;
+
+
+export type AddAdminMutation = (
+  { __typename?: 'Mutation' }
+  & { register: (
+    { __typename?: 'LoginResponse' }
+    & { admin?: Maybe<(
+      { __typename?: 'Admin' }
+      & Pick<Admin, 'id'>
+    )>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'message'>
+    )>> }
+  ) }
 );
 
 export type CancelReservationMutationVariables = Exact<{
@@ -272,6 +377,34 @@ export type GetUserMutation = (
       & Pick<ErrorField, 'message'>
     )>> }
   ) }
+);
+
+export type LoginMutationVariables = Exact<{
+  usr: Scalars['String'];
+  pwd: Scalars['String'];
+}>;
+
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & { login: (
+    { __typename?: 'LoginResponse' }
+    & { admin?: Maybe<(
+      { __typename?: 'Admin' }
+      & Pick<Admin, 'firstName' | 'lastName' | 'email'>
+    )>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'message'>
+    )>> }
+  ) }
+);
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'logout'>
 );
 
 export type SaveQuestionMutationVariables = Exact<{
@@ -339,6 +472,17 @@ export type GetUserByIdQuery = (
       & Pick<ErrorField, 'message'>
     )>> }
   ) }
+);
+
+export type HeartbeatQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HeartbeatQuery = (
+  { __typename?: 'Query' }
+  & { heartBeat?: Maybe<(
+    { __typename?: 'Admin' }
+    & Pick<Admin, 'firstName' | 'lastName' | 'email'>
+  )> }
 );
 
 export type GetMeetingQueryVariables = Exact<{
@@ -438,6 +582,22 @@ export const UserDataFragmentDoc = gql`
   }
 }
     `;
+export const AddAdminDocument = gql`
+    mutation addAdmin($data: AdminInput!) {
+  register(options: $data) {
+    admin {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}
+    `;
+
+export function useAddAdminMutation() {
+  return Urql.useMutation<AddAdminMutation, AddAdminMutationVariables>(AddAdminDocument);
+};
 export const CancelReservationDocument = gql`
     mutation cancelReservation($reservationId: String!, $userId: String!) {
   cancelReservation(reservationId: $reservationId, userId: $userId)
@@ -478,6 +638,33 @@ export const GetUserDocument = gql`
 
 export function useGetUserMutation() {
   return Urql.useMutation<GetUserMutation, GetUserMutationVariables>(GetUserDocument);
+};
+export const LoginDocument = gql`
+    mutation login($usr: String!, $pwd: String!) {
+  login(password: $pwd, username: $usr) {
+    admin {
+      firstName
+      lastName
+      email
+    }
+    errors {
+      message
+    }
+  }
+}
+    `;
+
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
+export const LogoutDocument = gql`
+    mutation logout {
+  logout
+}
+    `;
+
+export function useLogoutMutation() {
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
 };
 export const SaveQuestionDocument = gql`
     mutation saveQuestion($questions: [QuestionType!]!, $userId: String!) {
@@ -533,6 +720,19 @@ export const GetUserByIdDocument = gql`
 
 export function useGetUserByIdQuery(options: Omit<Urql.UseQueryArgs<GetUserByIdQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<GetUserByIdQuery>({ query: GetUserByIdDocument, ...options });
+};
+export const HeartbeatDocument = gql`
+    query heartbeat {
+  heartBeat {
+    firstName
+    lastName
+    email
+  }
+}
+    `;
+
+export function useHeartbeatQuery(options: Omit<Urql.UseQueryArgs<HeartbeatQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<HeartbeatQuery>({ query: HeartbeatDocument, ...options });
 };
 export const GetMeetingDocument = gql`
     query getMeeting($id: String!) {

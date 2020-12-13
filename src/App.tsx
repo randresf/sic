@@ -6,21 +6,19 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/react"
 import Wrapper from "./components/Wrapper"
 import Question from "./container/questions"
 
-import { createClient, Provider } from "urql"
 import UserData from "./pages/UserData"
 import ReservationData from "./pages/Reservation"
 import Confirm from "./pages/Confirm"
 import { NAVABAR_LIST } from "./ui/formIds"
 import Login from "./pages/Login"
-
-const urqlClient = createClient({
-  url: process.env.REACT_APP_API || "http://localhost:4000/graphql",
-  requestPolicy: "network-only",
-})
+import { useHeartbeatQuery, useLogoutMutation } from "./generated/graphql"
+import WrapperButton from "./components/PrimaryButton"
+import urqlClient from "./urqlClient"
+import { Provider } from "urql"
 
 const App = () => {
   return (
-    <Provider value={urqlClient}>
+    <Provider value={urqlClient()}>
       <Router>
         <NavBar />
         <hr style={{ marginBottom: "10px", marginTop: "10px" }} />
@@ -38,7 +36,7 @@ const App = () => {
             <Route exact path="/confirm/:userId">
               <Confirm />
             </Route>
-            <Route exact path="/authentication">
+            <Route exact path="/login">
               <Login />
             </Route>
             <Route path="/">
@@ -52,6 +50,8 @@ const App = () => {
 }
 
 const NavBar = () => {
+  const [{ data }] = useHeartbeatQuery()
+  const [{ fetching }, logout] = useLogoutMutation()
   return (
     <Box style={{ position: "sticky" }}>
       <Flex alignItems="center" p={2} flexWrap="wrap">
@@ -79,6 +79,28 @@ const NavBar = () => {
             REGISTRO DE ASISTENCIA A LAS REUNIONES
           </Heading>
         </Flex>
+
+        {data && data.heartBeat && (
+          <Flex
+            flexDir="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            flexGrow={3}
+            ml={3}
+          >
+            <Box left={0}>{data.heartBeat?.firstName}</Box>
+            <WrapperButton
+              onClick={async () => {
+                await logout()
+                //window.location.reload()
+              }}
+              variant="link"
+              isLoading={fetching}
+            >
+              logout
+            </WrapperButton>
+          </Flex>
+        )}
       </Flex>
     </Box>
   )

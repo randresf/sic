@@ -14,6 +14,7 @@
     "@types/jest": "^26.0.15",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
+    "@urql/exchange-graphcache": "^3.3.3",
     "env-cmd": "^10.1.0",
     "formik": "^2.2.5",
     "framer-motion": "^2.9.4",

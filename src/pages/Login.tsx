@@ -1,12 +1,20 @@
-import { Box, Flex, Heading } from "@chakra-ui/react"
+import { Flex, Heading, useToast } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import React from "react"
 import Wrapper from "../components/Wrapper"
 import FormikInput from "../components/FormikInput"
 import MSGS from "../locale/es"
 import PrimaryButton from "../components/PrimaryButton"
+import { useLoginMutation } from "../generated/graphql"
+import { useHistory } from "react-router-dom"
 
 const Login = () => {
+  const [, login] = useLoginMutation()
+  const history = useHistory()
+  const toast = useToast({
+    duration: 3000,
+    isClosable: true,
+  })
   const validateInputs = (values: any) => {
     const { user, pwd } = values
     const errors: any = {}
@@ -24,10 +32,7 @@ const Login = () => {
   return (
     <Wrapper variant="small">
       <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
-        <Heading mb={5}>Aforo</Heading>
-        <Box mb={5}>
-          <img src="/logo192.png" alt="logo" width={90} />
-        </Box>
+        <Heading mb={5}>Aforo Admin</Heading>
         <Formik
           initialValues={{
             user: "",
@@ -37,7 +42,14 @@ const Login = () => {
             const errors = validateInputs(values)
             return errors
           }}
-          onSubmit={async (values: any) => {}}
+          onSubmit={async ({pwd, user}: any) => {
+            const {data, error} = await login({pwd, usr:user})
+            if(error){
+              return toast({description:error.message, status:'error'})
+            }
+            toast({description:`bienvenido ${data?.login.admin?.firstName}`, status:'success'})
+            history.push('/')
+          }}
         >
           {({ isSubmitting }) => (
             <Form style={{ width: "90%" }}>

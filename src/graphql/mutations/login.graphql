@@ -1,0 +1,12 @@
+mutation login($usr: String!, $pwd: String!) {
+  login(password: $pwd, username: $usr) {
+    admin {
+      firstName
+      lastName
+      email
+    }
+    errors {
+      message
+    }
+  }
+}
