@@ -40,3 +40,5 @@ export const MENSAJE_DE_CONFIRMACION = `Lleva esta confirmación impresa o en tu
   Recuerde llegar con 30 minutos de anticipación.
   Esta reserva será válida hasta 20 minutos después de haber iniciado la reunión a la cual se inscribió. Pasado este tiempo ya no se podrá ingresar,
   puesto que la duración total del evento es de tan solo una hora.`
+
+export const DATE_FORMAT = `dddd Do MMMM, h:mm a`

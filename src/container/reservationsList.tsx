@@ -19,6 +19,7 @@ import Loading from "../components/Loading"
 import { formatDate } from "../utils/formatDate"
 import moment from "moment"
 import { RESERVATIONS_LIST } from "../ui/formIds"
+import CancelReservation from "../components/CancelReservation"
 
 type ReservationListProps = {
   reservations: any
@@ -74,7 +75,11 @@ const ReservationsList = ({
   if (saving) return <Loading loading={saving} />
   if (usrReserv.length === 0) return null
   return (
-    <Flex flexDir="column" flexWrap="wrap" id={RESERVATIONS_LIST.reservationSection}>
+    <Flex
+      flexDir="column"
+      flexWrap="wrap"
+      id={RESERVATIONS_LIST.reservationSection}
+    >
       {booked && (
         <Box>
           <Text fontStyle="italic" p={2} id={RESERVATIONS_LIST.note}>
@@ -87,11 +92,19 @@ const ReservationsList = ({
       </Heading>
       <Wrap className={RESERVATIONS_LIST.reservationItem}>
         {usrReserv?.map((r: any) => (
-          <WrapItem id={r.id} className={RESERVATIONS_LIST.reservationItem}>
+          <WrapItem
+            key={r.id}
+            id={r.id}
+            className={RESERVATIONS_LIST.reservationItem}
+          >
             <Center w="80%" mr={4}>
               <Link to={`/reservation/${r.id}`} id={RESERVATIONS_LIST.link}>
-                <Text id={RESERVATIONS_LIST.meetingTitle}>{r.meeting.title}</Text>
-                <Text size="sm" id={RESERVATIONS_LIST.meetingDate}>{formatDate(r.meeting.meetingDate)}</Text>
+                <Text id={RESERVATIONS_LIST.meetingTitle}>
+                  {r.meeting.title}
+                </Text>
+                <Text size="sm" id={RESERVATIONS_LIST.meetingDate}>
+                  {formatDate(r.meeting.meetingDate)}
+                </Text>
               </Link>
             </Center>
             <Center>
@@ -104,17 +117,10 @@ const ReservationsList = ({
                 id={RESERVATIONS_LIST.btnOpenReservation}
                 mr={3}
               />
-              {formatDate(r.meeting.meetingDate) <
-                moment().format(`dddd Do MMMM, h:mm a`) && (
-                <IconButton
-                  onClick={() => {
-                    onCancel(r.id)
-                  }}
-                  aria-label="cancelar"
-                  id={RESERVATIONS_LIST.btnCancelReservation}
-                  icon={<DeleteIcon />}
-                />
-              )}
+              <CancelReservation
+                onClick={() => onCancel(r.id)}
+                meetingDate={r.meeting.meetingDate}
+              />
             </Center>
           </WrapItem>
         ))}
