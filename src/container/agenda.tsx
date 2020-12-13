@@ -74,7 +74,7 @@ const Agenda = () => {
             initialValues={{
               document: "",
             }}
-            validate={(values) => {}}
+            validate={values => {}}
             onSubmit={async ({ ...values }) => {}}
           >
             {({ isSubmitting, setValues, values }) => (

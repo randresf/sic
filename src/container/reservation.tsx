@@ -25,6 +25,7 @@ import ModalWrapper from "../components/ModalWrapper"
 import { formatDate } from "../utils/formatDate"
 import moment from "moment"
 import { RESERVATION_VIEW } from "../ui/formIds"
+import CancelReservation from "../components/CancelReservation"
 
 const ReservationView = ({ reservationId }: any) => {
   const [saving, setLoading] = useState(false)
@@ -189,15 +190,12 @@ const ReservationView = ({ reservationId }: any) => {
             </Text>
           </Box>
           <Box mt={3}>
-            <Stack direction="row" spacing={3}>
-              {moment(reser.meeting.meetingDate).utc() >= moment().utc() && (
-                <WrapperButton
-                  id={RESERVATION_VIEW.btnOpenModalCancelReserve}
-                  onClick={() => setOpen(true)}
-                >
-                  cancelar
-                </WrapperButton>
-              )}
+            <Stack direction="row" align="center" spacing={3}>
+              <CancelReservation
+                onClick={() => setOpen(true)}
+                meetingDate={reser.meeting.meetingDate}
+                labeled
+              />
               <PDFDownloadLink
                 style={{ marginRight: "20px" }}
                 document={

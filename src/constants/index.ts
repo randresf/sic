@@ -4,21 +4,15 @@ export const QUESTIONS = [
   {
     id: 1,
     question:
-      "¿Ha presentado alguna de estas enfermedades: Hipertensión arterial, diabetes, enfermedades cardiovasculares o cerebrovasculares, cáncer, enfermedades pulmonares, asma, síntomas de gripa, tos o malestar general?",
-  },
-
-  {
-    id: 2,
-    question:
       "¿Ha presentado alguno de los siguientes síntomas relacionados con el COVID-19 durante los últimos 15 días: Dolor de cabeza, garganta, dolor muscular, dificultad respiratoria, tos seca?",
   },
   {
-    id: 3,
+    id: 2,
     question:
       "¿Ha tenido contacto con personas que hayan regresado del exterior en los últimos 20 dias y/o familiares o amigos que hayan sido diagnosticados con COVID-19?",
   },
   {
-    id: 4,
+    id: 3,
     question: "¿Presenta fiebre o una temperatura superior a 37,5°c?",
   },
 ]
@@ -40,3 +34,5 @@ export const MENSAJE_DE_CONFIRMACION = `Lleva esta confirmación impresa o en tu
   Recuerde llegar con 30 minutos de anticipación.
   Esta reserva será válida hasta 20 minutos después de haber iniciado la reunión a la cual se inscribió. Pasado este tiempo ya no se podrá ingresar,
   puesto que la duración total del evento es de tan solo una hora.`
+
+export const DATE_FORMAT = `dddd Do MMMM, h:mm a`

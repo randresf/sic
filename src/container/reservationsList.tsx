@@ -17,8 +17,8 @@ import { useCancelReservationMutation } from "../generated/graphql"
 import MSGS from "../locale/es"
 import Loading from "../components/Loading"
 import { formatDate } from "../utils/formatDate"
-import moment from "moment"
 import { RESERVATIONS_LIST } from "../ui/formIds"
+import CancelReservation from "../components/CancelReservation"
 
 type ReservationListProps = {
   reservations: any
@@ -91,7 +91,11 @@ const ReservationsList = ({
       </Heading>
       <Wrap className={RESERVATIONS_LIST.reservationItem}>
         {usrReserv?.map((r: any) => (
-          <WrapItem id={r.id} className={RESERVATIONS_LIST.reservationItem}>
+          <WrapItem
+            key={r.id}
+            id={r.id}
+            className={RESERVATIONS_LIST.reservationItem}
+          >
             <Center w="80%" mr={4}>
               <Link to={`/reservation/${r.id}`} id={RESERVATIONS_LIST.link}>
                 <Text id={RESERVATIONS_LIST.meetingTitle}>
@@ -112,16 +116,10 @@ const ReservationsList = ({
                 id={RESERVATIONS_LIST.btnOpenReservation}
                 mr={3}
               />
-              {moment(r.meeting.meetingDate).utc() >= moment().utc() && (
-                <IconButton
-                  onClick={() => {
-                    onCancel(r.id)
-                  }}
-                  aria-label="cancelar"
-                  id={RESERVATIONS_LIST.btnCancelReservation}
-                  icon={<DeleteIcon />}
-                />
-              )}
+              <CancelReservation
+                onClick={() => onCancel(r.id)}
+                meetingDate={r.meeting.meetingDate}
+              />
             </Center>
           </WrapItem>
         ))}

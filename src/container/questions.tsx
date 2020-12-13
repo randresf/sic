@@ -35,7 +35,7 @@ const Question = () => {
     const { emergencyPhone, emergencyContact, ...questions } = values
 
     const arrValue = Object.values(questions)
-    const q = arrValue.find((value) => value === "1")
+    const q = arrValue.find(value => value === "1")
     if (QUESTIONS.length !== arrValue.length - 2) {
       return setErrorInco(true)
     } else {
@@ -50,7 +50,7 @@ const Question = () => {
   const validateInputs = (values: any) => {
     const { contactNumber, emergenceContact } = values
     const errors: any = {}
-    const regex = /^[A-Z]+$/i
+    const regex = /^[A-Z _]+$/i
 
     if (!contactNumber) {
       errors.emergencyPhone = MSGS.REQUIRED
@@ -91,7 +91,7 @@ const Question = () => {
             emergenceContact: "",
             contactNumber: "",
           }}
-          validate={(values) => {
+          validate={values => {
             const errors = validateInputs(values)
             validateQuestions(values)
             //
@@ -127,7 +127,7 @@ const Question = () => {
               })
             }
 
-            const params = Object.keys(questions).map((key) => ({
+            const params = Object.keys(questions).map(key => ({
               questionId: key,
               answer: values[key],
             }))

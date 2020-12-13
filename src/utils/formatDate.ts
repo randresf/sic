@@ -1,4 +1,5 @@
 import moment from "moment"
+import { DATE_FORMAT } from "../constants"
 
 moment.locale("es", {
   months: "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_de Diciembre".split(
@@ -13,7 +14,7 @@ moment.locale("es", {
 })
 
 export const formatDate = (strDate: string) =>
-  moment(strDate).format(`dddd Do MMMM, h:mm a`)
+  moment(strDate).format(DATE_FORMAT)
 
 export const formatAgeDate = (strDate: string) =>
   moment(strDate).format("YYYY-MM-DD")
