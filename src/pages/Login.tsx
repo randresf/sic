@@ -3,10 +3,10 @@ import { Form, Formik } from "formik"
 import React from "react"
 import Wrapper from "../components/Wrapper"
 import FormikInput from "../components/FormikInput"
-import MSGS from "../locale/es"
 import PrimaryButton from "../components/PrimaryButton"
 import { useLoginMutation } from "../generated/graphql"
 import { useHistory } from "react-router-dom"
+import { GetDisplayText } from "../utils/displayText"
 
 const Login = () => {
   const [, login] = useLoginMutation()
@@ -20,10 +20,10 @@ const Login = () => {
     const errors: any = {}
 
     if (!user) {
-      errors.user = MSGS.REQUIRED
+      errors.user = GetDisplayText("form.required", "requerido")
     }
     if (!pwd) {
-      errors.pwd = MSGS.REQUIRED
+      errors.pwd = GetDisplayText("form.required", "requerido")
     }
 
     return errors
@@ -42,20 +42,31 @@ const Login = () => {
             const errors = validateInputs(values)
             return errors
           }}
-          onSubmit={async ({pwd, user}: any) => {
-            const {data, error} = await login({pwd, usr:user})
-            if(error){
-              return toast({description:error.message, status:'error'})
+          onSubmit={async ({ pwd, user }: any) => {
+            const { data, error } = await login({ pwd, usr: user })
+            if (data?.login.errors) {
+              return toast({
+                description: data?.login.errors[0].message,
+                status: "error",
+              })
             }
-            toast({description:`bienvenido ${data?.login.admin?.firstName}`, status:'success'})
-            history.push('/')
+            toast({
+              description: `bienvenido ${data?.login.admin?.firstName}`,
+              status: "success",
+            })
+            history.push("/")
           }}
         >
           {({ isSubmitting }) => (
             <Form style={{ width: "90%" }}>
               <Flex mb={5} justifyContent="space-around" flexDir="column">
                 <FormikInput label="Usuario" name="user" required />
-                <FormikInput label="Password" name="pwd" required />
+                <FormikInput
+                  label="Password"
+                  type="password"
+                  name="pwd"
+                  required
+                />
               </Flex>
 
               <PrimaryButton

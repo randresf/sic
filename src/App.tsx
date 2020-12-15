@@ -15,6 +15,8 @@ import { useHeartbeatQuery, useLogoutMutation } from "./generated/graphql"
 import WrapperButton from "./components/PrimaryButton"
 import urqlClient from "./urqlClient"
 import { Provider } from "urql"
+import LangDropDown from "./components/LangDropDown"
+import ShouldRender from "./components/ShouldRender"
 
 const App = () => {
   return (
@@ -80,7 +82,7 @@ const NavBar = () => {
           </Heading>
         </Flex>
 
-        {data && data.heartBeat && (
+        <ShouldRender if={data && data.heartBeat}>
           <Flex
             flexDir="row"
             justifyContent="flex-end"
@@ -88,7 +90,7 @@ const NavBar = () => {
             flexGrow={3}
             ml={3}
           >
-            <Box left={0}>{data.heartBeat?.firstName}</Box>
+            <Box left={0}>{data?.heartBeat?.firstName}</Box>
             <WrapperButton
               onClick={async () => {
                 await logout()
@@ -100,7 +102,8 @@ const NavBar = () => {
               logout
             </WrapperButton>
           </Flex>
-        )}
+        </ShouldRender>
+        <LangDropDown />
       </Flex>
     </Box>
   )

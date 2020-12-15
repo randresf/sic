@@ -4,6 +4,7 @@ import moment from "moment"
 import React from "react"
 import { RESERVATIONS_LIST } from "../ui/formIds"
 import WrapperButton from "./PrimaryButton"
+import ShouldRender from "./ShouldRender"
 
 type CancelProps = {
   onClick: (a: any) => void
@@ -21,11 +22,15 @@ const CancelReservation = ({
     onClick,
     id: RESERVATIONS_LIST.btnCancelReservation,
   }
-  if (!canDelete) return null
-  return labeled ? (
-    <WrapperButton {...props}>cancelar</WrapperButton>
-  ) : (
-    <IconButton {...props} aria-label="cancelar" icon={<DeleteIcon />} />
+
+  return (
+    <ShouldRender if={canDelete}>
+      {labeled ? (
+        <WrapperButton {...props}>cancelar</WrapperButton>
+      ) : (
+        <IconButton {...props} aria-label="cancelar" icon={<DeleteIcon />} />
+      )}
+    </ShouldRender>
   )
 }
 

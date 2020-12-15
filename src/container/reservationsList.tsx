@@ -1,4 +1,4 @@
-import { DeleteIcon, SearchIcon } from "@chakra-ui/icons"
+import { SearchIcon } from "@chakra-ui/icons"
 import {
   Box,
   Center,
@@ -14,11 +14,11 @@ import React, { useEffect, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
 // import Loading from "../components/Loading"
 import { useCancelReservationMutation } from "../generated/graphql"
-import MSGS from "../locale/es"
 import Loading from "../components/Loading"
 import { formatDate } from "../utils/formatDate"
 import { RESERVATIONS_LIST } from "../ui/formIds"
 import CancelReservation from "../components/CancelReservation"
+import DisplayText from "../components/DisplayMessage"
 
 type ReservationListProps = {
   reservations: any
@@ -36,12 +36,10 @@ const ReservationsList = ({
   const [, cancelReserve] = useCancelReservationMutation()
   const [saving, setLoading] = useState(false)
   const [booked, setBooked] = useState(false)
-  const [usrReserv, setReservations] = useState([])
   const toast = useToast()
   const history = useHistory()
 
   useEffect(() => {
-    setReservations(reservations)
     if (reservations.find(({ meetingId: id }: any): any => id === meetingId))
       setBooked(true)
   }, [reservations, meetingId])
@@ -66,13 +64,11 @@ const ReservationsList = ({
       duration: 3000,
       status: "success",
     })
-    const newReserv = usrReserv.filter(({ id }: any) => id !== reservationId)
-    cb()
-    return setReservations(newReserv)
+    return cb()
   }
 
   if (saving) return <Loading loading={saving} />
-  if (usrReserv.length === 0) return null
+  if (reservations.length === 0) return null
   return (
     <Flex
       flexDir="column"
@@ -87,10 +83,10 @@ const ReservationsList = ({
         </Box>
       )}
       <Heading as="h3" size="md" mt={3} id={RESERVATIONS_LIST.title}>
-        {MSGS.RESERVATIONS_HEADING}
+        <DisplayText id="app.reservations.title" defaultMessage="reservas" />
       </Heading>
       <Wrap className={RESERVATIONS_LIST.reservationItem}>
-        {usrReserv?.map((r: any) => (
+        {reservations?.map((r: any) => (
           <WrapItem
             key={r.id}
             id={r.id}

@@ -12,6 +12,7 @@ import ReservationsList from "./reservationsList"
 import Loading from "../components/Loading"
 import { blurText } from "../utils/truncate"
 import { CITIZEN_FORM } from "../ui/formIds"
+import ShouldRender from "../components/ShouldRender"
 
 const PersonalDataForm = () => {
   const [age, setAge] = useState("")
@@ -163,7 +164,7 @@ const PersonalDataForm = () => {
                   />
                 </Flex>
                 <Box mt={3}>
-                  {reservations && !booked && (
+                  <ShouldRender if={reservations && !booked}>
                     <PrimaryButton
                       type="submit"
                       //disabled={error}
@@ -172,8 +173,7 @@ const PersonalDataForm = () => {
                     >
                       continuar
                     </PrimaryButton>
-                  )}
-
+                  </ShouldRender>
                   <ReservationsList
                     reservations={reservations}
                     userId={userId}

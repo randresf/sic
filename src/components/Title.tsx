@@ -1,6 +1,7 @@
 import React from "react"
-import { Box, Flex, Heading } from "@chakra-ui/react"
+import { Flex, Heading } from "@chakra-ui/react"
 import { MEETINGS_LIST } from "../ui/formIds"
+import DisplayText from "./DisplayMessage"
 
 export const Title = () => (
   <Flex
@@ -10,10 +11,8 @@ export const Title = () => (
     mt={2}
     mb={2}
   >
-    <Box>
-      <Heading as="h3" size="md" id={MEETINGS_LIST.topTitle}>
-        Revisa muy bien la fecha y hora de la reunión que vas a seleccionar
-      </Heading>
-    </Box>
+    <Heading as="h3" size="md" id={MEETINGS_LIST.topTitle}>
+      <DisplayText id="app.title" defaultMessage="campo requerido" />
+    </Heading>
   </Flex>
 )

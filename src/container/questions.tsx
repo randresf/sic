@@ -12,9 +12,9 @@ import { useParams, useHistory, Link } from "react-router-dom"
 import { useSaveQuestionMutation } from "../generated/graphql"
 import { useUpdateContactUserMutation } from "../generated/graphql"
 import FormikInput from "../components/FormikInput"
-import MSGS from "../locale/es"
 import ModalWrapper from "../components/ModalWrapper"
 import { QUESTION_VIEW } from "../ui/formIds"
+import { GetDisplayText } from "../utils/displayText"
 
 const Question = () => {
   const [error, setError] = React.useState(false)
@@ -53,20 +53,20 @@ const Question = () => {
     const regex = /^[A-Z _]+$/i
 
     if (!contactNumber) {
-      errors.emergencyPhone = MSGS.REQUIRED
+      errors.emergencyPhone = GetDisplayText("form.required", "requerido")
     }
     if (
       String(contactNumber).length !== 7 &&
       String(contactNumber).length !== 10
     ) {
-      errors.contactNumber = MSGS.INCORRECT_VALUE
+      errors.contactNumber = GetDisplayText("form.incorrect", "incorrecto")
     }
 
     if (!emergenceContact) {
-      errors.emergenceContact = MSGS.REQUIRED
+      errors.emergenceContact = GetDisplayText("form.required", "requerido")
     }
     if (!regex.test(emergenceContact)) {
-      errors.emergenceContact = MSGS.INCORRECT_VALUE
+      errors.emergenceContact = GetDisplayText("form.incorrect", "incorrecto")
     }
 
     return errors

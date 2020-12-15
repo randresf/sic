@@ -1,5 +1,5 @@
 import { PersonalDataType } from "../components/types"
-import MSGS from "../locale/es"
+import { GetDisplayText } from "./displayText"
 
 const isPersonalDataValid = ({
   document,
@@ -12,50 +12,62 @@ const isPersonalDataValid = ({
   const errors: any = {}
   //required field
   if (!document) {
-    errors.document = MSGS.REQUIRED
+    errors.document = GetDisplayText("form.required", "requerido")
   }
   if (String(document).length < 7) {
-    errors.document = MSGS.INCORRECT_VALUE
+    errors.document = GetDisplayText(
+      "field.incorrect_value",
+      "formato incorrecto"
+    )
   }
   if (!firstName) {
-    errors.firstName = MSGS.REQUIRED
+    errors.firstName = GetDisplayText("form.required", "requerido")
   }
   if (!lastName) {
-    errors.lastName = MSGS.REQUIRED
+    errors.lastName = GetDisplayText("form.required", "requerido")
   }
   if (!phone) {
-    errors.phone = MSGS.REQUIRED
+    errors.phone = GetDisplayText("form.required", "requerido")
   }
   // if (!email) {
-  //   errors.email = MSGS.REQUIRED
+  //   errors.email = GetDisplayText('form.required', 'requerido')
   // }
   if (!birthDate) {
-    errors.birthDate = MSGS.REQUIRED
+    errors.birthDate = GetDisplayText("form.required", "requerido")
   } else if (Number(birthDate.substr(0, 4)) >= 2017) {
-    errors.birthDate = MSGS.INCORRECT_VALUE
+    errors.birthDate = GetDisplayText(
+      "field.incorrect_value",
+      "formato incorrecto"
+    )
   }
 
   //exceptions
   if (String(phone).length !== 7 && String(phone).length !== 10) {
-    errors.phone = MSGS.INCORRECT_VALUE
+    errors.phone = GetDisplayText("field.incorrect_value", "formato incorrecto")
   }
 
   const regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i
   if (!regex.test(email)) {
-    errors.email = MSGS.INCORRECT_VALUE
+    errors.email = GetDisplayText("field.incorrect_value", "formato incorrecto")
   }
 
   const docRegex = /^[0-9*]+$/g
   if (document && !docRegex.test(document)) {
-    errors.document = MSGS.INCORRECT_VALUE
+    errors.document = GetDisplayText(
+      "field.incorrect_value",
+      "formato incorrecto"
+    )
   }
 
   const textRegex = /^[a-zA-Z*]+(([',. -*][a-zA-Z ])?[a-zA-Z]*)*$/g
   if (firstName && !textRegex.test(firstName)) {
-    errors.firstName = MSGS.INCORRECT_VALUE
+    errors.firstName = GetDisplayText(
+      "field.incorrect_value",
+      "formato incorrecto"
+    )
   }
   // if (lastName && !textRegex.test(lastName)) {
-  //   errors.lastName = MSGS.INCORRECT_VALUE
+  //   errors.lastName = GetDisplayText("field.incorrect_value", "formato incorrecto")
   // }
 
   return errors
