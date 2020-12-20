@@ -113,14 +113,14 @@ const PersonalDataForm = () => {
                 <FormikInput
                   label="Nombres"
                   name="firstName"
-                  required 
+                  required
                   id={CITIZEN_FORM.firstName}
                   disabled={userExists}
                 />
                 <FormikInput
                   label="Apellidos"
                   name="lastName"
-                  required 
+                  required
                   id={CITIZEN_FORM.lastName}
                   disabled={userExists}
                 />
@@ -128,10 +128,15 @@ const PersonalDataForm = () => {
                   label="Telefono"
                   name="phone"
                   type="number"
-                  required 
+                  required
                   id={CITIZEN_FORM.phone}
                 />
-                <FormikInput label="Correo" name="email" required id={CITIZEN_FORM.email} />
+                <FormikInput
+                  label="Correo"
+                  name="email"
+                  required
+                  id={CITIZEN_FORM.email}
+                />
                 <Flex justifyContent="space-around">
                   {!userExists && (
                     <FormikInput
@@ -158,7 +163,7 @@ const PersonalDataForm = () => {
                   />
                 </Flex>
                 <Box mt={3}>
-                  {reservations && reservations.length < 3 && !booked && (
+                  {reservations && !booked && (
                     <PrimaryButton
                       type="submit"
                       //disabled={error}
