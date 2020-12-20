@@ -18,8 +18,8 @@ import { formatDate } from "../utils/formatDate"
 import { MEETINGS_LIST, RESERVATIONS_LIST } from "../ui/formIds"
 import CancelReservation from "../components/CancelReservation"
 import DisplayText from "../components/formElements/DisplayMessage"
-import { GetDisplayText } from "../utils/displayText"
 import ShouldRender from "../components/ShouldRender"
+import { useIntl } from "react-intl"
 
 type ReservationListProps = {
   reservations: any
@@ -33,7 +33,7 @@ const ReservationsList = ({
   onChange,
 }: ReservationListProps) => {
   const [{ fetching }, cancelReserve] = useCancelReservationMutation()
-
+  const { formatMessage } = useIntl()
   const toast = useToast({ isClosable: true, duration: 3000 })
   const history = useHistory()
 
@@ -41,18 +41,12 @@ const ReservationsList = ({
     const res = await cancelReserve({ reservationId, userId })
     if (res.error)
       return toast({
-        title: GetDisplayText(
-          "app.notification.cancelReservationError",
-          "no se pudo cancelar la reserva"
-        ),
+        title: formatMessage({ id: "app.notification.cancelReservationError" }),
         description: res.error.message,
         status: "error",
       })
     toast({
-      title: GetDisplayText(
-        "app.notification.success",
-        "actualizado correctamente"
-      ),
+      title: formatMessage({ id: "app.notification.success" }),
       description: "",
       status: "success",
     })

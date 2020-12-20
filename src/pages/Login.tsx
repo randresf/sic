@@ -6,10 +6,12 @@ import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import { useLoginMutation } from "../generated/graphql"
 import { useHistory } from "react-router-dom"
-import { GetDisplayText } from "../utils/displayText"
+import { useIntl } from "react-intl"
 
 const Login = () => {
   const [, login] = useLoginMutation()
+  const { formatMessage } = useIntl()
+  const IS_REQUIRED = formatMessage({ id: "form.required" })
   const history = useHistory()
   const toast = useToast({
     duration: 3000,
@@ -20,10 +22,10 @@ const Login = () => {
     const errors: any = {}
 
     if (!user) {
-      errors.user = GetDisplayText("form.required", "requerido")
+      errors.user = IS_REQUIRED
     }
     if (!pwd) {
-      errors.pwd = GetDisplayText("form.required", "requerido")
+      errors.pwd = IS_REQUIRED
     }
 
     return errors
@@ -43,7 +45,7 @@ const Login = () => {
             return errors
           }}
           onSubmit={async ({ pwd, user }: any) => {
-            const { data, error } = await login({ pwd, usr: user })
+            const { data } = await login({ pwd, usr: user })
             if (data?.login.errors) {
               return toast({
                 description: data?.login.errors[0].message,

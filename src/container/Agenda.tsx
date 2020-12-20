@@ -3,7 +3,7 @@ import { Box, Button, Flex, Heading } from "@chakra-ui/react"
 import Loading from "../components/formElements/Loading"
 import { useMeetingsQuery } from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
-import RenderMeetings from "./renderMeetings"
+import RenderMeetings from "./RenderMeetings"
 import ShouldRender from "../components/ShouldRender"
 import ReservationSection from "./ReservationSection"
 import DisplayText from "../components/formElements/DisplayMessage"
@@ -22,14 +22,14 @@ const Agenda = () => {
         />
       </Heading>
       <Flex flex={1} alignItems="center" flexWrap="wrap">
-        {(error || !data || data.meetings?.length === 0) && (
+        <ShouldRender if={error || !data || data.meetings?.length === 0}>
           <Box id={MEETINGS_LIST.noMeetings}>
             <DisplayText
               id="app.meetings.empty"
               defaultMessage="no hay reuniones"
             />
           </Box>
-        )}
+        </ShouldRender>
         <ShouldRender if={data && data.meetings}>
           {data?.meetings.map(({ __typename, ...reu }) => (
             <RenderMeetings {...reu} admin={false} />

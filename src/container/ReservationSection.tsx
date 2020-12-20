@@ -1,12 +1,12 @@
 import { SearchIcon } from "@chakra-ui/icons"
 import { Box, InputGroup, Flex, IconButton } from "@chakra-ui/react"
 import React, { useState } from "react"
+import { useIntl } from "react-intl"
 import DisplayText from "../components/formElements/DisplayMessage"
 import NormalInput from "../components/formElements/NormalInput"
 import ShouldRender from "../components/ShouldRender"
 import { useGetUserMutation } from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
-import { GetDisplayText } from "../utils/displayText"
 import ReservationsList from "./ReservationsList"
 
 type ReservationSectionState = {
@@ -27,6 +27,7 @@ const initialState = {
   loading: false,
 }
 export default function ReservationSection({ showIcon = false }) {
+  const { formatMessage } = useIntl()
   const [, searchUser] = useGetUserMutation()
   const [state, setState] = useState<ReservationSectionState>(initialState)
 
@@ -47,6 +48,7 @@ export default function ReservationSection({ showIcon = false }) {
     const { data } = await searchUser({ citizenId })
     if (data?.user?.user) {
       const { id, reservations: prevRes = [] } = data.user.user
+      localStorage.setItem("userId", id)
       updateSate({
         userId: id,
         reservations: prevRes,
@@ -63,7 +65,7 @@ export default function ReservationSection({ showIcon = false }) {
         <Flex flexDir="row" align="flex-end" w="50%">
           <NormalInput
             onBlur={!showIcon ? searchReservation : undefined}
-            label={GetDisplayText("form.document", "document")}
+            label={formatMessage({ id: "form.document" })}
             name="document"
             required
             id={MEETINGS_LIST.document}
@@ -72,7 +74,7 @@ export default function ReservationSection({ showIcon = false }) {
           />
           <ShouldRender if={showIcon}>
             <IconButton
-              aria-label={GetDisplayText("form.searchReservation", "search")}
+              aria-label={formatMessage({ id: "form.searchReservation" })}
               icon={<SearchIcon />}
               onClick={searchReservation}
               isLoading={loading}

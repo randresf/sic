@@ -13,8 +13,10 @@ import Loading from "../components/formElements/Loading"
 import { blurText } from "../utils/truncate"
 import { CITIZEN_FORM } from "../ui/formIds"
 import ShouldRender from "../components/ShouldRender"
+import { useIntl } from "react-intl"
 
 const PersonalDataForm = () => {
+  const { formatMessage } = useIntl()
   const [age, setAge] = useState("")
   const [userId, setUserId] = useState("")
   const [userExists, setExist] = useState(false)
@@ -48,6 +50,7 @@ const PersonalDataForm = () => {
         reservations: prevRes,
         ...rest
       } = data.user.user
+      localStorage.setItem("userId", id)
       const formatedDate = formatAgeDate(birthDate)
       cb({
         document: blurText(document),
@@ -77,7 +80,7 @@ const PersonalDataForm = () => {
           birthDate: "",
         }}
         validate={(values) => {
-          const errors = isPersonalDataValid(values)
+          const errors = isPersonalDataValid({ ...values, formatMessage })
           if (values.birthDate) {
             const age = getAgeFromDate(values.birthDate)
             setAge(String(age))
@@ -99,7 +102,7 @@ const PersonalDataForm = () => {
           )
         }}
       >
-        {({ isSubmitting, setValues, values }) => (
+        {({ isSubmitting, setValues }) => (
           <Form style={{ width: "100%" }}>
             <Box>
               <Flex flexDir="column" w="100%">
@@ -167,6 +170,7 @@ const PersonalDataForm = () => {
                   <ShouldRender if={reservations && !booked}>
                     <PrimaryButton
                       type="submit"
+                      colorScheme="teal"
                       //disabled={error}
                       isLoading={isSubmitting}
                       id={CITIZEN_FORM.submit}

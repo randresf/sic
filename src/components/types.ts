@@ -18,6 +18,7 @@ export type PersonalDataType = {
   phone: number | string
   email: string
   birthDate: string
+  formatMessage?: any | undefined
 }
 
 export type DefaultFun = (param: any) => void

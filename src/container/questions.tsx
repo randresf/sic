@@ -14,9 +14,10 @@ import { useUpdateContactUserMutation } from "../generated/graphql"
 import FormikInput from "../components/formElements/FormikInput"
 import ModalWrapper from "../components/ModalWrapper"
 import { QUESTION_VIEW } from "../ui/formIds"
-import { GetDisplayText } from "../utils/displayText"
+import { useIntl } from "react-intl"
 
 const Question = () => {
+  const { formatMessage } = useIntl()
   const [error, setError] = React.useState(false)
   const [errorInco, setErrorInco] = React.useState(true)
   const history = useHistory()
@@ -53,20 +54,20 @@ const Question = () => {
     const regex = /^[A-Z _]+$/i
 
     if (!contactNumber) {
-      errors.emergencyPhone = GetDisplayText("form.required", "requerido")
+      errors.emergencyPhone = formatMessage({ id: "form.required" })
     }
     if (
       String(contactNumber).length !== 7 &&
       String(contactNumber).length !== 10
     ) {
-      errors.contactNumber = GetDisplayText("form.incorrect", "incorrecto")
+      errors.contactNumber = formatMessage({ id: "form.incorrect" })
     }
 
     if (!emergenceContact) {
-      errors.emergenceContact = GetDisplayText("form.required", "requerido")
+      errors.emergenceContact = formatMessage({ id: "form.required" })
     }
     if (!regex.test(emergenceContact)) {
-      errors.emergenceContact = GetDisplayText("form.incorrect", "incorrecto")
+      errors.emergenceContact = formatMessage({ id: "form.incorrect" })
     }
 
     return errors
@@ -149,7 +150,7 @@ const Question = () => {
         >
           {({ isSubmitting }) => (
             <Form style={{ width: "100%" }}>
-              <Flex mb={5} justifyContent="space-around">
+              <Flex mb={5} justifyContent="space-around" align="flex-end">
                 <FormikInput
                   id={QUESTION_VIEW.emergenceContact}
                   label="Nombre contacto de emergencia"
@@ -169,7 +170,7 @@ const Question = () => {
                 <Text id={QUESTION_VIEW.notice} mt={5} mb={3}>
                   Responde cuidadosamente las siguientes preguntas:
                 </Text>
-                <Flex flexDir="column" w="100%">
+                <Flex flexDir="column" w="100%" align="center">
                   {QUESTIONS && <YesNoRadioGroup questions={QUESTIONS} />}
                   <Box mt={3}>
                     <PrimaryButton

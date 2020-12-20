@@ -23,7 +23,6 @@ import PDF from "../components/DownloadPdf"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 import ModalWrapper from "../components/ModalWrapper"
 import { formatDate } from "../utils/formatDate"
-import moment from "moment"
 import { RESERVATION_VIEW } from "../ui/formIds"
 import CancelReservation from "../components/CancelReservation"
 
@@ -48,12 +47,11 @@ const ReservationView = ({ reservationId }: any) => {
 
   const onCancel = async () => {
     setLoading(true)
-    const res = await cancelReserve({ reservationId, userId })
+    const { data } = await cancelReserve({ reservationId, userId })
     setLoading(false)
-    if (res.error)
+    if (!data?.cancelReservation)
       return toast({
         title: "no se pudo cancelar la reserva",
-        description: res.error.message,
         isClosable: true,
         duration: 3000,
         status: "error",
