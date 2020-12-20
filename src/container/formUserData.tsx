@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import FormikInput from "../components/FormikInput"
-import PrimaryButton from "../components/PrimaryButton"
+import FormikInput from "../components/formElements/FormikInput"
+import PrimaryButton from "../components/formElements/PrimaryButton"
 import { Box, Flex, useToast } from "@chakra-ui/react"
 import { Formik, Form } from "formik"
 import isPersonalDataValid from "../utils/isPersonalDataValid"
@@ -8,8 +8,8 @@ import { getAgeFromDate } from "../utils/getAgeFromDate"
 import { formatAgeDate } from "../utils/formatDate"
 import { useSaveUserMutation, useGetUserMutation } from "../generated/graphql"
 import { useHistory, useParams } from "react-router-dom"
-import ReservationsList from "./reservationsList"
-import Loading from "../components/Loading"
+import ReservationsList from "./ReservationsList"
+import Loading from "../components/formElements/Loading"
 import { blurText } from "../utils/truncate"
 import { CITIZEN_FORM } from "../ui/formIds"
 import ShouldRender from "../components/ShouldRender"
@@ -177,12 +177,7 @@ const PersonalDataForm = () => {
                   <ReservationsList
                     reservations={reservations}
                     userId={userId}
-                    meetingId={meetingId}
-                    cb={() => {
-                      onBlurCitizenField(setValues)({
-                        target: { value: values.document },
-                      })
-                    }}
+                    onChange={onBlurCitizenField(setValues)}
                   />
                 </Box>
               </Flex>

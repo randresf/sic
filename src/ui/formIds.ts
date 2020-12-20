@@ -39,6 +39,7 @@ export const MEETINGS_LIST = {
   spots: "lbl-meeting-spots",
   linkCitizenForm: "link-citizen-form",
   btnReserve: "btn-reserve",
+  btnNewMeeting: "btn-new-meeting",
 }
 
 export const NAVABAR_LIST = {

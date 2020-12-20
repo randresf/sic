@@ -1,6 +1,6 @@
 import { Text } from "@chakra-ui/react"
 import React from "react"
-import { blurText } from "../utils/truncate"
+import { blurText } from "../../utils/truncate"
 
 type TextProps = {
   text: string

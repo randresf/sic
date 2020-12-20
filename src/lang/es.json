@@ -1,7 +1,19 @@
 {
-  "app.title": "Revisa muy bien la fecha y hora de la reunión que vas a seleccionar",
+  "app.buttons.back": "volver",
+  "app.buttons.continue": "continuar",
+  "app.buttons.searcReservation": "consultar reservas",
+  "app.errors.noUser": "usuario no existe",
+  "app.meetings.title": "Próximos eventos:",
+  "app.meetings.empty": "no hay reuniones",
+  "app.notification.cancelReservationError": "no se pudo cancelar la reserva",
+  "app.notification.success": "actualizado correctamente",
   "app.reservations.title": "Reservas",
+  "app.reservations.noResults": "no se encontraron reservas",
+  "app.reservationList.booked": "Nota: el usuario ya tiene esta reunion reservada",
+  "app.title": "Revisa muy bien la fecha y hora de la reunión que vas a seleccionar",
+  "form.document": "Documento",
   "form.required": "campo requerido",
+  "form.searchReservation": "Buscar reservas",
   "field.incorrect": "formato incorrecto",
   "field.incorrect_value": "valor incorrecto"
 }

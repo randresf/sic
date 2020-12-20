@@ -1,7 +1,7 @@
 import { Box, Center, Flex, Heading, Text, useToast } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
-import Loading from "../components/Loading"
+import Loading from "../components/formElements/Loading"
 import Wrapper from "../components/Wrapper"
 import YesNoButtonGroup from "../components/YesNoButtonGroup"
 import {

@@ -9,7 +9,7 @@ import {
   Center,
   ModalFooter,
 } from "@chakra-ui/react"
-import Loading from "../components/Loading"
+import Loading from "../components/formElements/Loading"
 import {
   useSearchReservationQuery,
   useCancelReservationMutation,
@@ -18,7 +18,7 @@ import { useLocation, useHistory } from "react-router-dom"
 import queryString from "querystring"
 import { MENSAJE_DE_CONFIRMACION } from "../constants/index"
 import { MENSAJE_DE_CANCELAR_RESERVA } from "../constants/index"
-import WrapperButton from "../components/PrimaryButton"
+import WrapperButton from "../components/formElements/PrimaryButton"
 import PDF from "../components/DownloadPdf"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 import ModalWrapper from "../components/ModalWrapper"

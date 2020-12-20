@@ -1,6 +1,5 @@
 import { SearchIcon } from "@chakra-ui/icons"
 import {
-  Box,
   Center,
   Flex,
   Heading,
@@ -10,82 +9,76 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Link, useHistory } from "react-router-dom"
 // import Loading from "../components/Loading"
 import { useCancelReservationMutation } from "../generated/graphql"
-import Loading from "../components/Loading"
+import Loading from "../components/formElements/Loading"
 import { formatDate } from "../utils/formatDate"
-import { RESERVATIONS_LIST } from "../ui/formIds"
+import { MEETINGS_LIST, RESERVATIONS_LIST } from "../ui/formIds"
 import CancelReservation from "../components/CancelReservation"
-import DisplayText from "../components/DisplayMessage"
+import DisplayText from "../components/formElements/DisplayMessage"
+import { GetDisplayText } from "../utils/displayText"
+import ShouldRender from "../components/ShouldRender"
 
 type ReservationListProps = {
   reservations: any
   userId: string
-  meetingId: string
-  cb: () => void
+  onChange?: any
 }
 
 const ReservationsList = ({
-  reservations,
+  reservations = [],
   userId,
-  meetingId,
-  cb,
+  onChange,
 }: ReservationListProps) => {
-  const [, cancelReserve] = useCancelReservationMutation()
-  const [saving, setLoading] = useState(false)
-  const [booked, setBooked] = useState(false)
-  const toast = useToast()
+  const [{ fetching }, cancelReserve] = useCancelReservationMutation()
+
+  const toast = useToast({ isClosable: true, duration: 3000 })
   const history = useHistory()
 
-  useEffect(() => {
-    if (reservations.find(({ meetingId: id }: any): any => id === meetingId))
-      setBooked(true)
-  }, [reservations, meetingId])
-
   const onCancel = async (reservationId: string) => {
-    setLoading(true)
     const res = await cancelReserve({ reservationId, userId })
-
-    setLoading(false)
     if (res.error)
       return toast({
-        title: "no se pudo cancelar la reserva",
+        title: GetDisplayText(
+          "app.notification.cancelReservationError",
+          "no se pudo cancelar la reserva"
+        ),
         description: res.error.message,
-        isClosable: true,
-        duration: 3000,
         status: "error",
       })
     toast({
-      title: "actualizado correctamente",
+      title: GetDisplayText(
+        "app.notification.success",
+        "actualizado correctamente"
+      ),
       description: "",
-      isClosable: true,
-      duration: 3000,
       status: "success",
     })
-    return cb()
+    if (typeof onChange === "function") onChange()
   }
 
-  if (saving) return <Loading loading={saving} />
-  if (reservations.length === 0) return null
+  if (fetching) return <Loading loading={fetching} />
+  if (reservations?.length === 0) return null
   return (
     <Flex
       flexDir="column"
       flexWrap="wrap"
       id={RESERVATIONS_LIST.reservationSection}
     >
-      {booked && (
-        <Box>
-          <Text fontStyle="italic" p={2} id={RESERVATIONS_LIST.note}>
-            Nota: el usuario ya tiene esta reunion reservada
-          </Text>
-        </Box>
-      )}
       <Heading as="h3" size="md" mt={3} id={RESERVATIONS_LIST.title}>
         <DisplayText id="app.reservations.title" defaultMessage="reservas" />
       </Heading>
       <Wrap className={RESERVATIONS_LIST.reservationItem}>
+        <ShouldRender if={!reservations || reservations.length === 0}>
+          <Text id={MEETINGS_LIST.noResults}>
+            <DisplayText
+              id="app.reservations.noResults"
+              defaultMessage="no reservations"
+            />
+          </Text>
+        </ShouldRender>
         {reservations?.map((r: any) => (
           <WrapItem
             key={r.id}

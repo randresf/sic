@@ -1,7 +1,7 @@
 import React from "react"
 import Wrapper from "../components/Wrapper"
 import { Box, Flex, Heading, useToast, Text } from "@chakra-ui/react"
-import PrimaryButton from "../components/PrimaryButton"
+import PrimaryButton from "../components/formElements/PrimaryButton"
 import YesNoRadioGroup from "../components/YesNoRadioGroup"
 import { Formik, Form } from "formik"
 import { QUESTIONS } from "../constants/index"
@@ -11,7 +11,7 @@ import { MENSAJE_NO_INGRESO } from "../constants/index"
 import { useParams, useHistory, Link } from "react-router-dom"
 import { useSaveQuestionMutation } from "../generated/graphql"
 import { useUpdateContactUserMutation } from "../generated/graphql"
-import FormikInput from "../components/FormikInput"
+import FormikInput from "../components/formElements/FormikInput"
 import ModalWrapper from "../components/ModalWrapper"
 import { QUESTION_VIEW } from "../ui/formIds"
 import { GetDisplayText } from "../utils/displayText"
@@ -213,7 +213,7 @@ const Question = () => {
           }
           isOpen={error}
           onClose={onClose}
-        ></ModalWrapper>
+        />
       </Flex>
     </Wrapper>
   )

@@ -1,6 +1,6 @@
 import { ButtonGroup } from "@chakra-ui/react"
 import React from "react"
-import WrapperButton from "./PrimaryButton"
+import WrapperButton from "./formElements/PrimaryButton"
 import { DefaultFun } from "./types"
 
 type GroupProps = {

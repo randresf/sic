@@ -6,7 +6,7 @@ import {
   FormLabel,
   FormErrorMessage,
 } from "@chakra-ui/react"
-import { FormikType } from "./types"
+import { FormikType } from "../types"
 
 const WrapperInput = ({
   type = "text",

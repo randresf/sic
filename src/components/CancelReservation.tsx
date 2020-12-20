@@ -3,7 +3,7 @@ import { IconButton } from "@chakra-ui/react"
 import moment from "moment"
 import React from "react"
 import { RESERVATIONS_LIST } from "../ui/formIds"
-import WrapperButton from "./PrimaryButton"
+import WrapperButton from "./formElements/PrimaryButton"
 import ShouldRender from "./ShouldRender"
 
 type CancelProps = {
