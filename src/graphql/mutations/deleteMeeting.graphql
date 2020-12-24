@@ -1,0 +1,17 @@
+mutation deleteMeet($meetingId: String!) {
+  deleteMeeting(meetingId: $meetingId) {
+    meeting {
+      id
+      title
+      spots
+      meetingDate
+      createdAt
+      updatedAt
+      isActive
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

@@ -1,5 +1,12 @@
 import React, { useState } from "react"
-import { Box, Flex, Heading } from "@chakra-ui/react"
+import {
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Text,
+  useToast,
+} from "@chakra-ui/react"
 import Loading from "../components/formElements/Loading"
 import { useMeetingsQuery } from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
@@ -10,14 +17,46 @@ import MeetingDataForm from "../container/formMeetingData"
 import RenderMeetings from "../container/RenderMeetings"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import NewMeetingCard from "../components/NewMeetingCard"
-import DisplayText from "../components/formElements/DisplayMessage"
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
+import { useDeleteMeetMutation } from "../generated/graphql"
+import { useIsAuth } from "../hooks/useIsAuth"
 
 const Settings = () => {
-  const [{ data, fetching, error }] = useMeetingsQuery()
+  useIsAuth()
+  const [{ data, fetching }] = useMeetingsQuery()
   const [newMeeting, setNewMeeting] = useState(false)
+  const [deleteMeeting, setDeleteMeeting] = useState(false)
+  const [meetingId, setMeetingId] = useState("")
+  const [, getIdMeetMutation] = useDeleteMeetMutation()
+  const toast = useToast()
 
-  const onClose = () => {
+  const onCloseFormMeeting = () => {
     setNewMeeting(false)
+  }
+
+  const onCloseDeleteMeeting = () => {
+    setDeleteMeeting(false)
+  }
+
+  const deleteThisMeeting = async (meeting: any) => {
+    const res = await getIdMeetMutation({ meetingId: meeting })
+    if (res.data?.deleteMeeting.errors) {
+      setDeleteMeeting(false)
+      return toast({
+        title: "No se puede eliminar la reunión",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      })
+    }
+    setDeleteMeeting(false)
+    window.location.reload()
+    return toast({
+      title: "reunión eliminada correctamente",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    })
   }
 
   if (fetching) return <Loading loading={fetching} />
@@ -28,37 +67,71 @@ const Settings = () => {
       </Heading>
       <SearchMeeting />
       <Flex flex={1} alignItems="center" flexWrap="wrap">
-        <ShouldRender if={error || !data || data.meetings?.length === 0}>
-          <div id={MEETINGS_LIST.noMeetings}>
-            <DisplayText
-              id="app.meetings.empty"
-              defaultMessage="no hay reuniones"
-            />
-          </div>
-        </ShouldRender>
-        {/* validar como usar en el punto map RenderMeetings */}
-        <ShouldRender if={data && data.meetings}>
-          {data?.meetings.map(({ __typename, ...reu }) => (
-            <RenderMeetings {...reu} admin={true} />
-          ))}
-        </ShouldRender>
         <NewMeetingCard
           onClick={() => {
+            setMeetingId("")
             setNewMeeting(true)
           }}
         />
+        <ShouldRender if={data && data.meetings}>
+          {data?.meetings.map(({ __typename, ...reu }) => (
+            <RenderMeetings {...reu}>
+              <IconButton
+                onClick={() => {
+                  setMeetingId(reu.id)
+                  setNewMeeting(true)
+                }}
+                mr={2}
+                aria-label="editar"
+                icon={<EditIcon />}
+              />
+              <IconButton
+                onClick={() => {
+                  setMeetingId(reu.id)
+                  setDeleteMeeting(true)
+                }}
+                aria-label="eliminar"
+                icon={<DeleteIcon />}
+              />
+            </RenderMeetings>
+          ))}
+        </ShouldRender>
       </Flex>
       <ModalWrapper
-        titulo="Nueva reunion"
+        titulo={meetingId === "" ? "Nueva reunión" : "Modificar reunión"}
         contenido={
-          <MeetingDataForm>
-            <PrimaryButton onClick={onClose} mr={3}>
+          <MeetingDataForm meeting={meetingId}>
+            <PrimaryButton onClick={onCloseFormMeeting} mr={3}>
               volver
             </PrimaryButton>
           </MeetingDataForm>
         }
         isOpen={newMeeting}
-        onClose={onClose}
+        onClose={onCloseFormMeeting}
+      />
+      <ModalWrapper
+        titulo="Eliminar reunión"
+        contenido={
+          <>
+            <Text>Seguro que desea eliminar esta reunión?</Text>
+            <Box mt={5} float="right">
+              <PrimaryButton
+                onClick={() => {
+                  deleteThisMeeting(meetingId)
+                }}
+                colorScheme="red"
+                mr={3}
+              >
+                Eliminar
+              </PrimaryButton>
+              <PrimaryButton onClick={onCloseDeleteMeeting} mr={3}>
+                volver
+              </PrimaryButton>
+            </Box>
+          </>
+        }
+        isOpen={deleteMeeting}
+        onClose={onCloseDeleteMeeting}
       />
     </Box>
   )

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Button, Flex, Heading } from "@chakra-ui/react"
+import { Box, Button, Flex, Heading, IconButton, Text } from "@chakra-ui/react"
 import Loading from "../components/formElements/Loading"
 import { useMeetingsQuery } from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
@@ -7,6 +7,8 @@ import RenderMeetings from "./RenderMeetings"
 import ShouldRender from "../components/ShouldRender"
 import ReservationSection from "./ReservationSection"
 import DisplayText from "../components/formElements/DisplayMessage"
+import { ArrowRightIcon } from "@chakra-ui/icons"
+import { Link } from "react-router-dom"
 
 const Agenda = () => {
   const [showInput, setInput] = useState(false)
@@ -32,7 +34,21 @@ const Agenda = () => {
         </ShouldRender>
         <ShouldRender if={data && data.meetings}>
           {data?.meetings.map(({ __typename, ...reu }) => (
-            <RenderMeetings {...reu} admin={false} />
+            <RenderMeetings {...reu}>
+              <Link
+                to={`/datos/${reu.id}`}
+                className={MEETINGS_LIST.linkCitizenForm}
+              >
+                <Flex alignItems="center">
+                  <Text mr={3}>Reservar</Text>
+                  <IconButton
+                    className={MEETINGS_LIST.btnReserve}
+                    aria-label="reservar"
+                    icon={<ArrowRightIcon />}
+                  />
+                </Flex>
+              </Link>
+            </RenderMeetings>
           ))}
         </ShouldRender>
       </Flex>
