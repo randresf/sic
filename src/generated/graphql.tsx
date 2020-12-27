@@ -25,6 +25,7 @@ export type Query = {
   searchReservation: ReservationResponse
   userById: UserResponse
   heartBeat?: Maybe<Admin>
+  getUserPlaces: PlaceResponse
 }
 
 export type QueryMeetingArgs = {
@@ -49,6 +50,17 @@ export type Meeting = {
   title: Scalars["String"]
   spots: Scalars["Float"]
   meetingDate: Scalars["DateTime"]
+  createdAt: Scalars["String"]
+  updatedAt: Scalars["String"]
+  isActive: Scalars["Boolean"]
+  place: Place
+}
+
+export type Place = {
+  __typename?: "Place"
+  id: Scalars["String"]
+  name: Scalars["String"]
+  address: Scalars["String"]
   createdAt: Scalars["String"]
   updatedAt: Scalars["String"]
   isActive: Scalars["Boolean"]
@@ -125,6 +137,12 @@ export type Admin = {
   createdAt: Scalars["String"]
   updatedAt: Scalars["String"]
   isActive: Scalars["Boolean"]
+}
+
+export type PlaceResponse = {
+  __typename?: "PlaceResponse"
+  errors?: Maybe<Array<ErrorField>>
+  place?: Maybe<Array<Place>>
 }
 
 export type Mutation = {
@@ -258,22 +276,6 @@ export type AdminInput = {
   username: Scalars["String"]
   password: Scalars["String"]
   organizationId: Scalars["String"]
-}
-
-export type PlaceResponse = {
-  __typename?: "PlaceResponse"
-  errors?: Maybe<Array<ErrorField>>
-  place?: Maybe<Place>
-}
-
-export type Place = {
-  __typename?: "Place"
-  id: Scalars["String"]
-  name: Scalars["String"]
-  address: Scalars["String"]
-  createdAt: Scalars["String"]
-  updatedAt: Scalars["String"]
-  isActive: Scalars["Boolean"]
 }
 
 export type PlaceInput = {
@@ -470,6 +472,26 @@ export type UpdateContactUserMutation = { __typename?: "Mutation" } & {
   >
 }
 
+export type GetPlacesQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetPlacesQuery = { __typename?: "Query" } & {
+  getUserPlaces: { __typename?: "PlaceResponse" } & {
+    place?: Maybe<
+      Array<
+        { __typename?: "Place" } & Pick<
+          Place,
+          "id" | "name" | "address" | "createdAt" | "updatedAt" | "isActive"
+        >
+      >
+    >
+    errors?: Maybe<
+      Array<
+        { __typename?: "ErrorField" } & Pick<ErrorField, "field" | "message">
+      >
+    >
+  }
+}
+
 export type GetUserByIdQueryVariables = Exact<{
   userId: Scalars["String"]
 }>
@@ -507,7 +529,11 @@ export type GetMeetingQuery = { __typename?: "Query" } & {
 export type MeetingsQueryVariables = Exact<{ [key: string]: never }>
 
 export type MeetingsQuery = { __typename?: "Query" } & {
-  meetings: Array<{ __typename?: "Meeting" } & MeetingDataFragment>
+  meetings: Array<
+    { __typename?: "Meeting" } & {
+      place: { __typename?: "Place" } & Pick<Place, "id" | "name" | "address">
+    } & MeetingDataFragment
+  >
 }
 
 export type GetMeetingsByIdQueryVariables = Exact<{
@@ -765,6 +791,30 @@ export function useUpdateContactUserMutation() {
     UpdateContactUserMutationVariables
   >(UpdateContactUserDocument)
 }
+export const GetPlacesDocument = gql`
+  query getPlaces {
+    getUserPlaces {
+      place {
+        id
+        name
+        address
+        createdAt
+        updatedAt
+        isActive
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`
+
+export function useGetPlacesQuery(
+  options: Omit<Urql.UseQueryArgs<GetPlacesQueryVariables>, "query"> = {}
+) {
+  return Urql.useQuery<GetPlacesQuery>({ query: GetPlacesDocument, ...options })
+}
 export const GetUserByIdDocument = gql`
   query getUserById($userId: String!) {
     userById(userId: $userId) {
@@ -828,6 +878,11 @@ export const MeetingsDocument = gql`
   query Meetings {
     meetings {
       ...MeetingData
+      place {
+        id
+        name
+        address
+      }
     }
   }
   ${MeetingDataFragmentDoc}

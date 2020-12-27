@@ -1,5 +1,10 @@
 query Meetings {
   meetings {
     ...MeetingData
+    place {
+      id
+      name
+      address
+    }
   }
 }

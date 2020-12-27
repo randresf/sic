@@ -3,13 +3,15 @@ import React from "react"
 import { CheckboxPropsType } from "../types"
 
 const CheckboxWrapper = ({
-  color = "green",
-  text,
+  name,
+  colorScheme,
+  children,
+  defaultIsChecked,
   ...props
 }: CheckboxPropsType) => {
   return (
-    <Checkbox colorScheme={color} {...props}>
-      {text}
+    <Checkbox colorScheme={colorScheme} name={name} {...props} defaultIsChecked>
+      {children}
     </Checkbox>
   )
 }

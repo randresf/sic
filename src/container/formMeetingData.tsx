@@ -1,20 +1,36 @@
 import { Box, Flex, Checkbox, useToast } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
-import React, { useState } from "react"
+import React from "react"
 import Loading from "../components/formElements/Loading"
 import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
-import {
-  useGetMeetingQuery,
-  useSaveMeetingMutation,
-} from "../generated/graphql"
+import Select from "../components/formElements/Select"
+import { useSaveMeetingMutation, useGetPlacesQuery } from "../generated/graphql"
 import { useIntl } from "react-intl"
+import ShouldRender from "../components/ShouldRender"
+import moment from "moment"
+import isEmpty from "../utils/isEmpty"
+import { formatAgeDate } from "../utils/formatDate"
 
 const MeetingDataForm = ({ children, meeting }: any) => {
-  const [loading] = useState(false)
   const toast = useToast()
   const [, saveMeeting] = useSaveMeetingMutation()
   const { formatMessage } = useIntl()
+  console.log(meeting)
+  const initialValues = isEmpty(meeting)
+    ? {
+        meetingId: "",
+        title: "",
+        meetingDate: "",
+        spots: 0,
+        place: "",
+      }
+    : {
+        ...meeting,
+        meetingId: meeting.id,
+        meetingDate: formatAgeDate(meeting.meetingDate),
+        place: meeting.place.id,
+      }
 
   const validateInputs = (values: any) => {
     const { title, meetingDate, spots, place } = values
@@ -39,28 +55,14 @@ const MeetingDataForm = ({ children, meeting }: any) => {
     return errors
   }
 
-  const [{ data: meetingData }] = useGetMeetingQuery({
-    variables: { id: meeting },
-  })
+  const [{ data: placeData, fetching: placeLoading }] = useGetPlacesQuery()
 
+  if (placeLoading) return <Loading loading={placeLoading} />
   return (
     <Box minW="300px">
-      <Loading loading={loading} />
       <Formik
         enableReinitialize
-        initialValues={{
-          meetingId: meeting ? meeting : "",
-          title: meetingData?.meeting.meeting
-            ? meetingData?.meeting.meeting?.title
-            : "",
-          meetingDate: meetingData?.meeting.meeting
-            ? meetingData?.meeting.meeting?.meetingDate
-            : "",
-          spots: meetingData?.meeting.meeting
-            ? meetingData?.meeting.meeting?.spots
-            : 1,
-          place: "",
-        }}
+        initialValues={initialValues}
         validate={(values) => {
           const errors = validateInputs(values)
           return errors
@@ -99,20 +101,27 @@ const MeetingDataForm = ({ children, meeting }: any) => {
                   disabled={false}
                   required
                 ></FormikInput>
-                <FormikInput
+                {/* <FormikInput
                   id="2"
                   label="Lugar"
                   name="place"
                   disabled={false}
                   required
-                ></FormikInput>
+                ></FormikInput> */}
+                <ShouldRender if={placeData?.getUserPlaces.place}>
+                  <Select
+                    id="selec"
+                    label="Lugar"
+                    place={placeData?.getUserPlaces.place}
+                  />
+                </ShouldRender>
                 <FormikInput
                   id="3"
                   label="Fecha"
                   name="meetingDate"
                   type="date"
                   max="2030-12-31"
-                  min="2020-01-01"
+                  min={moment().format("YYYY-MM-DD")}
                   placeholder="yyyy-mm-dd"
                   required
                   pattern="(?:19|20)\[0-9\]{2}-(?:(?:0\[1-9\]|1\[0-2\])/(?:0\[1-9\]|1\[0-9\]|2\[0-9\])|(?:(?!02)(?:0\[1-9\]|1\[0-2\])/(?:30))|(?:(?:0\[13578\]|1\[02\])-31))"
@@ -126,7 +135,7 @@ const MeetingDataForm = ({ children, meeting }: any) => {
                   required
                 ></FormikInput>
                 <Box mt={3}>
-                  <Checkbox colorScheme="teal" defaultIsChecked>
+                  <Checkbox colorScheme="teal" name="isActive" defaultIsChecked>
                     Activa
                   </Checkbox>
                 </Box>

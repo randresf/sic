@@ -20,13 +20,14 @@ import NewMeetingCard from "../components/NewMeetingCard"
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
 import { useDeleteMeetMutation } from "../generated/graphql"
 import { useIsAuth } from "../hooks/useIsAuth"
+import isEmpty from "../utils/isEmpty"
 
 const Settings = () => {
   useIsAuth()
   const [{ data, fetching }] = useMeetingsQuery()
   const [newMeeting, setNewMeeting] = useState(false)
   const [deleteMeeting, setDeleteMeeting] = useState(false)
-  const [meetingId, setMeetingId] = useState("")
+  const [meetingData, setMeeting] = useState({})
   const [, getIdMeetMutation] = useDeleteMeetMutation()
   const toast = useToast()
 
@@ -39,7 +40,8 @@ const Settings = () => {
   }
 
   const deleteThisMeeting = async (meeting: any) => {
-    const res = await getIdMeetMutation({ meetingId: meeting })
+    if (isEmpty(meeting)) return
+    const res = await getIdMeetMutation({ meetingId: meeting.id })
     if (res.data?.deleteMeeting.errors) {
       setDeleteMeeting(false)
       return toast({
@@ -69,7 +71,7 @@ const Settings = () => {
       <Flex flex={1} alignItems="center" flexWrap="wrap">
         <NewMeetingCard
           onClick={() => {
-            setMeetingId("")
+            setMeeting({})
             setNewMeeting(true)
           }}
         />
@@ -78,7 +80,7 @@ const Settings = () => {
             <RenderMeetings {...reu}>
               <IconButton
                 onClick={() => {
-                  setMeetingId(reu.id)
+                  setMeeting(reu)
                   setNewMeeting(true)
                 }}
                 mr={2}
@@ -87,7 +89,7 @@ const Settings = () => {
               />
               <IconButton
                 onClick={() => {
-                  setMeetingId(reu.id)
+                  setMeeting(reu)
                   setDeleteMeeting(true)
                 }}
                 aria-label="eliminar"
@@ -98,9 +100,9 @@ const Settings = () => {
         </ShouldRender>
       </Flex>
       <ModalWrapper
-        titulo={meetingId === "" ? "Nueva reunión" : "Modificar reunión"}
+        titulo={isEmpty(meetingData) ? "Nueva reunión" : "Modificar reunión"}
         contenido={
-          <MeetingDataForm meeting={meetingId}>
+          <MeetingDataForm meeting={meetingData}>
             <PrimaryButton onClick={onCloseFormMeeting} mr={3}>
               volver
             </PrimaryButton>
@@ -117,7 +119,7 @@ const Settings = () => {
             <Box mt={5} float="right">
               <PrimaryButton
                 onClick={() => {
-                  deleteThisMeeting(meetingId)
+                  deleteThisMeeting(meetingData)
                 }}
                 colorScheme="red"
                 mr={3}

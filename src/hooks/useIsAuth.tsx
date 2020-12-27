@@ -9,5 +9,5 @@ export const useIsAuth = () => {
   useEffect(() => {
     if (!fetching && !data?.heartBeat)
       history.replace(`/login?next=${location.pathname}`)
-  }, [fetching, data, history])
+  }, [fetching, data, history, location.pathname])
 }

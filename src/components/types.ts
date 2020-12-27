@@ -7,8 +7,10 @@ export type FormikType = {
 }
 
 export type CheckboxPropsType = {
-  text: string
-  color: string
+  name: string
+  colorScheme: string
+  children: any
+  defaultIsChecked: boolean
 }
 
 export type PersonalDataType = {

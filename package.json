@@ -17,6 +17,7 @@
     "@urql/exchange-graphcache": "^3.3.3",
     "env-cmd": "^10.1.0",
     "formik": "^2.2.5",
+    "formik-chakra-ui": "^1.2.5",
     "framer-motion": "^2.9.4",
     "graphql": "^15.4.0",
     "moment": "^2.29.1",
