@@ -1,18 +1,28 @@
 import React, { useState } from "react"
-import { Box, Button, Flex, Heading, IconButton, Text } from "@chakra-ui/react"
+import { Box, Flex, Heading, IconButton, Text } from "@chakra-ui/react"
 import Loading from "../components/formElements/Loading"
 import { useMeetingsQuery } from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
-import RenderMeetings from "./RenderMeetings"
+import RenderMeetings from "./MeetingCard"
 import ShouldRender from "../components/ShouldRender"
 import ReservationSection from "./ReservationSection"
 import DisplayText from "../components/formElements/DisplayMessage"
 import { ArrowRightIcon } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
+import PrimaryButton from "../components/formElements/PrimaryButton"
+import NeutralButton from "../components/formElements/NeutralButton"
 
-const Agenda = () => {
+const Meetings = () => {
   const [showInput, setInput] = useState(false)
   const [{ data, fetching, error }] = useMeetingsQuery()
+
+  const btnsProps = {
+    onClick: () => {
+      setInput(!showInput)
+    },
+    mt: 5,
+    id: MEETINGS_LIST.searchOrClean,
+  }
 
   if (fetching) return <Loading loading={fetching} />
   return (
@@ -52,23 +62,19 @@ const Agenda = () => {
           ))}
         </ShouldRender>
       </Flex>
-      <Button
-        colorScheme={showInput ? "gray" : "teal"}
-        onClick={() => {
-          setInput(!showInput)
-        }}
-        mt={5}
-        id={MEETINGS_LIST.searchOrClean}
-      >
-        {showInput ? (
+
+      {showInput ? (
+        <NeutralButton {...btnsProps}>
           <DisplayText id="app.buttons.back" defaultMessage="volver" />
-        ) : (
+        </NeutralButton>
+      ) : (
+        <PrimaryButton {...btnsProps}>
           <DisplayText
             id="app.buttons.searchReservation"
             defaultMessage="consultar reservas"
           />
-        )}
-      </Button>
+        </PrimaryButton>
+      )}
       <ShouldRender if={showInput}>
         <ReservationSection showIcon />
       </ShouldRender>
@@ -76,4 +82,4 @@ const Agenda = () => {
   )
 }
 
-export default Agenda
+export default Meetings

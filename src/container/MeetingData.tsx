@@ -5,7 +5,11 @@ import Loading from "../components/formElements/Loading"
 import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import Select from "../components/formElements/Select"
-import { useSaveMeetingMutation, useGetPlacesQuery } from "../generated/graphql"
+import {
+  useSaveMeetingMutation,
+  useGetPlacesQuery,
+  MeetingInput,
+} from "../generated/graphql"
 import { useIntl } from "react-intl"
 import ShouldRender from "../components/ShouldRender"
 import moment from "moment"
@@ -38,23 +42,42 @@ const MeetingDataForm = ({ children, meeting }: any) => {
     if (!place) {
       errors.place = formatMessage({ id: "form.required" })
     }
-
     if (!title) {
       errors.title = formatMessage({ id: "form.required" })
     }
-
     if (!meetingDate) {
       errors.meetingDate = formatMessage({ id: "form.required" })
     }
-
     if (!spots) {
       errors.spots = formatMessage({ id: "form.required" })
     }
-
     return errors
   }
 
   const [{ data: placeData, fetching: placeLoading }] = useGetPlacesQuery()
+
+  const onSubmit = async ({ ...values }) => {
+    const { meetingId, ...data } = values
+    const saveMeetingResponse = await saveMeeting({
+      meetingId,
+      data: data as MeetingInput,
+    })
+    if (saveMeetingResponse.error) {
+      return toast({
+        title: "no se pudo guardar la reunion",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      })
+    }
+    toast({
+      title: "se guardo la reunión",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    })
+    window.location.reload()
+  }
 
   if (placeLoading) return <Loading loading={placeLoading} />
   return (
@@ -62,32 +85,8 @@ const MeetingDataForm = ({ children, meeting }: any) => {
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        validate={(values) => {
-          const errors = validateInputs(values)
-          return errors
-        }}
-        onSubmit={async ({ ...values }) => {
-          const { meetingId, ...data } = values
-          const saveMeetingResponse = await saveMeeting({
-            meetingId,
-            data,
-          })
-          if (saveMeetingResponse.error) {
-            return toast({
-              title: "no se pudo guardar la reunion",
-              status: "error",
-              duration: 3000,
-              isClosable: true,
-            })
-          }
-          toast({
-            title: "se guardo la reunión",
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-          })
-          window.location.reload()
-        }}
+        validate={validateInputs}
+        onSubmit={onSubmit}
       >
         {({ isSubmitting, setValues, values }) => (
           <Form style={{ width: "100%" }}>
@@ -99,19 +98,14 @@ const MeetingDataForm = ({ children, meeting }: any) => {
                   name="title"
                   disabled={false}
                   required
-                ></FormikInput>
-                {/* <FormikInput
-                  id="2"
-                  label="Lugar"
-                  name="place"
-                  disabled={false}
-                  required
-                ></FormikInput> */}
+                />
                 <ShouldRender if={placeData?.getUserPlaces.place}>
                   <Select
                     id="selec"
                     label="Lugar"
-                    place={placeData?.getUserPlaces.place}
+                    name="place"
+                    placeholder="lugar"
+                    options={placeData?.getUserPlaces.place}
                   />
                 </ShouldRender>
                 <FormikInput
@@ -132,7 +126,7 @@ const MeetingDataForm = ({ children, meeting }: any) => {
                   name="spots"
                   disabled={false}
                   required
-                ></FormikInput>
+                />
                 <Box mt={3}>
                   <Checkbox colorScheme="teal" name="isActive" defaultIsChecked>
                     Activa
@@ -140,12 +134,8 @@ const MeetingDataForm = ({ children, meeting }: any) => {
                 </Box>
                 <Box mt={3}>
                   {children}
-                  <PrimaryButton
-                    type="submit"
-                    isLoading={isSubmitting}
-                    colorScheme="teal"
-                  >
-                    Guardar
+                  <PrimaryButton type="submit" isLoading={isSubmitting}>
+                    guardar
                   </PrimaryButton>
                 </Box>
               </Flex>

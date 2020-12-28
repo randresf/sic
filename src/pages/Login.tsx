@@ -4,15 +4,20 @@ import React from "react"
 import Wrapper from "../components/Wrapper"
 import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
-import { useLoginMutation } from "../generated/graphql"
-import { useHistory } from "react-router-dom"
+import { useHeartbeatQuery, useLoginMutation } from "../generated/graphql"
+import { useHistory, useLocation } from "react-router-dom"
 import { useIntl } from "react-intl"
+import Loading from "../components/formElements/Loading"
+import queryString from "query-string"
 
 const Login = () => {
   const [, login] = useLoginMutation()
+  const [{ data, fetching }] = useHeartbeatQuery()
   const { formatMessage } = useIntl()
   const IS_REQUIRED = formatMessage({ id: "form.required" })
   const history = useHistory()
+  const location = useLocation()
+  const { next = "/settings" } = queryString.parse(location.search)
   const toast = useToast({
     duration: 3000,
     isClosable: true,
@@ -31,8 +36,10 @@ const Login = () => {
     return errors
   }
 
+  if (data && data.heartBeat) history.push("/settings")
   return (
     <Wrapper variant="small">
+      <Loading loading={fetching} />
       <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
         <Heading mb={5}>Aforo Admin</Heading>
         <Formik
@@ -56,7 +63,7 @@ const Login = () => {
               description: `bienvenido ${data?.login.admin?.firstName}`,
               status: "success",
             })
-            history.push("/")
+            history.push(String(next))
           }}
         >
           {({ isSubmitting }) => (
@@ -70,12 +77,7 @@ const Login = () => {
                   required
                 />
               </Flex>
-
-              <PrimaryButton
-                type="submit"
-                isLoading={isSubmitting}
-                colorScheme="teal"
-              >
+              <PrimaryButton type="submit" isLoading={isSubmitting}>
                 continuar
               </PrimaryButton>
             </Form>

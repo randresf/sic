@@ -11,7 +11,7 @@ type MeetingProps = {
   children: any
 }
 
-const RenderMeetings = ({
+const MeetingCard = ({
   spots,
   id,
   title,
@@ -48,4 +48,4 @@ const RenderMeetings = ({
   )
 }
 
-export default RenderMeetings
+export default MeetingCard

@@ -1,7 +1,7 @@
 import { Flex, Heading } from "@chakra-ui/react"
 import React from "react"
 import Wrapper from "../components/Wrapper"
-import PersonalDataForm from "../container/formUserData"
+import PersonalDataForm from "../container/PersonalDataForm"
 import { CITIZEN_FORM } from "../ui/formIds"
 
 const UserData = () => {

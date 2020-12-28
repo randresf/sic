@@ -5,21 +5,17 @@ import {
   Heading,
   IconButton,
   Text,
-  useToast,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react"
 import React from "react"
 import { Link, useHistory } from "react-router-dom"
 // import Loading from "../components/Loading"
-import { useCancelReservationMutation } from "../generated/graphql"
-import Loading from "../components/formElements/Loading"
 import { formatDate } from "../utils/formatDate"
 import { MEETINGS_LIST, RESERVATIONS_LIST } from "../ui/formIds"
 import CancelReservation from "../components/CancelReservation"
 import DisplayText from "../components/formElements/DisplayMessage"
 import ShouldRender from "../components/ShouldRender"
-import { useIntl } from "react-intl"
 
 type ReservationListProps = {
   reservations: any
@@ -32,28 +28,7 @@ const ReservationsList = ({
   userId,
   onChange,
 }: ReservationListProps) => {
-  const [{ fetching }, cancelReserve] = useCancelReservationMutation()
-  const { formatMessage } = useIntl()
-  const toast = useToast({ isClosable: true, duration: 3000 })
   const history = useHistory()
-
-  const onCancel = async (reservationId: string) => {
-    const res = await cancelReserve({ reservationId, userId })
-    if (res.error)
-      return toast({
-        title: formatMessage({ id: "app.notification.cancelReservationError" }),
-        description: res.error.message,
-        status: "error",
-      })
-    toast({
-      title: formatMessage({ id: "app.notification.success" }),
-      description: "",
-      status: "success",
-    })
-    if (typeof onChange === "function") onChange()
-  }
-
-  if (fetching) return <Loading loading={fetching} />
   if (reservations?.length === 0) return null
   return (
     <Flex
@@ -100,8 +75,10 @@ const ReservationsList = ({
                 mr={3}
               />
               <CancelReservation
-                onClick={() => onCancel(r.id)}
+                reservationId={r.id}
+                userId={userId}
                 meetingDate={r.meeting.meetingDate}
+                onChange={onChange}
               />
             </Center>
           </WrapItem>

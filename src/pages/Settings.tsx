@@ -4,6 +4,7 @@ import {
   Flex,
   Heading,
   IconButton,
+  Stack,
   Text,
   useToast,
 } from "@chakra-ui/react"
@@ -13,14 +14,16 @@ import { MEETINGS_LIST } from "../ui/formIds"
 import ShouldRender from "../components/ShouldRender"
 import SearchMeeting from "../components/SeachMeeting"
 import ModalWrapper from "../components/ModalWrapper"
-import MeetingDataForm from "../container/formMeetingData"
-import RenderMeetings from "../container/RenderMeetings"
+import MeetingDataForm from "../container/MeetingData"
+import RenderMeetings from "../container/MeetingCard"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import NewMeetingCard from "../components/NewMeetingCard"
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
 import { useDeleteMeetMutation } from "../generated/graphql"
 import { useIsAuth } from "../hooks/useIsAuth"
 import isEmpty from "../utils/isEmpty"
+import CancelButton from "../components/formElements/CancelButton"
+import NeutralButton from "../components/formElements/NeutralButton"
 
 const Settings = () => {
   useIsAuth()
@@ -103,9 +106,9 @@ const Settings = () => {
         titulo={isEmpty(meetingData) ? "Nueva reunión" : "Modificar reunión"}
         contenido={
           <MeetingDataForm meeting={meetingData}>
-            <PrimaryButton onClick={onCloseFormMeeting} mr={3}>
+            <NeutralButton onClick={onCloseFormMeeting} mr={3}>
               volver
-            </PrimaryButton>
+            </NeutralButton>
           </MeetingDataForm>
         }
         isOpen={newMeeting}
@@ -116,20 +119,18 @@ const Settings = () => {
         contenido={
           <>
             <Text>Seguro que desea eliminar esta reunión?</Text>
-            <Box mt={5} float="right">
-              <PrimaryButton
+            <Stack spacing={3}>
+              <CancelButton
                 onClick={() => {
                   deleteThisMeeting(meetingData)
                 }}
-                colorScheme="red"
-                mr={3}
               >
-                Eliminar
-              </PrimaryButton>
+                eliminar
+              </CancelButton>
               <PrimaryButton onClick={onCloseDeleteMeeting} mr={3}>
                 volver
               </PrimaryButton>
-            </Box>
+            </Stack>
           </>
         }
         isOpen={deleteMeeting}

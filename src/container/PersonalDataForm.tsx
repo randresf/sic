@@ -170,7 +170,6 @@ const PersonalDataForm = () => {
                   <ShouldRender if={reservations && !booked}>
                     <PrimaryButton
                       type="submit"
-                      colorScheme="teal"
                       //disabled={error}
                       isLoading={isSubmitting}
                       id={CITIZEN_FORM.submit}

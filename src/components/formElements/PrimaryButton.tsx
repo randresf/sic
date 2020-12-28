@@ -1,10 +1,10 @@
 import React from "react"
 import { Button } from "@chakra-ui/react"
 
-const WrapperButton = ({ children = "", ...rest }) => (
-  <Button width="110px" size="md" height="48px" {...rest}>
+const PrimaryButton = ({ children, ...rest }: any) => (
+  <Button size="md" height="48px" colorScheme="teal" {...rest}>
     {children}
   </Button>
 )
 
-export default WrapperButton
+export default PrimaryButton

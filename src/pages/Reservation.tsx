@@ -2,7 +2,7 @@ import { Flex } from "@chakra-ui/react"
 import React from "react"
 import { useHistory, useLocation, useParams } from "react-router-dom"
 import Wrapper from "../components/Wrapper"
-import ReservationView from "../container/reservation"
+import ReservationView from "../container/ReservationView"
 import queryString from "query-string"
 
 const ReservationData = () => {
@@ -14,12 +14,7 @@ const ReservationData = () => {
   return (
     <Wrapper variant="regular">
       <Flex alignItems="center" flex={1} p={5} flexDir="column">
-        {
-          <ReservationView
-            reservationId={reservationId}
-            external={!!external}
-          />
-        }
+        <ReservationView reservationId={reservationId} external={external} />
       </Flex>
     </Wrapper>
   )

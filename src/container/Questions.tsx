@@ -15,6 +15,7 @@ import FormikInput from "../components/formElements/FormikInput"
 import ModalWrapper from "../components/ModalWrapper"
 import { QUESTION_VIEW } from "../ui/formIds"
 import { useIntl } from "react-intl"
+import CancelButton from "../components/formElements/CancelButton"
 
 const Question = () => {
   const { formatMessage } = useIntl()
@@ -173,7 +174,7 @@ const Question = () => {
                 <Flex flexDir="column" w="100%" align="center">
                   {QUESTIONS && <YesNoRadioGroup questions={QUESTIONS} />}
                   <Box mt={3}>
-                    <PrimaryButton
+                    <CancelButton
                       id={QUESTION_VIEW.btnGoBack}
                       mr={3}
                       onClick={() => {
@@ -181,13 +182,12 @@ const Question = () => {
                       }}
                     >
                       volver
-                    </PrimaryButton>
+                    </CancelButton>
                     <PrimaryButton
                       id={QUESTION_VIEW.btnSubmit}
                       type="submit"
                       disabled={error}
                       isLoading={isSubmitting}
-                      colorScheme="teal"
                     >
                       continuar
                     </PrimaryButton>
