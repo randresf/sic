@@ -16,7 +16,6 @@ const MeetingDataForm = ({ children, meeting }: any) => {
   const toast = useToast()
   const [, saveMeeting] = useSaveMeetingMutation()
   const { formatMessage } = useIntl()
-  console.log(meeting)
   const initialValues = isEmpty(meeting)
     ? {
         meetingId: "",
