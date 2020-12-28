@@ -1,4 +1,4 @@
-import { Box, Flex, Checkbox, useToast } from "@chakra-ui/react"
+import { Box, Flex, useToast, Text, Radio } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import React from "react"
 import Loading from "../components/formElements/Loading"
@@ -15,6 +15,7 @@ import ShouldRender from "../components/ShouldRender"
 import moment from "moment"
 import isEmpty from "../utils/isEmpty"
 import { formatAgeDate } from "../utils/formatDate"
+import { RadioGroupControl } from "formik-chakra-ui"
 
 const MeetingDataForm = ({ children, meeting }: any) => {
   const toast = useToast()
@@ -27,6 +28,7 @@ const MeetingDataForm = ({ children, meeting }: any) => {
         meetingDate: "",
         spots: 0,
         place: "",
+        isActive: "false",
       }
     : {
         ...meeting,
@@ -38,7 +40,7 @@ const MeetingDataForm = ({ children, meeting }: any) => {
   const validateInputs = (values: any) => {
     const { title, meetingDate, spots, place } = values
     const errors: any = {}
-
+    console.log(values)
     if (!place) {
       errors.place = formatMessage({ id: "form.required" })
     }
@@ -128,9 +130,16 @@ const MeetingDataForm = ({ children, meeting }: any) => {
                   required
                 />
                 <Box mt={3}>
-                  <Checkbox colorScheme="teal" name="isActive" defaultIsChecked>
-                    Activa
-                  </Checkbox>
+                  <RadioGroupControl label="Estado" name="isActive">
+                    <Radio value="false">Inactive</Radio>
+                    <Radio value="true">Active</Radio>
+                  </RadioGroupControl>
+                  <ShouldRender if={String(values.isActive) === "true"}>
+                    <Text color="tomato" as="i" fontSize="md" noOfLines={2}>
+                      Al activar la reunion los usuario podran reservar cupos
+                      Reuniones con reservas no se pueden modificar/eliminar
+                    </Text>
+                  </ShouldRender>
                 </Box>
                 <Box mt={3}>
                   {children}
