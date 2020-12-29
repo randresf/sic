@@ -12,6 +12,7 @@ import {
 import { CONFIRM_RESERVATION } from "../ui/formIds"
 import { formatDate } from "../utils/formatDate"
 import useValidUser from "../utils/validUserInfo"
+import DisplayText from "../components/formElements/DisplayMessage"
 
 const Confirm = () => {
   const userId = useValidUser()
@@ -64,7 +65,7 @@ const Confirm = () => {
           <Flex mb={2} flexDir="row">
             <Center>
               <Heading id={CONFIRM_RESERVATION.userTitle} as="h4" size="md">
-                Usuario:
+                <DisplayText id="form.user" defaultMessage="User" />:
               </Heading>{" "}
               <Text id={CONFIRM_RESERVATION.fullnameUser} fontSize="md" ml={15}>
                 {objUser?.firstName} {objUser?.lastName}
@@ -74,7 +75,7 @@ const Confirm = () => {
           <Flex mb={2} flexDir="row">
             <Center>
               <Heading id={CONFIRM_RESERVATION.documentTitle} as="h4" size="md">
-                Documento:
+                <DisplayText id="form.document" defaultMessage="Document" />:
               </Heading>{" "}
               <Text id={CONFIRM_RESERVATION.documentUser} fontSize="md" ml={15}>
                 {objUser?.document}
@@ -84,7 +85,7 @@ const Confirm = () => {
           <Flex mb={2} flexDir="row">
             <Center>
               <Heading id={CONFIRM_RESERVATION.contactTitle} as="h4" size="md">
-                Contacto:
+                <DisplayText id="form.contact" defaultMessage="Contact" />:
               </Heading>{" "}
               <Text id={CONFIRM_RESERVATION.contactUser} fontSize="md" ml={15}>
                 {objUser?.phone}
@@ -94,7 +95,7 @@ const Confirm = () => {
           <Flex mb={2} flexDir="row">
             <Center>
               <Heading id={CONFIRM_RESERVATION.emailTitle} as="h4" size="md">
-                Correo:
+                <DisplayText id="form.email" defaultMessage="Email" />:
               </Heading>{" "}
               <Text id={CONFIRM_RESERVATION.emailUser} fontSize="md" ml={15}>
                 {objUser?.email}
@@ -104,7 +105,7 @@ const Confirm = () => {
           <Flex mb={2} flexDir="row">
             <Center>
               <Heading id={CONFIRM_RESERVATION.dateTitle} as="h4" size="md">
-                Fecha:
+                <DisplayText id="form.date" defaultMessage="Date" />:
               </Heading>
               <Text id={CONFIRM_RESERVATION.dateUser} fontSize="md" ml={15}>
                 {formatDate(meet?.meetingDate || "")}
@@ -114,7 +115,11 @@ const Confirm = () => {
           <Flex mb={2} flexDir="row">
             <Center>
               <Heading id={CONFIRM_RESERVATION.spotsTitle} as="h4" size="md">
-                Cupos disponibles:
+                <DisplayText
+                  id="form.SpaceAvailable"
+                  defaultMessage="Space available"
+                />
+                :
               </Heading>
               <Text id={CONFIRM_RESERVATION.spotsUser} fontSize="md" ml={15}>
                 {meet?.spots}
@@ -127,7 +132,7 @@ const Confirm = () => {
               fontSize="md"
               style={{ color: "#dc6d6d" }}
             >
-              Por favor revise la información antes de proceder
+              <DisplayText id="app.confirm.notice" />
             </Text>
           </Box>
         </Flex>

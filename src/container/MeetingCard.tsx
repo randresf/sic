@@ -2,6 +2,7 @@ import { Flex, Heading, Text } from "@chakra-ui/react"
 import React from "react"
 import { MEETINGS_LIST } from "../ui/formIds"
 import { formatDate } from "../utils/formatDate"
+import DisplayText from "../components/formElements/DisplayMessage"
 
 type MeetingProps = {
   spots: number
@@ -9,6 +10,7 @@ type MeetingProps = {
   title: string
   meetingDate: string
   children: any
+  borderColor?: string
 }
 
 const MeetingCard = ({
@@ -16,6 +18,7 @@ const MeetingCard = ({
   id,
   title,
   meetingDate,
+  borderColor = "",
   children,
 }: MeetingProps) => {
   return (
@@ -23,6 +26,7 @@ const MeetingCard = ({
       key={id}
       p={3}
       shadow="md"
+      borderColor={borderColor}
       borderWidth={1}
       m={2}
       w="270px"
@@ -34,10 +38,11 @@ const MeetingCard = ({
         {title}
       </Heading>
       <Text as="h3" size="md" className={MEETINGS_LIST.meetingDate}>
-        fecha: {formatDate(meetingDate)}
+        <DisplayText id="app.label.date" defaultMessage="date: " />
+        {formatDate(meetingDate)}
       </Text>
       <Text as="h3" size="md" className={MEETINGS_LIST.spots}>
-        cupos: {spots}
+        <DisplayText id="app.label.spots" defaultMessage="spots: " /> {spots}
       </Text>
       {String(spots) !== "0" && (
         <Flex flexDir="row-reverse">

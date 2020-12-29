@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react"
 import React from "react"
 import { Link, useHistory } from "react-router-dom"
-// import Loading from "../components/Loading"
 import { formatDate } from "../utils/formatDate"
 import { MEETINGS_LIST, RESERVATIONS_LIST } from "../ui/formIds"
 import CancelReservation from "../components/CancelReservation"

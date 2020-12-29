@@ -7,6 +7,7 @@ import { NAVABAR_LIST } from "../ui/formIds"
 import ToggleDarkMode from "./ToggleDarkMode"
 import { Box, Flex, Heading, Text } from "@chakra-ui/react"
 import NeutralButton from "./formElements/NeutralButton"
+import DisplayText from "./formElements/DisplayMessage"
 
 const NavBar = () => {
   const [{ data }] = useHeartbeatQuery()
@@ -22,7 +23,9 @@ const NavBar = () => {
           <Link to="/" id={NAVABAR_LIST.logo}>
             <Flex align="center">
               <img style={{ width: "40px" }} src="/logo192.png" alt="logo" />
-              <Text ml={2}>Inicio</Text>
+              <Text ml={2}>
+                <DisplayText id="app.navBar.home" defaultMessage="home" />
+              </Text>
             </Flex>
           </Link>
         </Box>
@@ -56,7 +59,7 @@ const NavBar = () => {
               variant="link"
               isLoading={fetching}
             >
-              logout
+              <DisplayText id="app.buttons.logout" defaultMessage="logout" />
             </NeutralButton>
           </Flex>
         </ShouldRender>

@@ -3,7 +3,7 @@ import { Box, Flex, Heading, IconButton, Text } from "@chakra-ui/react"
 import Loading from "../components/formElements/Loading"
 import { useMeetingsQuery } from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
-import RenderMeetings from "./MeetingCard"
+import MeetingCard from "./MeetingCard"
 import ShouldRender from "../components/ShouldRender"
 import ReservationSection from "./ReservationSection"
 import DisplayText from "../components/formElements/DisplayMessage"
@@ -15,6 +15,8 @@ import NeutralButton from "../components/formElements/NeutralButton"
 const Meetings = () => {
   const [showInput, setInput] = useState(false)
   const [{ data, fetching, error }] = useMeetingsQuery()
+
+  console.log(data)
 
   const btnsProps = {
     onClick: () => {
@@ -44,13 +46,18 @@ const Meetings = () => {
         </ShouldRender>
         <ShouldRender if={data && data.meetings}>
           {data?.meetings.map(({ __typename, ...reu }) => (
-            <RenderMeetings {...reu}>
+            <MeetingCard {...reu}>
               <Link
                 to={`/datos/${reu.id}`}
                 className={MEETINGS_LIST.linkCitizenForm}
               >
                 <Flex alignItems="center">
-                  <Text mr={3}>Reservar</Text>
+                  <Text mr={3}>
+                    <DisplayText
+                      id="app.buttons.reserve"
+                      defaultMessage="Reserve"
+                    />
+                  </Text>
                   <IconButton
                     className={MEETINGS_LIST.btnReserve}
                     aria-label="reservar"
@@ -58,7 +65,7 @@ const Meetings = () => {
                   />
                 </Flex>
               </Link>
-            </RenderMeetings>
+            </MeetingCard>
           ))}
         </ShouldRender>
       </Flex>
@@ -71,7 +78,7 @@ const Meetings = () => {
         <PrimaryButton {...btnsProps}>
           <DisplayText
             id="app.buttons.searchReservation"
-            defaultMessage="consultar reservas"
+            defaultMessage="search reservation"
           />
         </PrimaryButton>
       )}

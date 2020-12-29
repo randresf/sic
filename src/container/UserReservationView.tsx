@@ -1,6 +1,6 @@
 import { Flex, Heading, Box, Center, Text } from "@chakra-ui/react"
 import React from "react"
-import { MENSAJE_DE_CONFIRMACION } from "../constants"
+import DisplayText from "../components/formElements/DisplayMessage"
 import { Reservation } from "../generated/graphql"
 import { RESERVATION_VIEW } from "../ui/formIds"
 import { formatDate } from "../utils/formatDate"
@@ -15,8 +15,8 @@ export default function UserReservationView({
   return (
     <Flex flexDir="column" alignItems="center">
       <Heading id={RESERVATION_VIEW.welcome} mt={2} mb={3} as="h3" size="lg">
-        Bienvenid @{reservation?.citizen.firstName}{" "}
-        {reservation?.citizen.lastName}
+        <DisplayText id="app.reservation.title" />{" "}
+        {reservation?.citizen.firstName} {reservation?.citizen.lastName}
       </Heading>
       <Box m="auto">
         <img
@@ -35,7 +35,7 @@ export default function UserReservationView({
                 as="h4"
                 size="md"
               >
-                Documento:
+                <DisplayText id="form.document" defaultMessage="Document" />:
               </Heading>
               <Text id={RESERVATION_VIEW.userDocument} fontSize="md" ml={15}>
                 {reservation?.citizen.document}
@@ -49,7 +49,11 @@ export default function UserReservationView({
                 as="h4"
                 size="md"
               >
-                Reunion reservada:
+                <DisplayText
+                  id="form.meetingReserved"
+                  defaultMessage="Meeting reserved"
+                />
+                :
               </Heading>
               <Text id={RESERVATION_VIEW.userMeeting} fontSize="md" ml={15}>
                 {reservation?.meeting.title}
@@ -63,7 +67,7 @@ export default function UserReservationView({
                 as="h4"
                 size="md"
               >
-                Fecha:
+                <DisplayText id="form.date" defaultMessage="Date" />:
               </Heading>
               <Text
                 id={RESERVATION_VIEW.reservationUserDate}
@@ -75,7 +79,9 @@ export default function UserReservationView({
             </Center>
           </Flex>
         </Flex>
-        <Text id={RESERVATION_VIEW.msgConfirm}>{MENSAJE_DE_CONFIRMACION}</Text>
+        <Text id={RESERVATION_VIEW.msgConfirm}>
+          <DisplayText id="app.reservation.message" />
+        </Text>
       </Box>
     </Flex>
   )

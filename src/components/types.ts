@@ -11,6 +11,7 @@ export type CheckboxPropsType = {
   colorScheme: string
   children: any
   defaultIsChecked: boolean
+  type: string
 }
 
 export type PersonalDataType = {

@@ -5,9 +5,6 @@ import PrimaryButton from "../components/formElements/PrimaryButton"
 import YesNoRadioGroup from "../components/YesNoRadioGroup"
 import { Formik, Form } from "formik"
 import { QUESTIONS } from "../constants/index"
-import { AVISO_PROTECCION_DATOS } from "../constants/index"
-import { TITULO_AVISO_MODAL } from "../constants/index"
-import { MENSAJE_NO_INGRESO } from "../constants/index"
 import { useParams, useHistory, Link } from "react-router-dom"
 import { useSaveQuestionMutation } from "../generated/graphql"
 import { useUpdateContactUserMutation } from "../generated/graphql"
@@ -16,6 +13,7 @@ import ModalWrapper from "../components/ModalWrapper"
 import { QUESTION_VIEW } from "../ui/formIds"
 import { useIntl } from "react-intl"
 import CancelButton from "../components/formElements/CancelButton"
+import DisplayText from "../components/formElements/DisplayMessage"
 
 const Question = () => {
   const { formatMessage } = useIntl()
@@ -61,14 +59,14 @@ const Question = () => {
       String(contactNumber).length !== 7 &&
       String(contactNumber).length !== 10
     ) {
-      errors.contactNumber = formatMessage({ id: "form.incorrect" })
+      errors.contactNumber = formatMessage({ id: "field.incorrect" })
     }
 
     if (!emergenceContact) {
       errors.emergenceContact = formatMessage({ id: "form.required" })
     }
     if (!regex.test(emergenceContact)) {
-      errors.emergenceContact = formatMessage({ id: "form.incorrect" })
+      errors.emergenceContact = formatMessage({ id: "field.incorrect" })
     }
 
     return errors
@@ -77,7 +75,9 @@ const Question = () => {
   return (
     <Wrapper variant="small">
       <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
-        <Heading id={QUESTION_VIEW.formTitle}>Formulario salud</Heading>
+        <Heading id={QUESTION_VIEW.formTitle}>
+          <DisplayText id="app.question.title" defaultMessage="Health form" />
+        </Heading>
 
         <Heading
           id={QUESTION_VIEW.formparagraph}
@@ -86,7 +86,7 @@ const Question = () => {
           mb={6}
           mt={6}
         >
-          {AVISO_PROTECCION_DATOS}
+          <DisplayText id="app.question.intro" />
         </Heading>
         <Formik
           initialValues={{
@@ -96,9 +96,6 @@ const Question = () => {
           validate={(values) => {
             const errors = validateInputs(values)
             validateQuestions(values)
-            //
-            //
-
             return errors
           }}
           onSubmit={async (values: any) => {
@@ -112,7 +109,7 @@ const Question = () => {
             if (resEmergencyContact.error) {
               return toast({
                 description: resEmergencyContact.error.message,
-                title: "no se pudo guardar el contactio de emergencia",
+                title: formatMessage({ id: "app.question.contactNameError" }),
                 status: "error",
                 duration: 3000,
                 isClosable: true,
@@ -122,7 +119,7 @@ const Question = () => {
             if (errorInco) {
               return toast({
                 description: "",
-                title: "Por favor complete todas las preguntas",
+                title: formatMessage({ id: "app.question.uncompleteQuestion" }),
                 status: "error",
                 duration: 3000,
                 isClosable: true,
@@ -154,14 +151,14 @@ const Question = () => {
               <Flex mb={5} justifyContent="space-around" align="flex-end">
                 <FormikInput
                   id={QUESTION_VIEW.emergenceContact}
-                  label="Nombre contacto de emergencia"
+                  label={formatMessage({ id: "app.question.contactName" })}
                   name="emergenceContact"
                   w="90%"
                   required
                 />
                 <FormikInput
                   id={QUESTION_VIEW.contactNumber}
-                  label="Número de contacto"
+                  label={formatMessage({ id: "app.question.contactPhone" })}
                   name="contactNumber"
                   type="number"
                   required
@@ -169,7 +166,10 @@ const Question = () => {
               </Flex>
               <Box>
                 <Text id={QUESTION_VIEW.notice} mt={5} mb={3}>
-                  Responde cuidadosamente las siguientes preguntas:
+                  <DisplayText
+                    id="app.question.notice"
+                    defaultMessage="Please carefully answer the following questions:"
+                  />
                 </Text>
                 <Flex flexDir="column" w="100%" align="center">
                   {QUESTIONS && <YesNoRadioGroup questions={QUESTIONS} />}
@@ -181,7 +181,10 @@ const Question = () => {
                         history.goBack()
                       }}
                     >
-                      volver
+                      <DisplayText
+                        id="app.buttons.back"
+                        defaultMessage="back"
+                      />
                     </CancelButton>
                     <PrimaryButton
                       id={QUESTION_VIEW.btnSubmit}
@@ -189,7 +192,10 @@ const Question = () => {
                       disabled={error}
                       isLoading={isSubmitting}
                     >
-                      continuar
+                      <DisplayText
+                        id="app.buttons.continue"
+                        defaultMessage="continue"
+                      />
                     </PrimaryButton>
                   </Box>
                 </Flex>
@@ -198,10 +204,10 @@ const Question = () => {
           )}
         </Formik>
         <ModalWrapper
-          titulo={TITULO_AVISO_MODAL}
+          titulo={formatMessage({ id: "app.modalQuestion.title" })}
           contenido={
             <>
-              {MENSAJE_NO_INGRESO}
+              <DisplayText id="app.modalQuestion.message" />
               <Link
                 id={QUESTION_VIEW.linkNoEntry}
                 to="https://www.youtube.com/c/cfebello"

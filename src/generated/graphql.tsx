@@ -52,7 +52,8 @@ export type Meeting = {
   meetingDate: Scalars["DateTime"]
   createdAt: Scalars["String"]
   updatedAt: Scalars["String"]
-  isActive: Scalars["Boolean"]
+  isActive: Scalars["String"]
+  hasReservation: Scalars["Boolean"]
   place: Place
 }
 
@@ -224,10 +225,13 @@ export type MutationUpdatePlaceArgs = {
 }
 
 export type MeetingInput = {
+  id?: Maybe<Scalars["String"]>
   title: Scalars["String"]
   spots: Scalars["Float"]
   meetingDate: Scalars["String"]
+  hasReservation: Scalars["Boolean"]
   place: Scalars["String"]
+  isActive: Scalars["String"]
 }
 
 export type QuestionResponse = {
@@ -286,7 +290,7 @@ export type PlaceInput = {
 
 export type MeetingDataFragment = { __typename?: "Meeting" } & Pick<
   Meeting,
-  "id" | "title" | "meetingDate" | "spots"
+  "id" | "title" | "meetingDate" | "spots" | "isActive"
 >
 
 export type UserDataFragment = { __typename?: "User" } & Pick<
@@ -530,9 +534,9 @@ export type MeetingsQueryVariables = Exact<{ [key: string]: never }>
 
 export type MeetingsQuery = { __typename?: "Query" } & {
   meetings: Array<
-    { __typename?: "Meeting" } & {
-      place: { __typename?: "Place" } & Pick<Place, "id" | "name" | "address">
-    } & MeetingDataFragment
+    { __typename?: "Meeting" } & Pick<Meeting, "hasReservation"> & {
+        place: { __typename?: "Place" } & Pick<Place, "id" | "name" | "address">
+      } & MeetingDataFragment
   >
 }
 
@@ -576,6 +580,7 @@ export const MeetingDataFragmentDoc = gql`
     title
     meetingDate
     spots
+    isActive
   }
 `
 export const UserDataFragmentDoc = gql`
@@ -878,6 +883,7 @@ export const MeetingsDocument = gql`
   query Meetings {
     meetings {
       ...MeetingData
+      hasReservation
       place {
         id
         name

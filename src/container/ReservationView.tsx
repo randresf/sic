@@ -20,8 +20,11 @@ import { Reservation } from "../generated/graphql"
 import CancelButton from "../components/formElements/CancelButton"
 import ShouldRender from "../components/ShouldRender"
 import moment from "moment"
+import { useIntl } from "react-intl"
+import DisplayText from "../components/formElements/DisplayMessage"
 
 const ReservationView = ({ reservationId, external = false }: any) => {
+  const { formatMessage } = useIntl()
   const [saving, setLoading] = useState(false)
   const history = useHistory()
   const toast = useToast()
@@ -41,7 +44,15 @@ const ReservationView = ({ reservationId, external = false }: any) => {
   if (fetching || saving) return <Loading loading={fetching || saving} />
   if (error) return <div>{error?.message}</div>
   const reservation = data?.searchReservation?.reservation as Reservation
-  if (!reservation) return <Box>No hay una reserva con este id</Box>
+  if (!reservation)
+    return (
+      <Box>
+        <DisplayText
+          id="app.reservation.noReservation"
+          defaultMessage="There is no reservation with this id"
+        />
+      </Box>
+    )
   // -------
 
   const onCancel = async () => {
@@ -50,13 +61,13 @@ const ReservationView = ({ reservationId, external = false }: any) => {
     setLoading(false)
     if (!data?.cancelReservation)
       return toast({
-        title: "no se pudo cancelar la reserva",
+        title: formatMessage({ id: "app.notification.cancelReservationError" }),
         isClosable: true,
         duration: 3000,
         status: "error",
       })
     toast({
-      title: "reserva cancelada correctamente",
+      title: formatMessage({ id: "app.notification.cancelReservationOk" }),
       description: "",
       isClosable: true,
       duration: 3000,
@@ -74,7 +85,7 @@ const ReservationView = ({ reservationId, external = false }: any) => {
           onClick={onCancel}
           colorScheme="teal"
         >
-          confirmar
+          <DisplayText id="app.buttons.confirm" defaultMessage="confirm" />
         </WrapperButton>
       </Flex>
     </Box>
@@ -89,7 +100,9 @@ const ReservationView = ({ reservationId, external = false }: any) => {
               moment(reservation?.meeting.meetingDate) > moment()
             }
           >
-            <CancelButton onClick={() => setOpen(true)}>cancelar</CancelButton>
+            <CancelButton onClick={() => setOpen(true)}>
+              <DisplayText id="app.buttons.cancel" defaultMessage="cancel" />
+            </CancelButton>
           </ShouldRender>
           <PDFDownloadLink
             style={{ marginRight: "20px" }}
@@ -112,7 +125,9 @@ const ReservationView = ({ reservationId, external = false }: any) => {
                 colorScheme="teal"
                 isLoading={loading}
               >
-                {loading ? "cargando.." : "descargar"}
+                {loading
+                  ? formatMessage({ id: "app.buttons.loading" })
+                  : formatMessage({ id: "app.buttons.downLoad" })}
               </WrapperButton>
             )}
           </PDFDownloadLink>

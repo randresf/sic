@@ -3,6 +3,7 @@ import { Box, Center, Flex } from "@chakra-ui/react"
 import { Field } from "formik"
 import { v4 } from "uuid"
 import { QUESTIONS_FORM } from "../ui/formIds"
+import DisplayText from "./formElements/DisplayMessage"
 
 type RadioProps = {
   questions: { id: number; question: string }[]
@@ -26,7 +27,7 @@ const YesNoRadioGroup = ({ questions }: RadioProps) => {
                     name={id}
                     value="1"
                   />
-                  Si
+                  <DisplayText id="radio.question.yes" defaultMessage="Yes" />
                 </label>
               </Box>
               <Box>
@@ -37,7 +38,7 @@ const YesNoRadioGroup = ({ questions }: RadioProps) => {
                     name={id}
                     value="0"
                   />
-                  No
+                  <DisplayText id="radio.question.no" defaultMessage="No" />
                 </label>
               </Box>
             </Center>

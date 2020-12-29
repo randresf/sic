@@ -1,22 +1,17 @@
-import { Box, Flex, useToast, Text, Radio } from "@chakra-ui/react"
+import { Box, Flex, useToast } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import React from "react"
 import Loading from "../components/formElements/Loading"
 import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
+import Checkbox from "../components/formElements/Checkbox"
 import Select from "../components/formElements/Select"
-import {
-  useSaveMeetingMutation,
-  useGetPlacesQuery,
-  MeetingInput,
-} from "../generated/graphql"
+import { useSaveMeetingMutation, useGetPlacesQuery } from "../generated/graphql"
 import { useIntl } from "react-intl"
 import ShouldRender from "../components/ShouldRender"
 import moment from "moment"
 import isEmpty from "../utils/isEmpty"
 import { formatAgeDate } from "../utils/formatDate"
-import { RadioGroupControl } from "formik-chakra-ui"
-import DisplayText from "../components/formElements/DisplayMessage"
 
 const MeetingDataForm = ({ children, meeting }: any) => {
   const toast = useToast()
@@ -29,6 +24,7 @@ const MeetingDataForm = ({ children, meeting }: any) => {
         meetingDate: "",
         spots: 0,
         place: "",
+        isActive: false,
       }
     : {
         ...meeting,
@@ -40,46 +36,27 @@ const MeetingDataForm = ({ children, meeting }: any) => {
   const validateInputs = (values: any) => {
     const { title, meetingDate, spots, place } = values
     const errors: any = {}
-    console.log(values)
+
     if (!place) {
       errors.place = formatMessage({ id: "form.required" })
     }
+
     if (!title) {
       errors.title = formatMessage({ id: "form.required" })
     }
+
     if (!meetingDate) {
       errors.meetingDate = formatMessage({ id: "form.required" })
     }
+
     if (!spots) {
       errors.spots = formatMessage({ id: "form.required" })
     }
+
     return errors
   }
 
   const [{ data: placeData, fetching: placeLoading }] = useGetPlacesQuery()
-
-  const onSubmit = async ({ ...values }) => {
-    const { meetingId, ...data } = values
-    const saveMeetingResponse = await saveMeeting({
-      meetingId,
-      data: data as MeetingInput,
-    })
-    if (saveMeetingResponse.error) {
-      return toast({
-        title: formatMessage({ id: "app.notification.saveMeetingError" }),
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      })
-    }
-    toast({
-      title: formatMessage({ id: "app.notification.saveMeetingOk" }),
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    })
-    window.location.reload()
-  }
 
   if (placeLoading) return <Loading loading={placeLoading} />
   return (
@@ -87,8 +64,33 @@ const MeetingDataForm = ({ children, meeting }: any) => {
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        validate={validateInputs}
-        onSubmit={onSubmit}
+        validate={(values) => {
+          const errors = validateInputs(values)
+          return errors
+        }}
+        onSubmit={async ({ ...values }) => {
+          console.log(values)
+          const { meetingId, ...data } = values
+          const saveMeetingResponse = await saveMeeting({
+            meetingId,
+            data,
+          })
+          if (saveMeetingResponse.error) {
+            return toast({
+              title: "no se pudo guardar la reunion",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            })
+          }
+          toast({
+            title: "se guardo la reunión",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          })
+          window.location.reload()
+        }}
       >
         {({ isSubmitting, setValues, values }) => (
           <Form style={{ width: "100%" }}>
@@ -96,23 +98,21 @@ const MeetingDataForm = ({ children, meeting }: any) => {
               <Flex flexDir="column" w="100%">
                 <FormikInput
                   id="1"
-                  label={formatMessage({ id: "form.title" })}
+                  label="Titulo"
                   name="title"
                   disabled={false}
                   required
-                />
+                ></FormikInput>
                 <ShouldRender if={placeData?.getUserPlaces.place}>
                   <Select
                     id="selec"
-                    label={formatMessage({ id: "form.place" })}
-                    name="place"
-                    placeholder={formatMessage({ id: "form.place" })}
-                    options={placeData?.getUserPlaces.place}
+                    label="Lugar"
+                    place={placeData?.getUserPlaces.place}
                   />
                 </ShouldRender>
                 <FormikInput
                   id="3"
-                  label={formatMessage({ id: "form.date" })}
+                  label="Fecha"
                   name="meetingDate"
                   type="date"
                   max="2030-12-31"
@@ -124,39 +124,29 @@ const MeetingDataForm = ({ children, meeting }: any) => {
                 <FormikInput
                   type="number"
                   id="4"
-                  label={formatMessage({ id: "form.spots" })}
+                  label="Cupos"
                   name="spots"
                   disabled={false}
                   required
-                />
+                ></FormikInput>
                 <Box mt={3}>
-                  <RadioGroupControl
-                    label={formatMessage({ id: "app.label.state" })}
+                  <Checkbox
+                    type="boolean"
+                    colorScheme="steal"
+                    defaultIsChecked
                     name="isActive"
                   >
-                    <Radio value="false">
-                      <DisplayText
-                        id="form.inactive"
-                        defaultMessage="Inactive"
-                      />
-                    </Radio>
-                    <Radio value="true">
-                      <DisplayText id="form.active" defaultMessage="Active" />
-                    </Radio>
-                  </RadioGroupControl>
-                  <ShouldRender if={String(values.isActive) === "true"}>
-                    <Text color="tomato" as="i" fontSize="md" noOfLines={2}>
-                      <DisplayText
-                        id="app.meetingForm.activeMessage"
-                        defaultMessage="When activating the meeting, users will be able to reserve quotas Meetings with reservations cannot be modified / deleted"
-                      />
-                    </Text>
-                  </ShouldRender>
+                    Activa
+                  </Checkbox>
                 </Box>
                 <Box mt={3}>
                   {children}
-                  <PrimaryButton type="submit" isLoading={isSubmitting}>
-                    <DisplayText id="app.buttons.save" defaultMessage="save" />
+                  <PrimaryButton
+                    type="submit"
+                    isLoading={isSubmitting}
+                    colorScheme="teal"
+                  >
+                    Guardar
                   </PrimaryButton>
                 </Box>
               </Flex>

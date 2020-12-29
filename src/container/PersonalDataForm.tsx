@@ -14,6 +14,7 @@ import { blurText } from "../utils/truncate"
 import { CITIZEN_FORM } from "../ui/formIds"
 import ShouldRender from "../components/ShouldRender"
 import { useIntl } from "react-intl"
+import DisplayText from "../components/formElements/DisplayMessage"
 
 const PersonalDataForm = () => {
   const { formatMessage } = useIntl()
@@ -108,35 +109,35 @@ const PersonalDataForm = () => {
               <Flex flexDir="column" w="100%">
                 <FormikInput
                   onBlur={onBlurCitizenField(setValues)}
-                  label="Documento"
+                  label={formatMessage({ id: "form.document" })}
                   name="document"
                   disabled={userExists}
                   id={CITIZEN_FORM.document}
                   required
                 />
                 <FormikInput
-                  label="Nombres"
+                  label={formatMessage({ id: "form.names" })}
                   name="firstName"
                   required
                   id={CITIZEN_FORM.firstName}
                   disabled={userExists}
                 />
                 <FormikInput
-                  label="Apellidos"
+                  label={formatMessage({ id: "form.lastNames" })}
                   name="lastName"
                   required
                   id={CITIZEN_FORM.lastName}
                   disabled={userExists}
                 />
                 <FormikInput
-                  label="Telefono"
+                  label={formatMessage({ id: "form.phone" })}
                   name="phone"
                   type="number"
                   required
                   id={CITIZEN_FORM.phone}
                 />
                 <FormikInput
-                  label="Correo"
+                  label={formatMessage({ id: "form.email" })}
                   name="email"
                   required
                   id={CITIZEN_FORM.email}
@@ -144,7 +145,7 @@ const PersonalDataForm = () => {
                 <Flex justifyContent="space-around">
                   {!userExists && (
                     <FormikInput
-                      label="Fecha de nacimiento"
+                      label={formatMessage({ id: "form.birthDate" })}
                       name="birthDate"
                       type="date"
                       max="2010-12-31"
@@ -156,7 +157,7 @@ const PersonalDataForm = () => {
                     />
                   )}
                   <FormikInput
-                    label="Edad"
+                    label={formatMessage({ id: "form.age" })}
                     name="age"
                     type="number"
                     disabled
@@ -174,7 +175,10 @@ const PersonalDataForm = () => {
                       isLoading={isSubmitting}
                       id={CITIZEN_FORM.submit}
                     >
-                      continuar
+                      <DisplayText
+                        id="app.buttons.continue"
+                        defaultMessage="continue"
+                      />
                     </PrimaryButton>
                   </ShouldRender>
                   <ReservationsList

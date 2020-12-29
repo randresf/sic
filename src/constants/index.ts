@@ -17,11 +17,6 @@ export const QUESTIONS = [
   },
 ]
 
-export const AVISO_PROTECCION_DATOS =
-  "Nos tomamos muy enserio los datos personales que nos facilitas al usar nuestros servicios, por esta razón " +
-  "nos comprometemos a maneterlos completamente a salvo, a ser transparentes sobre los datos que recopilamos " +
-  "y a garantizar los derechos que te asisten para controlar dicha información"
-
 export const TITULO_AVISO_MODAL = "IMPORTANTE"
 
 export const MENSAJE_DE_CANCELAR_RESERVA = "Esta seguro de cancelar la reserva?"

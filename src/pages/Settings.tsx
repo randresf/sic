@@ -15,7 +15,7 @@ import ShouldRender from "../components/ShouldRender"
 import SearchMeeting from "../components/SeachMeeting"
 import ModalWrapper from "../components/ModalWrapper"
 import MeetingDataForm from "../container/MeetingData"
-import RenderMeetings from "../container/MeetingCard"
+import MeetingCard from "../container/MeetingCard"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import NewMeetingCard from "../components/NewMeetingCard"
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
@@ -24,9 +24,12 @@ import { useIsAuth } from "../hooks/useIsAuth"
 import isEmpty from "../utils/isEmpty"
 import CancelButton from "../components/formElements/CancelButton"
 import NeutralButton from "../components/formElements/NeutralButton"
+import DisplayText from "../components/formElements/DisplayMessage"
+import { useIntl } from "react-intl"
 
 const Settings = () => {
   useIsAuth()
+  const { formatMessage } = useIntl()
   const [{ data, fetching }] = useMeetingsQuery()
   const [newMeeting, setNewMeeting] = useState(false)
   const [deleteMeeting, setDeleteMeeting] = useState(false)
@@ -68,7 +71,7 @@ const Settings = () => {
   return (
     <Box>
       <Heading as="h2" size="md" id={MEETINGS_LIST.title}>
-        Eventos:
+        <DisplayText id="form.events" defaultMessage="Events" />
       </Heading>
       <SearchMeeting />
       <Flex flex={1} alignItems="center" flexWrap="wrap">
@@ -80,34 +83,43 @@ const Settings = () => {
         />
         <ShouldRender if={data && data.meetings}>
           {data?.meetings.map(({ __typename, ...reu }) => (
-            <RenderMeetings {...reu}>
-              <IconButton
-                onClick={() => {
-                  setMeeting(reu)
-                  setNewMeeting(true)
-                }}
-                mr={2}
-                aria-label="editar"
-                icon={<EditIcon />}
-              />
-              <IconButton
-                onClick={() => {
-                  setMeeting(reu)
-                  setDeleteMeeting(true)
-                }}
-                aria-label="eliminar"
-                icon={<DeleteIcon />}
-              />
-            </RenderMeetings>
+            <MeetingCard
+              {...reu}
+              borderColor={reu.isActive === "false" ? "tomato" : "#269e39"}
+            >
+              <ShouldRender if={!reu.hasReservation}>
+                <IconButton
+                  onClick={() => {
+                    setMeeting(reu)
+                    setNewMeeting(true)
+                  }}
+                  mr={2}
+                  aria-label="editar"
+                  icon={<EditIcon />}
+                />
+                <IconButton
+                  onClick={() => {
+                    setMeeting(reu)
+                    setDeleteMeeting(true)
+                  }}
+                  aria-label="eliminar"
+                  icon={<DeleteIcon />}
+                />
+              </ShouldRender>
+            </MeetingCard>
           ))}
         </ShouldRender>
       </Flex>
       <ModalWrapper
-        titulo={isEmpty(meetingData) ? "Nueva reunión" : "Modificar reunión"}
+        titulo={
+          isEmpty(meetingData)
+            ? formatMessage({ id: "app.meetingForm.newMeeting" })
+            : formatMessage({ id: "app.meetingForm.updateMeeting" })
+        }
         contenido={
           <MeetingDataForm meeting={meetingData}>
             <NeutralButton onClick={onCloseFormMeeting} mr={3}>
-              volver
+              <DisplayText id="app.buttons.back" defaultMessage="back" />
             </NeutralButton>
           </MeetingDataForm>
         }
@@ -115,20 +127,25 @@ const Settings = () => {
         onClose={onCloseFormMeeting}
       />
       <ModalWrapper
-        titulo="Eliminar reunión"
+        titulo={formatMessage({ id: "app.meetingForm.deleteMeeting" })}
         contenido={
           <>
-            <Text>Seguro que desea eliminar esta reunión?</Text>
+            <Text>
+              <DisplayText
+                id="app.meetingForm.deleteMessage"
+                defaultMessage="Are you sure you want to delete this meeting?"
+              />
+            </Text>
             <Stack spacing={3}>
               <CancelButton
                 onClick={() => {
                   deleteThisMeeting(meetingData)
                 }}
               >
-                eliminar
+                <DisplayText id="app.buttons.delete" defaultMessage="delete" />
               </CancelButton>
               <PrimaryButton onClick={onCloseDeleteMeeting} mr={3}>
-                volver
+                <DisplayText id="app.buttons.back" defaultMessage="back" />
               </PrimaryButton>
             </Stack>
           </>

@@ -2,7 +2,11 @@ import { Box, Flex, InputGroup } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import React from "react"
 import FormikInput from "./formElements/FormikInput"
+import { useIntl } from "react-intl"
+
 const SearchMeeting = () => {
+  const { formatMessage } = useIntl()
+
   return (
     <Formik
       enableReinitialize
@@ -17,7 +21,11 @@ const SearchMeeting = () => {
           <Box>
             <InputGroup>
               <Flex flexDir="row" align="flex-end" w="40%">
-                <FormikInput label="Buscar" name="buscar" required />
+                <FormikInput
+                  label={formatMessage({ id: "form.search" })}
+                  name="buscar"
+                  required
+                />
               </Flex>
             </InputGroup>
           </Box>

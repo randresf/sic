@@ -1,5 +1,6 @@
 import { ButtonGroup } from "@chakra-ui/react"
 import React from "react"
+import DisplayText from "./formElements/DisplayMessage"
 import WrapperButton from "./formElements/PrimaryButton"
 import { DefaultFun } from "./types"
 
@@ -15,18 +16,16 @@ type GroupProps = {
 const YesNoButtonGroup = ({
   onYes,
   onNo,
-  yesLbl = "continuar",
-  noLbl = "cancelar",
   yesProps = {},
   noProps = {},
 }: GroupProps) => {
   return (
     <ButtonGroup spacing="3">
       <WrapperButton onClick={onNo} {...noProps}>
-        {noLbl}
+        <DisplayText id="app.buttons.cancel" defaultMessage="cancel" />
       </WrapperButton>
       <WrapperButton onClick={onYes} colorScheme="teal" {...yesProps}>
-        {yesLbl}
+        <DisplayText id="app.buttons.continue" defaultMessage="continue" />
       </WrapperButton>
     </ButtonGroup>
   )

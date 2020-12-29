@@ -9,6 +9,7 @@ import { useHistory, useLocation } from "react-router-dom"
 import { useIntl } from "react-intl"
 import Loading from "../components/formElements/Loading"
 import queryString from "query-string"
+import DisplayText from "../components/formElements/DisplayMessage"
 
 const Login = () => {
   const [, login] = useLoginMutation()
@@ -41,7 +42,9 @@ const Login = () => {
     <Wrapper variant="small">
       <Loading loading={fetching} />
       <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
-        <Heading mb={5}>Aforo Admin</Heading>
+        <Heading mb={5}>
+          <DisplayText id="app.login.title" defaultMessage="Aforo Admin" />
+        </Heading>
         <Formik
           initialValues={{
             user: "",
@@ -60,7 +63,9 @@ const Login = () => {
               })
             }
             toast({
-              description: `bienvenido ${data?.login.admin?.firstName}`,
+              description: `${formatMessage({ id: "app.reservation.title" })} ${
+                data?.login.admin?.firstName
+              }`,
               status: "success",
             })
             history.push(String(next))
@@ -69,16 +74,23 @@ const Login = () => {
           {({ isSubmitting }) => (
             <Form style={{ width: "90%" }}>
               <Flex mb={5} justifyContent="space-around" flexDir="column">
-                <FormikInput label="Usuario" name="user" required />
                 <FormikInput
-                  label="Password"
+                  label={formatMessage({ id: "form.user" })}
+                  name="user"
+                  required
+                />
+                <FormikInput
+                  label={formatMessage({ id: "form.pwd" })}
                   type="password"
                   name="pwd"
                   required
                 />
               </Flex>
               <PrimaryButton type="submit" isLoading={isSubmitting}>
-                continuar
+                <DisplayText
+                  id="app.buttons.continue"
+                  defaultMessage="continue"
+                />
               </PrimaryButton>
             </Form>
           )}
