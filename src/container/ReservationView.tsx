@@ -6,8 +6,6 @@ import {
   useCancelReservationMutation,
 } from "../generated/graphql"
 import { useHistory } from "react-router-dom"
-import { MENSAJE_DE_CONFIRMACION } from "../constants/index"
-import { MENSAJE_DE_CANCELAR_RESERVA } from "../constants/index"
 import WrapperButton from "../components/formElements/PrimaryButton"
 import PDF from "../components/DownloadPdf"
 import { PDFDownloadLink } from "@react-pdf/renderer"
@@ -114,7 +112,9 @@ const ReservationView = ({ reservationId, external = false }: any) => {
                 document={reservation?.citizen.document}
                 title={reservation?.meeting.title}
                 meetingDate={reservation?.meeting.meetingDate}
-                confirmationMessage={MENSAJE_DE_CONFIRMACION}
+                confirmationMessage={formatMessage({
+                  id: "app.message.confirmation",
+                })}
               />
             }
             fileName={`reservaAforo_${reservation?.meeting.id}.pdf`}
@@ -137,7 +137,10 @@ const ReservationView = ({ reservationId, external = false }: any) => {
         titulo=""
         contenido={
           <>
-            {MENSAJE_DE_CANCELAR_RESERVA}
+            <DisplayText
+              id="app.modalReservation.cancelMessage"
+              defaultMessage="Are you sure to cancel the reservation?"
+            />
             <ModalFooter>
               <CancelReservation
                 reservationId={reservationId}

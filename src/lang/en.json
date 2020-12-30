@@ -63,5 +63,7 @@
   "app.meetingForm.activeMessage": "When activating the meeting, users will be able to reserve quotas Meetings with reservations cannot be modified / deleted",
   "app.pdf.title": "Reservation",
   "app.modalQuestion.title": "IMPORTANT",
-  "app.modalQuestion.message": "You cannot attend our service because you do not meet the minimum security conditions. We invite you to connect to our service through the YouTube channel:"
+  "app.modalQuestion.message": "You cannot attend our service because you do not meet the minimum security conditions. We invite you to connect to our service through the YouTube channel:",
+  "app.modalReservation.cancelMessage": "Are you sure to cancel the reservation?",
+  "app.message.confirmation": "Take this confirmation printed or on your cell phone, you can get it again by entering the link on this page. If you are not going to attend, remember to cancel this reservation in advance. Remember to arrive 30 minutes in advance. This reservation will be valid until 20 minutes after starting the meeting to which you registered. After this time you will no longer be able to enter, since the total duration of the event is only one hour."
 }
