@@ -102,3 +102,7 @@ export const QUESTIONS_FORM = {
   responseYes: "rbtn-response-yes",
   responseNo: "rbtn-response-no",
 }
+
+export const DASHBOARD_MEETINGS = {
+  searchMeeting: "input-search-meeting",
+}

@@ -18,7 +18,7 @@ const Login = () => {
   const IS_REQUIRED = formatMessage({ id: "form.required" })
   const history = useHistory()
   const location = useLocation()
-  const { next = "/settings" } = queryString.parse(location.search)
+  const { next = "/dashboard" } = queryString.parse(location.search)
   const toast = useToast({
     duration: 3000,
     isClosable: true,
@@ -37,7 +37,7 @@ const Login = () => {
     return errors
   }
 
-  if (data && data.heartBeat) history.push("/settings")
+  if (data && data.heartBeat) history.push("/dashboard")
   return (
     <Wrapper variant="small">
       <Loading loading={fetching} />

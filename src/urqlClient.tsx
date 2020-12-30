@@ -22,14 +22,13 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
   )
 }
 
-// const invalidateMeetings = (cache: Cache) => {
-//   const allFields = cache.inspectFields("Query")
-//   const fieldInfos = allFields.filter((info) => info.fieldName === "meetings")
-//   console.log(fieldInfos)
-//   fieldInfos.forEach((fi) => {
-//     cache.invalidate("Query", "meetings", fi.arguments || {})
-//   })
-// }
+const invalidateMeetings = (cache: Cache) => {
+  const allFields = cache.inspectFields("Query")
+  const fieldInfos = allFields.filter((info) => info.fieldName === "meetings")
+  fieldInfos.forEach((fi) => {
+    cache.invalidate("Query", "meetings", fi.arguments || {})
+  })
+}
 
 const createUrqlClient = () => {
   return createClient({
@@ -61,6 +60,12 @@ const createUrqlClient = () => {
                   return { heartBeat: res.login.admin }
                 }
               )
+            },
+            saveMeeting: (_results, _args, cache, _info) => {
+              invalidateMeetings(cache)
+            },
+            deleteMeeting: (_results, _args, cache, _info) => {
+              invalidateMeetings(cache)
             },
           },
         },

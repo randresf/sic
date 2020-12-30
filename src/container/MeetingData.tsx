@@ -40,7 +40,6 @@ const MeetingDataForm = ({ children, meeting }: any) => {
   const validateInputs = (values: any) => {
     const { title, meetingDate, spots, place } = values
     const errors: any = {}
-    console.log(values)
     if (!place) {
       errors.place = formatMessage({ id: "form.required" })
     }

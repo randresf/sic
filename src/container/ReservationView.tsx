@@ -81,7 +81,7 @@ const ReservationView = ({ reservationId, external = false }: any) => {
         <WrapperButton
           id={RESERVATION_VIEW.confirmBtn}
           onClick={onCancel}
-          colorScheme="teal"
+          colorScheme="purple"
         >
           <DisplayText id="app.buttons.confirm" defaultMessage="confirm" />
         </WrapperButton>
@@ -122,7 +122,7 @@ const ReservationView = ({ reservationId, external = false }: any) => {
             {({ loading }) => (
               <WrapperButton
                 id={RESERVATION_VIEW.btnDownLoadPdf}
-                colorScheme="teal"
+                colorScheme="purple"
                 isLoading={loading}
               >
                 {loading

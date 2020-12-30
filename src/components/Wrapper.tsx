@@ -10,10 +10,10 @@ const Wrapper = ({ children, variant = "regular" }: wrapper) => {
   return (
     <Box
       mx="auto"
-      maxW={variant === "regular" ? "900px" : "500px"}
+      maxW={variant === "regular" ? "100%" : "500px"}
       w="100%"
-      pr={4}
-      pl={4}
+      pr={6}
+      pl={6}
     >
       {children}
     </Box>

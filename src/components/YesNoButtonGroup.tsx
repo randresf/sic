@@ -24,7 +24,7 @@ const YesNoButtonGroup = ({
       <WrapperButton onClick={onNo} {...noProps}>
         <DisplayText id="app.buttons.cancel" defaultMessage="cancel" />
       </WrapperButton>
-      <WrapperButton onClick={onYes} colorScheme="teal" {...yesProps}>
+      <WrapperButton onClick={onYes} colorScheme="purple" {...yesProps}>
         <DisplayText id="app.buttons.continue" defaultMessage="continue" />
       </WrapperButton>
     </ButtonGroup>

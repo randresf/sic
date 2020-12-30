@@ -6,8 +6,8 @@ type NormalInputProps = {
   label: string
   id: string
   required: true | false
-  onBlur: any
-  onChange: any
+  onBlur?: any
+  onChange?: any
   disabled: true | false
 }
 

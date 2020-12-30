@@ -1,41 +1,30 @@
 import React, { useState } from "react"
-import {
-  Box,
-  Flex,
-  Heading,
-  IconButton,
-  Stack,
-  Text,
-  useToast,
-} from "@chakra-ui/react"
-import Loading from "../components/formElements/Loading"
-import { useMeetingsQuery } from "../generated/graphql"
-import { MEETINGS_LIST } from "../ui/formIds"
-import ShouldRender from "../components/ShouldRender"
-import SearchMeeting from "../components/SeachMeeting"
-import ModalWrapper from "../components/ModalWrapper"
-import MeetingDataForm from "../container/MeetingData"
-import MeetingCard from "../container/MeetingCard"
-import PrimaryButton from "../components/formElements/PrimaryButton"
-import NewMeetingCard from "../components/NewMeetingCard"
+import { Box, Flex, IconButton, Stack, Text } from "@chakra-ui/react"
+import ShouldRender from "../../../components/ShouldRender"
+import SearchMeeting from "../SearchMeeting"
+import ModalWrapper from "../../../components/ModalWrapper"
+import MeetingDataForm from "../../../container/MeetingData"
+import MeetingCard from "../../../container/MeetingCard"
+import PrimaryButton from "../../../components/formElements/PrimaryButton"
+import NewMeetingCard from "../../../components/NewMeetingCard"
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
-import { useDeleteMeetMutation } from "../generated/graphql"
-import { useIsAuth } from "../hooks/useIsAuth"
-import isEmpty from "../utils/isEmpty"
-import CancelButton from "../components/formElements/CancelButton"
-import NeutralButton from "../components/formElements/NeutralButton"
-import DisplayText from "../components/formElements/DisplayMessage"
+import CancelButton from "../../../components/formElements/CancelButton"
+import isEmpty from "../../../utils/isEmpty"
+import NeutralButton from "../../../components/formElements/NeutralButton"
+import DisplayText from "../../../components/formElements/DisplayMessage"
+import Loading from "../../../components/formElements/Loading"
+import { useMeetingsQuery } from "../../../generated/graphql"
+import { useDeleteMeetMutation } from "../../../generated/graphql"
+import Notify from "../../../utils/notify"
 import { useIntl } from "react-intl"
 
-const Settings = () => {
-  useIsAuth()
+export default function Meetings() {
   const { formatMessage } = useIntl()
   const [{ data, fetching }] = useMeetingsQuery()
   const [newMeeting, setNewMeeting] = useState(false)
   const [deleteMeeting, setDeleteMeeting] = useState(false)
   const [meetingData, setMeeting] = useState({})
   const [, getIdMeetMutation] = useDeleteMeetMutation()
-  const toast = useToast()
 
   const onCloseFormMeeting = () => {
     setNewMeeting(false)
@@ -50,30 +39,25 @@ const Settings = () => {
     const res = await getIdMeetMutation({ meetingId: meeting.id })
     if (res.data?.deleteMeeting.errors) {
       setDeleteMeeting(false)
-      return toast({
+      return Notify({
         title: "No se puede eliminar la reunión",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
+        type: "error",
       })
     }
     setDeleteMeeting(false)
-    window.location.reload()
-    return toast({
+    // window.location.reload()
+    return Notify({
       title: "reunión eliminada correctamente",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
+      type: "success",
     })
   }
+
+  const handleSearchField = (a: any) => {}
 
   if (fetching) return <Loading loading={fetching} />
   return (
     <Box>
-      <Heading as="h2" size="md" id={MEETINGS_LIST.title}>
-        <DisplayText id="form.events" defaultMessage="Events" />
-      </Heading>
-      <SearchMeeting />
+      <SearchMeeting onData={handleSearchField} />
       <Flex flex={1} alignItems="center" flexWrap="wrap">
         <NewMeetingCard
           onClick={() => {
@@ -156,5 +140,3 @@ const Settings = () => {
     </Box>
   )
 }
-
-export default Settings

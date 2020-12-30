@@ -229,7 +229,7 @@ export type MeetingInput = {
   title: Scalars["String"]
   spots: Scalars["Float"]
   meetingDate: Scalars["String"]
-  hasReservation: Scalars["Boolean"]
+  hasReservation?: Maybe<Scalars["Boolean"]>
   place: Scalars["String"]
   isActive: Scalars["String"]
 }

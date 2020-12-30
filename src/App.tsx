@@ -12,7 +12,7 @@ import urqlClient from "./urqlClient"
 import { Provider } from "urql"
 import NavBar from "./components/NavBar"
 import Divider from "./components/formElements/Divider"
-import Settings from "./pages/Settings"
+import Dashboard from "./pages/Dashboard"
 import Footer from "./components/Footer"
 
 const App = () => {
@@ -35,8 +35,8 @@ const App = () => {
             <Route exact path="/confirm/:userId">
               <Confirm />
             </Route>
-            <Route exact path="/settings">
-              <Settings />
+            <Route exact path="/dashboard">
+              <Dashboard />
             </Route>
             <Route exact path="/login">
               <Login />
