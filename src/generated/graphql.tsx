@@ -288,6 +288,16 @@ export type PlaceInput = {
   isActive?: Maybe<Scalars["String"]>
 }
 
+export type Subscription = {
+  __typename?: "Subscription"
+  newReservation: SubsNewReservation
+}
+
+export type SubsNewReservation = {
+  __typename?: "SubsNewReservation"
+  meetingId: Scalars["String"]
+}
+
 export type MeetingDataFragment = { __typename?: "Meeting" } & Pick<
   Meeting,
   "id" | "title" | "meetingDate" | "spots" | "isActive"
@@ -606,6 +616,17 @@ export type SearchReservationQuery = { __typename?: "Query" } & {
         }
     >
   }
+}
+
+export type NewReservationSubscriptionVariables = Exact<{
+  [key: string]: never
+}>
+
+export type NewReservationSubscription = { __typename?: "Subscription" } & {
+  newReservation: { __typename?: "SubsNewReservation" } & Pick<
+    SubsNewReservation,
+    "meetingId"
+  >
 }
 
 export const MeetingDataFragmentDoc = gql`
@@ -1023,4 +1044,27 @@ export function useSearchReservationQuery(
     query: SearchReservationDocument,
     ...options,
   })
+}
+export const NewReservationDocument = gql`
+  subscription NewReservation {
+    newReservation {
+      meetingId
+    }
+  }
+`
+
+export function useNewReservationSubscription<
+  TData = NewReservationSubscription
+>(
+  options: Omit<
+    Urql.UseSubscriptionArgs<NewReservationSubscriptionVariables>,
+    "query"
+  > = {},
+  handler?: Urql.SubscriptionHandler<NewReservationSubscription, TData>
+) {
+  return Urql.useSubscription<
+    NewReservationSubscription,
+    TData,
+    NewReservationSubscriptionVariables
+  >({ query: NewReservationDocument, ...options }, handler)
 }

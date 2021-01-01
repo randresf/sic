@@ -18,6 +18,10 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
 import CancelButton from "../../../components/formElements/CancelButton"
 import PrimaryButton from "../../../components/formElements/PrimaryButton"
 import Notify from "../../../utils/notify"
+import {
+  ACTIVE_MEETING_COLOR,
+  INACTIVE_MEETING_COLOR,
+} from "../../../constants"
 
 export default function Locations() {
   const [newPlace, setnewPlace] = useState(false)
@@ -30,7 +34,7 @@ export default function Locations() {
     setnewPlace(false)
   }
 
-  const onCloseDeleteMeeting = () => {
+  const onCloseDeletePlace = () => {
     setdeletePlaceModal(false)
   }
 
@@ -66,7 +70,11 @@ export default function Locations() {
           {data?.getUserPlaces.place?.map(({ __typename, ...place }: any) => (
             <PlaceCard
               {...place}
-              borderColor={place.isActive === "false" ? "tomato" : "#269e39"}
+              borderColor={
+                String(place.isActive) === "false"
+                  ? INACTIVE_MEETING_COLOR
+                  : ACTIVE_MEETING_COLOR
+              }
             >
               <IconButton
                 onClick={() => {
@@ -114,14 +122,14 @@ export default function Locations() {
               >
                 <DisplayText id="app.buttons.delete" defaultMessage="delete" />
               </CancelButton>
-              <PrimaryButton onClick={onCloseDeleteMeeting} mr={3}>
+              <PrimaryButton onClick={onCloseDeletePlace} mr={3}>
                 <DisplayText id="app.buttons.back" defaultMessage="back" />
               </PrimaryButton>
             </Stack>
           </>
         }
         isOpen={deletePlaceModal}
-        onClose={onCloseDeleteMeeting}
+        onClose={onCloseDeletePlace}
       />
     </Box>
   )

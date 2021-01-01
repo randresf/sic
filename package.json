@@ -29,6 +29,7 @@
     "react-scripts": "4.0.0",
     "react-to-pdf": "0.0.13",
     "socket.io-client": "^3.0.4",
+    "subscriptions-transport-ws": "^0.9.18",
     "urql": "^1.11.2",
     "uuid": "^8.3.1",
     "web-vitals": "^0.2.4",

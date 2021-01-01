@@ -1,4 +1,10 @@
-import { createClient, dedupExchange, Exchange, fetchExchange } from "urql"
+import {
+  createClient,
+  dedupExchange,
+  Exchange,
+  fetchExchange,
+  subscriptionExchange,
+} from "urql"
 import { cacheExchange, Cache } from "@urql/exchange-graphcache"
 import { betterUpdateQuery } from "./utils/createBetterQuery"
 import { tap, pipe } from "wonka"
@@ -9,6 +15,12 @@ import {
   LogoutMutation,
 } from "./generated/graphql"
 import { useHistory } from "react-router-dom"
+import { SubscriptionClient } from "subscriptions-transport-ws"
+
+const app_uri = "//localhost:4000/graphql"
+const subscriptionClient = new SubscriptionClient(`ws:${app_uri}`, {
+  reconnect: true,
+})
 
 const errorExchange: Exchange = ({ forward }) => (ops$) => {
   const history = useHistory()
@@ -16,7 +28,7 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
     forward(ops$),
     tap(({ error }) => {
       if (error?.message.includes("not authenticated")) {
-        history.replace("/login")
+        history ? history.replace("/login") : window.location.replace("/login")
       }
     })
   )
@@ -32,7 +44,7 @@ const invalidateMeetings = (cache: Cache) => {
 
 const createUrqlClient = () => {
   return createClient({
-    url: process.env.REACT_APP_API || "http://localhost:4000/graphql",
+    url: process.env.REACT_APP_API || `http:${app_uri}`,
     //requestPolicy: "network-only",
     fetchOptions: {
       credentials: "include",
@@ -68,6 +80,11 @@ const createUrqlClient = () => {
               invalidateMeetings(cache)
             },
           },
+        },
+      }),
+      subscriptionExchange({
+        forwardSubscription(operation) {
+          return subscriptionClient.request(operation)
         },
       }),
       errorExchange,

@@ -18,3 +18,7 @@ export const QUESTIONS = [
 ]
 
 export const DATE_FORMAT = `dddd Do MMMM, h:mm a`
+
+export const ACTIVE_MEETING_COLOR = "#269e39"
+
+export const INACTIVE_MEETING_COLOR = "tomato"

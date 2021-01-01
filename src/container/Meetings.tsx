@@ -1,7 +1,10 @@
 import React from "react"
 import { Box, Flex, IconButton, Text } from "@chakra-ui/react"
 import Loading from "../components/formElements/Loading"
-import { useMeetingsQuery } from "../generated/graphql"
+import {
+  useMeetingsQuery,
+  useNewReservationSubscription,
+} from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
 import MeetingCard from "./MeetingCard"
 import ShouldRender from "../components/ShouldRender"
@@ -9,8 +12,16 @@ import DisplayText from "../components/formElements/DisplayMessage"
 import { ArrowRightIcon } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
 
+// const handleSubscription = (messages = [], response) => {
+//   return [response.meetingId, ...messages]
+// }
+
 const Meetings = () => {
   const [{ data, fetching, error }] = useMeetingsQuery()
+  const [res] = useNewReservationSubscription()
+  if (res) {
+    console.log(res)
+  }
   if (fetching) return <Loading loading />
   return (
     <Flex flex={1} alignItems="center" flexWrap="wrap">
