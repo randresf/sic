@@ -1,129 +1,115 @@
 import React, { useState } from "react"
-import { Box, Flex, IconButton, Stack, Text } from "@chakra-ui/react"
-import ShouldRender from "../../../components/ShouldRender"
-import SearchMeeting from "../SearchMeeting"
+import { Box, Flex, Stack, Text } from "@chakra-ui/react"
 import ModalWrapper from "../../../components/ModalWrapper"
-import MeetingDataForm from "../../../container/MeetingData"
-import MeetingCard from "../../../container/MeetingCard"
-import PrimaryButton from "../../../components/formElements/PrimaryButton"
-import NewMeetingCard from "../../../components/NewMeetingCard"
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
-import CancelButton from "../../../components/formElements/CancelButton"
+import AddCard from "../../../components/AddCard"
 import isEmpty from "../../../utils/isEmpty"
 import NeutralButton from "../../../components/formElements/NeutralButton"
 import DisplayText from "../../../components/formElements/DisplayMessage"
 import Loading from "../../../components/formElements/Loading"
-import { useMeetingsQuery } from "../../../generated/graphql"
-import { useDeleteMeetMutation } from "../../../generated/graphql"
+import PlaceData from "../../../container/PlaceData"
+import {
+  useGetPlacesQuery,
+  useDeletePlaceMutation,
+} from "../../../generated/graphql"
+import ShouldRender from "../../../components/ShouldRender"
+import IconButton from "../../../components/formElements/IconButton"
+import PlaceCard from "../../../container/PlaceCard"
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
+import CancelButton from "../../../components/formElements/CancelButton"
+import PrimaryButton from "../../../components/formElements/PrimaryButton"
 import Notify from "../../../utils/notify"
-import { useIntl } from "react-intl"
 
 export default function Locations() {
-  const { formatMessage } = useIntl()
-  const [{ data, fetching }] = useMeetingsQuery()
-  const [newMeeting, setNewMeeting] = useState(false)
-  const [deleteMeeting, setDeleteMeeting] = useState(false)
-  const [meetingData, setMeeting] = useState({})
-  const [, getIdMeetMutation] = useDeleteMeetMutation()
+  const [newPlace, setnewPlace] = useState(false)
+  const [deletePlaceModal, setdeletePlaceModal] = useState(false)
+  const [placeData, setPlace] = useState({})
+  const [{ data, fetching }] = useGetPlacesQuery()
+  const [, idPlaceDelete] = useDeletePlaceMutation()
 
-  const onCloseFormMeeting = () => {
-    setNewMeeting(false)
+  const onCloseFormPlace = () => {
+    setnewPlace(false)
   }
 
   const onCloseDeleteMeeting = () => {
-    setDeleteMeeting(false)
+    setdeletePlaceModal(false)
   }
 
-  const deleteThisMeeting = async (meeting: any) => {
-    if (isEmpty(meeting)) return
-    const res = await getIdMeetMutation({ meetingId: meeting.id })
-    if (res.data?.deleteMeeting.errors) {
-      setDeleteMeeting(false)
+  const deletePlace = async (placeId: any) => {
+    if (!placeId) return
+    const res = await idPlaceDelete({ placeId: placeId })
+    if (res.data?.deletePlace.errors) {
+      setdeletePlaceModal(false)
       return Notify({
         title: "No se puede eliminar la reunión",
         type: "error",
       })
     }
-    setDeleteMeeting(false)
-    // window.location.reload()
+    setdeletePlaceModal(false)
+    window.location.reload()
     return Notify({
       title: "reunión eliminada correctamente",
       type: "success",
     })
   }
 
-  const handleSearchField = (a: any) => {}
-
   if (fetching) return <Loading loading={fetching} />
   return (
     <Box>
-      <SearchMeeting onData={handleSearchField} />
       <Flex flex={1} alignItems="center" flexWrap="wrap">
-        <NewMeetingCard
+        <AddCard
           onClick={() => {
-            // setMeeting({})
-            // setNewMeeting(true)
+            setPlace({})
+            setnewPlace(true)
           }}
         />
-        {/* <ShouldRender if={data && data.meetings}>
-          {data?.meetings.map(({ __typename, ...reu }) => (
-            <MeetingCard
-              {...reu}
-              borderColor={reu.isActive === "false" ? "tomato" : "#269e39"}
+        <ShouldRender if={data && data.getUserPlaces}>
+          {data?.getUserPlaces.place?.map(({ __typename, ...place }: any) => (
+            <PlaceCard
+              {...place}
+              borderColor={place.isActive === "false" ? "tomato" : "#269e39"}
             >
-              <ShouldRender if={!reu.hasReservation}>
-                <IconButton
-                  onClick={() => {
-                    setMeeting(reu)
-                    setNewMeeting(true)
-                  }}
-                  mr={2}
-                  aria-label="editar"
-                  icon={<EditIcon />}
-                />
-                <IconButton
-                  onClick={() => {
-                    setMeeting(reu)
-                    setDeleteMeeting(true)
-                  }}
-                  aria-label="eliminar"
-                  icon={<DeleteIcon />}
-                />
-              </ShouldRender>
-            </MeetingCard>
+              <IconButton
+                onClick={() => {
+                  setPlace(place)
+                  setnewPlace(true)
+                }}
+                mr={2}
+                aria-label="editar"
+                icon={<EditIcon />}
+              />
+              <IconButton
+                onClick={() => {
+                  setdeletePlaceModal(true)
+                  setPlace(place.id)
+                }}
+                aria-label="eliminar"
+                icon={<DeleteIcon />}
+              />
+            </PlaceCard>
           ))}
-        </ShouldRender> */}
+        </ShouldRender>
       </Flex>
-      {/* <ModalWrapper
-        titulo={
-          isEmpty(meetingData)
-            ? formatMessage({ id: "app.meetingForm.newMeeting" })
-            : formatMessage({ id: "app.meetingForm.updateMeeting" })
-        }
+      <ModalWrapper
+        titulo={isEmpty(placeData) ? "Nuevo Lugar" : "Modificar Lugar"}
         contenido={
-          <MeetingDataForm meeting={meetingData}>
-            <NeutralButton onClick={onCloseFormMeeting} mr={3}>
+          <PlaceData place={placeData}>
+            <NeutralButton onClick={onCloseFormPlace} mr={3}>
               <DisplayText id="app.buttons.back" defaultMessage="back" />
             </NeutralButton>
-          </MeetingDataForm>
+          </PlaceData>
         }
-        isOpen={newMeeting}
-        onClose={onCloseFormMeeting}
+        isOpen={newPlace}
+        onClose={onCloseFormPlace}
       />
       <ModalWrapper
-        titulo={formatMessage({ id: "app.meetingForm.deleteMeeting" })}
+        titulo="Eliminar lugar"
         contenido={
           <>
-            <Text>
-              <DisplayText
-                id="app.meetingForm.deleteMessage"
-                defaultMessage="Are you sure you want to delete this meeting?"
-              />
-            </Text>
+            <Text>Esta seguro que desea eliminar este lugar?</Text>
             <Stack spacing={3}>
               <CancelButton
                 onClick={() => {
-                  deleteThisMeeting(meetingData)
+                  deletePlace(placeData)
                 }}
               >
                 <DisplayText id="app.buttons.delete" defaultMessage="delete" />
@@ -134,9 +120,9 @@ export default function Locations() {
             </Stack>
           </>
         }
-        isOpen={deleteMeeting}
+        isOpen={deletePlaceModal}
         onClose={onCloseDeleteMeeting}
-      /> */}
+      />
     </Box>
   )
 }

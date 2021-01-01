@@ -6,7 +6,7 @@ import ModalWrapper from "../../../components/ModalWrapper"
 import MeetingDataForm from "../../../container/MeetingData"
 import MeetingCard from "../../../container/MeetingCard"
 import PrimaryButton from "../../../components/formElements/PrimaryButton"
-import NewMeetingCard from "../../../components/NewMeetingCard"
+import AddCard from "../../../components/AddCard"
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
 import CancelButton from "../../../components/formElements/CancelButton"
 import isEmpty from "../../../utils/isEmpty"
@@ -59,7 +59,7 @@ export default function Meetings() {
     <Box>
       <SearchMeeting onData={handleSearchField} />
       <Flex flex={1} alignItems="center" flexWrap="wrap">
-        <NewMeetingCard
+        <AddCard
           onClick={() => {
             setMeeting({})
             setNewMeeting(true)

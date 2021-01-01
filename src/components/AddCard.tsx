@@ -4,7 +4,7 @@ import React from "react"
 import { MEETINGS_LIST } from "../ui/formIds"
 import IconButton from "./formElements/IconButton"
 
-export default function NewMeetingCard(props: any) {
+export default function AddCard(props: any) {
   return (
     <Flex
       p={3}

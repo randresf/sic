@@ -1,7 +1,6 @@
-query getPlaces {
-  getUserPlaces {
+mutation addPlace($data: PlaceInput!) {
+  addPlace(data: $data) {
     place {
-      id
       name
       address
       isActive

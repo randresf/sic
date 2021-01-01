@@ -64,7 +64,7 @@ export type Place = {
   address: Scalars["String"]
   createdAt: Scalars["String"]
   updatedAt: Scalars["String"]
-  isActive: Scalars["Boolean"]
+  isActive: Scalars["String"]
 }
 
 export type MeetingRes = {
@@ -161,7 +161,7 @@ export type Mutation = {
   logout: Scalars["Boolean"]
   register: LoginResponse
   addPlace: PlaceResponse
-  updatePlace: PlaceResponse
+  deletePlace: PlaceResponse
 }
 
 export type MutationSaveMeetingArgs = {
@@ -215,13 +215,12 @@ export type MutationRegisterArgs = {
 }
 
 export type MutationAddPlaceArgs = {
+  placeId?: Maybe<Scalars["String"]>
   data: PlaceInput
-  idOrg: Scalars["String"]
 }
 
-export type MutationUpdatePlaceArgs = {
-  data: PlaceInput
-  idPlace: Scalars["String"]
+export type MutationDeletePlaceArgs = {
+  placeId: Scalars["String"]
 }
 
 export type MeetingInput = {
@@ -283,9 +282,10 @@ export type AdminInput = {
 }
 
 export type PlaceInput = {
+  id?: Maybe<Scalars["String"]>
   name: Scalars["String"]
   address: Scalars["String"]
-  isActive?: Maybe<Scalars["Boolean"]>
+  isActive?: Maybe<Scalars["String"]>
 }
 
 export type MeetingDataFragment = { __typename?: "Meeting" } & Pick<
@@ -319,6 +319,25 @@ export type AddAdminMutation = { __typename?: "Mutation" } & {
     admin?: Maybe<{ __typename?: "Admin" } & Pick<Admin, "id">>
     errors?: Maybe<
       Array<{ __typename?: "ErrorField" } & Pick<ErrorField, "message">>
+    >
+  }
+}
+
+export type AddPlaceMutationVariables = Exact<{
+  data: PlaceInput
+}>
+
+export type AddPlaceMutation = { __typename?: "Mutation" } & {
+  addPlace: { __typename?: "PlaceResponse" } & {
+    place?: Maybe<
+      Array<
+        { __typename?: "Place" } & Pick<Place, "name" | "address" | "isActive">
+      >
+    >
+    errors?: Maybe<
+      Array<
+        { __typename?: "ErrorField" } & Pick<ErrorField, "field" | "message">
+      >
     >
   }
 }
@@ -367,6 +386,21 @@ export type DeleteMeetMutation = { __typename?: "Mutation" } & {
         | "isActive"
       >
     >
+    errors?: Maybe<
+      Array<
+        { __typename?: "ErrorField" } & Pick<ErrorField, "field" | "message">
+      >
+    >
+  }
+}
+
+export type DeletePlaceMutationVariables = Exact<{
+  placeId: Scalars["String"]
+}>
+
+export type DeletePlaceMutation = { __typename?: "Mutation" } & {
+  deletePlace: { __typename?: "PlaceResponse" } & {
+    place?: Maybe<Array<{ __typename?: "Place" } & Pick<Place, "id">>>
     errors?: Maybe<
       Array<
         { __typename?: "ErrorField" } & Pick<ErrorField, "field" | "message">
@@ -484,7 +518,7 @@ export type GetPlacesQuery = { __typename?: "Query" } & {
       Array<
         { __typename?: "Place" } & Pick<
           Place,
-          "id" | "name" | "address" | "createdAt" | "updatedAt" | "isActive"
+          "id" | "name" | "address" | "isActive"
         >
       >
     >
@@ -621,6 +655,27 @@ export function useAddAdminMutation() {
     AddAdminDocument
   )
 }
+export const AddPlaceDocument = gql`
+  mutation addPlace($data: PlaceInput!) {
+    addPlace(data: $data) {
+      place {
+        name
+        address
+        isActive
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`
+
+export function useAddPlaceMutation() {
+  return Urql.useMutation<AddPlaceMutation, AddPlaceMutationVariables>(
+    AddPlaceDocument
+  )
+}
 export const CancelReservationDocument = gql`
   mutation cancelReservation($reservationId: String!, $userId: String!) {
     cancelReservation(reservationId: $reservationId, userId: $userId)
@@ -675,6 +730,25 @@ export const DeleteMeetDocument = gql`
 export function useDeleteMeetMutation() {
   return Urql.useMutation<DeleteMeetMutation, DeleteMeetMutationVariables>(
     DeleteMeetDocument
+  )
+}
+export const DeletePlaceDocument = gql`
+  mutation deletePlace($placeId: String!) {
+    deletePlace(placeId: $placeId) {
+      place {
+        id
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`
+
+export function useDeletePlaceMutation() {
+  return Urql.useMutation<DeletePlaceMutation, DeletePlaceMutationVariables>(
+    DeletePlaceDocument
   )
 }
 export const GetUserDocument = gql`
@@ -803,8 +877,6 @@ export const GetPlacesDocument = gql`
         id
         name
         address
-        createdAt
-        updatedAt
         isActive
       }
       errors {

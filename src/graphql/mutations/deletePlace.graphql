@@ -1,10 +1,7 @@
-query getPlaces {
-  getUserPlaces {
+mutation deletePlace($placeId: String!) {
+  deletePlace(placeId: $placeId) {
     place {
       id
-      name
-      address
-      isActive
     }
     errors {
       field
