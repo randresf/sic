@@ -39,11 +39,11 @@ const PlaceData = ({ children, place }: any) => {
     return errors
   }
 
-  const onSubmit = async ({ ...values }: any) => {
-    const place = await addPlaceMutation({ data: values })
+  const onSubmit = async ({ id, ...values }: any) => {
+    const place = await addPlaceMutation({ placeId: id,  data: values })
     if (place.error) {
       return toast({
-        title: "No se pudo crear el lugar ",
+        title: formatMessage({id: "app.notification.Couldn'tCreatePlace"}),
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -51,7 +51,7 @@ const PlaceData = ({ children, place }: any) => {
     }
 
     toast({
-      title: "Se creo el lugar correctamente",
+      title: formatMessage({id:"app.notification.placeCreatedCorrectly"}),
       status: "success",
       duration: 3000,
       isClosable: true,
@@ -73,14 +73,14 @@ const PlaceData = ({ children, place }: any) => {
               <Flex flexDir="column" w="100%">
                 <FormikInput
                   id="1"
-                  label="Nombre"
+                  label={formatMessage({id: "form.names"})}
                   name="name"
                   disabled={false}
                   required
                 />
                 <FormikInput
                   id="2"
-                  label="Dirección"
+                  label={formatMessage({id:"form.address"})}
                   name="address"
                   disabled={false}
                   required

@@ -14,6 +14,7 @@ import NavBar from "./components/NavBar"
 import Divider from "./components/formElements/Divider"
 import Dashboard from "./pages/Dashboard"
 import Footer from "./components/Footer"
+import Settings from "./pages/Settings"
 
 const App = () => {
   return (
@@ -40,6 +41,9 @@ const App = () => {
             </Route>
             <Route exact path="/login">
               <Login />
+            </Route>
+            <Route exact path="/settings">
+              <Settings />
             </Route>
             <Route path="/">
               <Landing />

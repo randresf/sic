@@ -5,9 +5,12 @@ import Loading from "./formElements/Loading"
 import DisplayText from "./formElements/DisplayMessage"
 import ShouldRender from "./ShouldRender"
 import { SettingsIcon } from "@chakra-ui/icons"
+import { useHistory } from "react-router-dom"
+
 
 export default function Account() {
   const [{ data }] = useHeartbeatQuery()
+  const history = useHistory()
   const [{ fetching }, logout] = useLogoutMutation()
   if (fetching) return <Loading loading />
 
@@ -23,7 +26,9 @@ export default function Account() {
           <SettingsIcon ml={3} />
         </MenuButton>
         <MenuList>
-          <MenuItem>
+          <MenuItem onClick={async () => {
+            history.push("/settings")
+          }} >
             <DisplayText id="app.account.settings" defaultMessage="settings" />
           </MenuItem>
           <MenuItem

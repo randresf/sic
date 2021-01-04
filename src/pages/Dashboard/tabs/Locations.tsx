@@ -22,6 +22,8 @@ import {
   ACTIVE_MEETING_COLOR,
   INACTIVE_MEETING_COLOR,
 } from "../../../constants"
+import { useIntl } from "react-intl"
+
 
 export default function Locations() {
   const [newPlace, setnewPlace] = useState(false)
@@ -29,6 +31,8 @@ export default function Locations() {
   const [placeData, setPlace] = useState({})
   const [{ data, fetching }] = useGetPlacesQuery()
   const [, idPlaceDelete] = useDeletePlaceMutation()
+  const { formatMessage } = useIntl()
+
 
   const onCloseFormPlace = () => {
     setnewPlace(false)
@@ -41,17 +45,18 @@ export default function Locations() {
   const deletePlace = async (placeId: any) => {
     if (!placeId) return
     const res = await idPlaceDelete({ placeId: placeId })
-    if (res.data?.deletePlace.errors) {
+    
+    if (res.data?.deletePlace.errors || res.error) {
       setdeletePlaceModal(false)
       return Notify({
-        title: "No se puede eliminar la reunión",
+        title: formatMessage({ id : "app.notification.cantDeletePlace"}),
         type: "error",
       })
     }
     setdeletePlaceModal(false)
     window.location.reload()
     return Notify({
-      title: "reunión eliminada correctamente",
+      title: formatMessage({ id : "app.notification.deletePlaceOk"}),
       type: "success",
     })
   }
@@ -98,7 +103,7 @@ export default function Locations() {
         </ShouldRender>
       </Flex>
       <ModalWrapper
-        titulo={isEmpty(placeData) ? "Nuevo Lugar" : "Modificar Lugar"}
+        titulo={isEmpty(placeData) ? formatMessage({id:"app.modalLocation.newPlace"}) : formatMessage({id:"app.modalLocation.modifyPlace"})}
         contenido={
           <PlaceData place={placeData}>
             <NeutralButton onClick={onCloseFormPlace} mr={3}>
@@ -110,10 +115,10 @@ export default function Locations() {
         onClose={onCloseFormPlace}
       />
       <ModalWrapper
-        titulo="Eliminar lugar"
+        titulo={formatMessage({id:"app.modalLocation.titleDeletePlace"})}
         contenido={
           <>
-            <Text>Esta seguro que desea eliminar este lugar?</Text>
+            <Text><DisplayText id="app.modalLocation.deletePlace"/></Text>
             <Stack spacing={3}>
               <CancelButton
                 onClick={() => {
