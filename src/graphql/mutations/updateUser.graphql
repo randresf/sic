@@ -1,0 +1,14 @@
+mutation updateUser($userData: userUpdateInput!) {
+  updateUser(userData: $userData) {
+    errors {
+      field
+      message
+    }
+    admin {
+      firstName
+      lastName
+      email
+      phone
+    }
+  }
+}

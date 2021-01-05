@@ -7,6 +7,7 @@
   "app.buttons.loading": "loading...",
   "app.buttons.reserve": "Reserve",
   "app.buttons.save": "save",
+  "app.buttons.changePwd": "change password",
   "app.buttons.searchReservation": "search reservation",
   "app.confirm.notice": "Please review the information before proceeding",
   "app.dashboard.tab1": "Locations",
@@ -17,6 +18,8 @@
   "app.label.date": "date: ",
   "app.label.spots": "spots: ",
   "app.label.state": "State",
+  "app.label.hide": "hide",
+  "app.login.pwdIncorret": "The password does not match",
   "app.login.title": "Aforo Admin",
   "app.meetingForm.activeMessage": "When activating the meeting, users will be able to reserve quotas Meetings with reservations cannot be modified / deleted",
   "app.meetingForm.deleteMeeting": "delete meeting",
@@ -37,6 +40,8 @@
   "app.notification.cancelReservationOk": "reservation successfully canceled",
   "app.notification.saveMeetingError": "meeting could not be saved",
   "app.notification.saveMeetingOk": "meeting successfully saved",
+  "app.notification.userDontUpdate": "User could not update correctly",
+  "app.notification.userUpdate": "User updated successfully",
   "app.pdf.title": "Reservation",
   "app.modalLocation.newPlace": "New place",
   "app.modalLocation.modifyPlace": "Modify place",
@@ -73,6 +78,8 @@
   "form.phone": "Phone",
   "form.place": "Place",
   "form.pwd": "Password",
+  "form.Newpwd": "New password",
+  "form.Repeatpwd": "Repeat new password",
   "form.required": "required",
   "form.search": "Search",
   "form.spots": "Spots",
@@ -80,5 +87,5 @@
   "form.user": "User",
   "radio.question.no": "No",
   "radio.question.yes": "Yes",
-  "app.settings.title" : "Settings"
+  "app.settings.title": "Settings"
 }

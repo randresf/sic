@@ -10,6 +10,7 @@
   "app.buttons.logout": "Salir",
   "app.buttons.reserve": "Reservar",
   "app.buttons.save": "guardar",
+  "app.buttons.changePwd": "cambiar contraseña",
   "app.buttons.searchReservation": "consultar reservas",
   "app.confirm.notice": "Por favor revise la información antes de proceder",
   "app.dashboard.tab1": "Lugares",
@@ -21,7 +22,9 @@
   "app.label.date": "fecha: ",
   "app.label.spots": "cupos: ",
   "app.label.state": "Estado",
+  "app.label.hide": "ocultar",
   "app.login.title": "Aforo Admin",
+  "app.login.pwdIncorret": "La contraseña no coincide",
   "app.meetingForm.activeMessage": "Al activar la reunion los usuario podran reservar cupos Reuniones con reservas no se pueden modificar/eliminar",
   "app.meetingForm.deleteMeeting": "Elimar reunión",
   "app.meetingForm.deleteMessage": "Seguro que desea eliminar esta reunión?",
@@ -43,6 +46,8 @@
   "app.notification.deletePlaceOk": "Lugar eliminado correctamente",
   "app.notification.Couldn'tCreatePlace": "No se pudo crear el lugar",
   "app.notification.placeCreatedCorrectly": "Se creo el lugar correctamente",
+  "app.notification.userDontUpdate": "Usuario no pudo actualizar correctamente",
+  "app.notification.userUpdate": "Usuario actualizado correctamente",
   "app.pdf.title": "Reserva",
   "app.modalLocation.newPlace": "Nuevo lugar",
   "app.modalLocation.modifyPlace": "Modificar lugar",
@@ -81,6 +86,8 @@
   "form.phone": "Telefono",
   "form.place": "Lugar",
   "form.pwd": "Contraseña",
+  "form.Newpwd": "Nueva contraseña",
+  "form.Repeatpwd": "Repetir nueva contraseña",
   "form.required": "campo requerido",
   "form.search": "Buscar",
   "form.searchReservation": "Buscar reservas",
@@ -89,5 +96,5 @@
   "form.user": "Usuario",
   "radio.question.no": "No",
   "radio.question.yes": "Si",
-  "app.settings.title" : "Configuración"
+  "app.settings.title": "Configuración"
 }
