@@ -23,7 +23,7 @@ import {
   INACTIVE_MEETING_COLOR,
 } from "../../../constants"
 import { useIntl } from "react-intl"
-
+import { v4 } from "uuid"
 
 export default function Locations() {
   const [newPlace, setnewPlace] = useState(false)
@@ -32,7 +32,6 @@ export default function Locations() {
   const [{ data, fetching }] = useGetPlacesQuery()
   const [, idPlaceDelete] = useDeletePlaceMutation()
   const { formatMessage } = useIntl()
-
 
   const onCloseFormPlace = () => {
     setnewPlace(false)
@@ -45,18 +44,18 @@ export default function Locations() {
   const deletePlace = async (placeId: any) => {
     if (!placeId) return
     const res = await idPlaceDelete({ placeId: placeId })
-    
+
     if (res.data?.deletePlace.errors || res.error) {
       setdeletePlaceModal(false)
       return Notify({
-        title: formatMessage({ id : "app.notification.cantDeletePlace"}),
+        title: formatMessage({ id: "app.notification.cantDeletePlace" }),
         type: "error",
       })
     }
     setdeletePlaceModal(false)
-    window.location.reload()
+    //window.location.reload()
     return Notify({
-      title: formatMessage({ id : "app.notification.deletePlaceOk"}),
+      title: formatMessage({ id: "app.notification.deletePlaceOk" }),
       type: "success",
     })
   }
@@ -74,6 +73,7 @@ export default function Locations() {
         <ShouldRender if={data && data.getUserPlaces}>
           {data?.getUserPlaces.place?.map(({ __typename, ...place }: any) => (
             <PlaceCard
+              key={v4()}
               {...place}
               borderColor={
                 String(place.isActive) === "false"
@@ -103,7 +103,11 @@ export default function Locations() {
         </ShouldRender>
       </Flex>
       <ModalWrapper
-        titulo={isEmpty(placeData) ? formatMessage({id:"app.modalLocation.newPlace"}) : formatMessage({id:"app.modalLocation.modifyPlace"})}
+        titulo={
+          isEmpty(placeData)
+            ? formatMessage({ id: "app.modalLocation.newPlace" })
+            : formatMessage({ id: "app.modalLocation.modifyPlace" })
+        }
         contenido={
           <PlaceData place={placeData}>
             <NeutralButton onClick={onCloseFormPlace} mr={3}>
@@ -115,10 +119,12 @@ export default function Locations() {
         onClose={onCloseFormPlace}
       />
       <ModalWrapper
-        titulo={formatMessage({id:"app.modalLocation.titleDeletePlace"})}
+        titulo={formatMessage({ id: "app.modalLocation.titleDeletePlace" })}
         contenido={
           <>
-            <Text><DisplayText id="app.modalLocation.deletePlace"/></Text>
+            <Text>
+              <DisplayText id="app.modalLocation.deletePlace" />
+            </Text>
             <Stack spacing={3}>
               <CancelButton
                 onClick={() => {

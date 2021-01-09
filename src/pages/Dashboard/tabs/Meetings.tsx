@@ -17,10 +17,15 @@ import { useMeetingsQuery } from "../../../generated/graphql"
 import { useDeleteMeetMutation } from "../../../generated/graphql"
 import Notify from "../../../utils/notify"
 import { useIntl } from "react-intl"
+import { v4 } from "uuid"
 
 export default function Meetings() {
   const { formatMessage } = useIntl()
-  const [{ data, fetching }] = useMeetingsQuery()
+  const [variables, setVariables] = useState({
+    limit: 15,
+    cursor: null as null | string,
+  })
+  const [{ data, fetching }] = useMeetingsQuery({ variables })
   const [newMeeting, setNewMeeting] = useState(false)
   const [deleteMeeting, setDeleteMeeting] = useState(false)
   const [meetingData, setMeeting] = useState({})
@@ -37,6 +42,13 @@ export default function Meetings() {
   const deleteThisMeeting = async (meeting: any) => {
     if (isEmpty(meeting)) return
     const res = await getIdMeetMutation({ meetingId: meeting.id })
+    if (res.error) {
+      setDeleteMeeting(false)
+      return Notify({
+        title: res.error.message,
+        type: "error",
+      })
+    }
     if (res.data?.deleteMeeting.errors) {
       setDeleteMeeting(false)
       return Notify({
@@ -45,7 +57,7 @@ export default function Meetings() {
       })
     }
     setDeleteMeeting(false)
-    // window.location.reload()
+    window.location.reload()
     return Notify({
       title: "reunión eliminada correctamente",
       type: "success",
@@ -65,11 +77,12 @@ export default function Meetings() {
             setNewMeeting(true)
           }}
         />
-        <ShouldRender if={data && data.meetings}>
-          {data?.meetings.map(({ __typename, ...reu }) => (
+        <ShouldRender if={data && data.meetings.meetings}>
+          {data?.meetings.meetings.map(({ __typename, ...reu }) => (
             <MeetingCard
               {...reu}
               borderColor={reu.isActive === "false" ? "tomato" : "#269e39"}
+              key={v4()}
             >
               <ShouldRender if={!reu.hasReservation}>
                 <IconButton
@@ -93,6 +106,24 @@ export default function Meetings() {
             </MeetingCard>
           ))}
         </ShouldRender>
+        {data?.meetings.hasMore ? (
+          <Flex>
+            <PrimaryButton
+              isLoading={fetching}
+              mt={8}
+              onClick={() => {
+                setVariables({
+                  limit: variables.limit,
+                  cursor:
+                    data.meetings.meetings[data.meetings.meetings.length - 1]
+                      .createdAt,
+                })
+              }}
+            >
+              load more
+            </PrimaryButton>
+          </Flex>
+        ) : null}
       </Flex>
       <ModalWrapper
         titulo={
@@ -101,7 +132,7 @@ export default function Meetings() {
             : formatMessage({ id: "app.meetingForm.updateMeeting" })
         }
         contenido={
-          <MeetingDataForm meeting={meetingData}>
+          <MeetingDataForm meeting={meetingData} onChange={onCloseFormMeeting}>
             <NeutralButton onClick={onCloseFormMeeting} mr={3}>
               <DisplayText id="app.buttons.back" defaultMessage="back" />
             </NeutralButton>

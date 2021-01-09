@@ -7,7 +7,6 @@ import ShouldRender from "./ShouldRender"
 import { SettingsIcon } from "@chakra-ui/icons"
 import { useHistory } from "react-router-dom"
 
-
 export default function Account() {
   const [{ data }] = useHeartbeatQuery()
   const history = useHistory()
@@ -17,7 +16,7 @@ export default function Account() {
   return (
     <ShouldRender if={data && data.heartBeat}>
       <Menu>
-        <MenuButton as={Text} rightIcon="chevron-down">
+        <MenuButton as={Text}>
           <DisplayText
             id="app.navbar.greeting"
             defaultMessage="registrado como"
@@ -26,16 +25,17 @@ export default function Account() {
           <SettingsIcon ml={3} />
         </MenuButton>
         <MenuList>
-          <MenuItem onClick={async () => {
-            history.push("/settings")
-          }} >
+          <MenuItem
+            onClick={async () => {
+              history.push("/settings")
+            }}
+          >
             <DisplayText id="app.account.settings" defaultMessage="settings" />
           </MenuItem>
           <MenuItem
             onClick={async () => {
               await logout()
             }}
-            isLoading={fetching}
           >
             <DisplayText id="app.account.logOut" defaultMessage="logout" />
           </MenuItem>

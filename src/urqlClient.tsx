@@ -13,6 +13,11 @@ import {
   HeartbeatQuery,
   LoginMutation,
   LogoutMutation,
+  MeetingsDocument,
+  MeetingsQuery,
+  MeetingQueryFragment,
+  SaveMeetingMutation,
+  NewMeetingSubscription,
 } from "./generated/graphql"
 import { useHistory } from "react-router-dom"
 import { SubscriptionClient } from "subscriptions-transport-ws"
@@ -34,24 +39,29 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
   )
 }
 
-const invalidateMeetings = (cache: Cache) => {
-  const allFields = cache.inspectFields("Query")
-  const fieldInfos = allFields.filter((info) => info.fieldName === "meetings")
-  fieldInfos.forEach((fi) => {
-    cache.invalidate("Query", "meetings", fi.arguments || {})
+const invalidateQuerys = (cache: Cache, fName: string) => {
+  const fieldInfos = cache
+    .inspectFields("Query")
+    .filter((info) => info.fieldName === fName)
+  fieldInfos.forEach(({ fieldName, arguments: variables }: any) => {
+    cache.invalidate("Query", fieldName, variables || undefined)
   })
 }
 
 const createUrqlClient = () => {
   return createClient({
     url: process.env.REACT_APP_API || `http:${app_uri}`,
-    //requestPolicy: "network-only",
+    requestPolicy: "cache-first",
     fetchOptions: {
       credentials: "include",
     },
     exchanges: [
       dedupExchange,
       cacheExchange({
+        keys: {
+          Admin: (data) => data.name as string,
+          PlaceResponse: () => null,
+        },
         updates: {
           Mutation: {
             logout: (result, _args, cache, _info) => {
@@ -74,10 +84,37 @@ const createUrqlClient = () => {
               )
             },
             saveMeeting: (_results, _args, cache, _info) => {
-              invalidateMeetings(cache)
+              invalidateQuerys(cache, "meetings")
             },
             deleteMeeting: (_results, _args, cache, _info) => {
-              invalidateMeetings(cache)
+              invalidateQuerys(cache, "meetings")
+            },
+            updateUser: (_results, _args, cache, _info) => {
+              invalidateQuerys(cache, "getUserData")
+            },
+          },
+          Subscription: {
+            newMeeting: (result, _args, cache) => {
+              const variables = {
+                limit: 15,
+                cursor: null as null | string,
+              }
+              betterUpdateQuery<NewMeetingSubscription, MeetingsQuery>(
+                cache,
+                { query: MeetingsDocument, variables },
+                result,
+                (res, que) => {
+                  const meeting = res.newMeeting.data
+                  if (!meeting) return que
+                  if (meeting.isActive === "true")
+                    que.meetings.meetings.unshift(meeting)
+                  else
+                    que.meetings.meetings = que.meetings.meetings.filter(
+                      (met) => met.id !== meeting.id
+                    )
+                  return que
+                }
+              )
             },
           },
         },

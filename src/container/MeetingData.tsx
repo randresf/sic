@@ -1,4 +1,4 @@
-import { Box, Flex, useToast, Text, Radio } from "@chakra-ui/react"
+import { Box, Flex, Text, Radio } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import React from "react"
 import Loading from "../components/formElements/Loading"
@@ -17,9 +17,9 @@ import isEmpty from "../utils/isEmpty"
 import { formatAgeDate } from "../utils/formatDate"
 import { RadioGroupControl } from "formik-chakra-ui"
 import DisplayText from "../components/formElements/DisplayMessage"
+import Notify from "../utils/notify"
 
-const MeetingDataForm = ({ children, meeting }: any) => {
-  const toast = useToast()
+const MeetingDataForm = ({ children, meeting, onChange }: any) => {
   const [, saveMeeting] = useSaveMeetingMutation()
   const { formatMessage } = useIntl()
   const initialValues = isEmpty(meeting)
@@ -58,26 +58,23 @@ const MeetingDataForm = ({ children, meeting }: any) => {
   const [{ data: placeData, fetching: placeLoading }] = useGetPlacesQuery()
 
   const onSubmit = async ({ ...values }) => {
-    const { meetingId, ...data } = values
+    const { meetingId, createdAt, ...data } = values
     const saveMeetingResponse = await saveMeeting({
       meetingId,
       data: data as MeetingInput,
     })
     if (saveMeetingResponse.error) {
-      return toast({
+      return Notify({
         title: formatMessage({ id: "app.notification.saveMeetingError" }),
-        status: "error",
-        duration: 3000,
-        isClosable: true,
+        type: "error",
       })
     }
-    toast({
+    if (typeof onChange === "function") onChange()
+    //window.location.reload()
+    Notify({
       title: formatMessage({ id: "app.notification.saveMeetingOk" }),
-      status: "success",
-      duration: 3000,
-      isClosable: true,
+      type: "success",
     })
-    window.location.reload()
   }
 
   if (placeLoading) return <Loading loading={placeLoading} />
@@ -113,12 +110,9 @@ const MeetingDataForm = ({ children, meeting }: any) => {
                   id="3"
                   label={formatMessage({ id: "form.date" })}
                   name="meetingDate"
-                  type="date"
-                  max="2030-12-31"
-                  min={moment().format("YYYY-MM-DD")}
-                  placeholder="yyyy-mm-dd"
+                  type="datetime-local"
+                  min={moment().format("yyyy-MM-ddThh:mm")}
                   required
-                  pattern="(?:19|20)\[0-9\]{2}-(?:(?:0\[1-9\]|1\[0-2\])/(?:0\[1-9\]|1\[0-9\]|2\[0-9\])|(?:(?!02)(?:0\[1-9\]|1\[0-2\])/(?:30))|(?:(?:0\[13578\]|1\[02\])-31))"
                 />
                 <FormikInput
                   type="number"

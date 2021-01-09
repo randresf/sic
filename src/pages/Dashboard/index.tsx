@@ -6,10 +6,15 @@ import TabsSection from "../../components/formElements/Tabs"
 import { useIntl } from "react-intl"
 import Meetings from "./tabs/Meetings"
 import Locations from "./tabs/Locations"
+import { useHistory, useLocation } from "react-router-dom"
+import queryString from "query-string"
 
 export default function Dashboard() {
   useIsAuth()
+  const history = useHistory()
+  const location = useLocation()
   const { formatMessage } = useIntl()
+  const { tab = 0 } = queryString.parse(location.search)
 
   const tabData = [
     {
@@ -37,12 +42,21 @@ export default function Dashboard() {
       ),
     },
   ]
+  const onChange = (tabIndex: number) => {
+    history.replace(`/dashboard?tab=${tabIndex}`)
+  }
 
   return (
     <Box mt="3em">
       <DashboardTitle />
       <Box mt="3em">
-        <TabsSection tabs={tabData} isFitted isLazy />
+        <TabsSection
+          tabs={tabData}
+          isFitted
+          isLazy
+          onChange={onChange}
+          defaultIndex={Number(tab)}
+        />
       </Box>
     </Box>
   )

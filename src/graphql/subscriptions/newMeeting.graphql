@@ -1,0 +1,7 @@
+subscription NewMeeting {
+  newMeeting {
+    data {
+      ...MeetingQuery
+    }
+  }
+}

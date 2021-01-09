@@ -56,7 +56,7 @@ const Confirm = () => {
   }
 
   return (
-    <Wrapper variant="small">
+    <Wrapper>
       <Flex w="100%" alignItems="center" flexDir="column">
         <Heading id={CONFIRM_RESERVATION.meetTitle} mb={5} as="h3">
           {meet?.title}

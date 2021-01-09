@@ -39,7 +39,7 @@ const Login = () => {
 
   if (data && data.heartBeat) history.push("/dashboard")
   return (
-    <Wrapper variant="small">
+    <Wrapper>
       <Loading loading={fetching} />
       <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
         <Heading mb={5}>

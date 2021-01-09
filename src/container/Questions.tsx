@@ -73,7 +73,7 @@ const Question = () => {
   }
 
   return (
-    <Wrapper variant="small">
+    <Wrapper>
       <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
         <Heading id={QUESTION_VIEW.formTitle}>
           <DisplayText id="app.question.title" defaultMessage="Health form" />

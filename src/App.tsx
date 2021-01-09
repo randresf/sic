@@ -22,7 +22,7 @@ const App = () => {
       <Router>
         <NavBar />
         <Divider style={{ marginBottom: "10px", marginTop: "10px" }} />
-        <Wrapper variant="regular">
+        <Wrapper>
           <Switch>
             <Route exact path="/datos/:meetingId">
               <UserData />

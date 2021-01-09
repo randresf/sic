@@ -1,11 +1,8 @@
-query Meetings {
-  meetings {
-    ...MeetingData
-    hasReservation
-    place {
-      id
-      name
-      address
+query Meetings($limit: Int!, $cursor: String) {
+  meetings(limit: $limit, cursor: $cursor) {
+    meetings {
+      ...MeetingQuery
     }
+    hasMore
   }
 }

@@ -12,7 +12,7 @@ const ReservationData = () => {
   const { external = false } = queryString.parse(location.search)
   if (!reservationId) history.push("/")
   return (
-    <Wrapper variant="regular">
+    <Wrapper>
       <Flex alignItems="center" flex={1} p={5} flexDir="column">
         <ReservationView reservationId={reservationId} external={external} />
       </Flex>

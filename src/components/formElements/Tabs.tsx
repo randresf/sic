@@ -5,11 +5,22 @@ type TabsProps = {
   tabs: { label: string; content: React.ReactNode }[]
   isFitted: boolean
   isLazy: boolean
+  onChange?: (index: number) => void
+  defaultIndex?: number
 }
 
-export default function TabsSection({ tabs, ...props }: TabsProps) {
+export default function TabsSection({
+  tabs,
+  defaultIndex = 0,
+  ...props
+}: TabsProps) {
   return (
-    <Tabs variant="enclosed" {...props}>
+    <Tabs
+      variant="enclosed"
+      {...props}
+      colorScheme="purple"
+      defaultIndex={defaultIndex}
+    >
       <TabList>
         {tabs.map((tab, index) => (
           <Tab key={index}>{tab.label}</Tab>

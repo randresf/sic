@@ -7,7 +7,7 @@ import DisplayText from "../components/formElements/DisplayMessage"
 
 const UserData = () => {
   return (
-    <Wrapper variant="small">
+    <Wrapper>
       <Flex alignItems="center" flex={1} p={5} flexDir="column">
         <Heading id={CITIZEN_FORM.headingTitle}>
           <DisplayText

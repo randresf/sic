@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import { Box, Flex, IconButton, Text } from "@chakra-ui/react"
 import Loading from "../components/formElements/Loading"
 import {
   useMeetingsQuery,
-  useNewReservationSubscription,
+  useMeetingUpdatedSubscription,
+  useNewMeetingSubscription,
 } from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
 import MeetingCard from "./MeetingCard"
@@ -11,30 +12,37 @@ import ShouldRender from "../components/ShouldRender"
 import DisplayText from "../components/formElements/DisplayMessage"
 import { ArrowRightIcon } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
-
-// const handleSubscription = (messages = [], response) => {
-//   return [response.meetingId, ...messages]
-// }
+import PrimaryButton from "../components/formElements/PrimaryButton"
 
 const Meetings = () => {
-  const [{ data, fetching, error }] = useMeetingsQuery()
-  const [res] = useNewReservationSubscription()
-  if (res) {
-    console.log(res)
-  }
+  const [variables, setVariables] = useState({
+    limit: 15,
+    cursor: null as null | string,
+  })
+  const [{ data, fetching, error }] = useMeetingsQuery({ variables })
+  useMeetingUpdatedSubscription()
+  useNewMeetingSubscription()
+
   if (fetching) return <Loading loading />
+  if (error || !data || data.meetings.meetings.length === 0)
+    return (
+      <Box id={MEETINGS_LIST.noMeetings}>
+        <DisplayText
+          id="app.meetings.empty"
+          defaultMessage="no hay reuniones"
+        />
+      </Box>
+    )
+  const nextPage = {
+    limit: variables.limit,
+    cursor:
+      data?.meetings.meetings[data.meetings.meetings.length - 1].createdAt,
+  }
+
   return (
     <Flex flex={1} alignItems="center" flexWrap="wrap">
-      <ShouldRender if={error || !data || data.meetings?.length === 0}>
-        <Box id={MEETINGS_LIST.noMeetings}>
-          <DisplayText
-            id="app.meetings.empty"
-            defaultMessage="no hay reuniones"
-          />
-        </Box>
-      </ShouldRender>
       <ShouldRender if={data && data.meetings}>
-        {data?.meetings.map(({ __typename, ...reu }) => (
+        {data?.meetings.meetings.map(({ __typename, ...reu }) => (
           <MeetingCard {...reu}>
             <Link
               to={`/datos/${reu.id}`}
@@ -56,6 +64,19 @@ const Meetings = () => {
             </Link>
           </MeetingCard>
         ))}
+        <ShouldRender if={data && data.meetings.hasMore}>
+          <Flex>
+            <PrimaryButton
+              isLoading={fetching}
+              mt={8}
+              onClick={() => {
+                setVariables(nextPage)
+              }}
+            >
+              load more
+            </PrimaryButton>
+          </Flex>
+        </ShouldRender>
       </ShouldRender>
     </Flex>
   )
