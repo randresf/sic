@@ -53,7 +53,7 @@ export default function Locations() {
       })
     }
     setdeletePlaceModal(false)
-    //window.location.reload()
+    window.location.reload()
     return Notify({
       title: formatMessage({ id: "app.notification.deletePlaceOk" }),
       type: "success",

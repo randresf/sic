@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useIntl } from "react-intl"
 import { useHistory } from "react-router-dom"
 
-import { Box, Flex, Link } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
@@ -12,6 +12,7 @@ import Loading from "../components/formElements/Loading"
 import isEmpty from "../utils/isEmpty"
 import ShouldRender from "../components/ShouldRender"
 import Notify from "../utils/notify"
+import ChangePwd from "../components/ChangesPwd"
 
 const SettingsData = ({ children }: any) => {
   const { formatMessage } = useIntl()
@@ -98,48 +99,8 @@ const SettingsData = ({ children }: any) => {
               disabled={false}
               required
             />
-            <Link
-              mt={4}
-              onClick={() => {
-                onChangenewPwd(!newPwd)
-              }}
-              href="#"
-              color="purple.500"
-            >
-              {newPwd ? (
-                <DisplayText id="app.label.hide" defaultMessage="hide" />
-              ) : (
-                <DisplayText
-                  id="app.buttons.changePwd"
-                  defaultMessage="change password"
-                />
-              )}
-            </Link>
-            <ShouldRender if={newPwd}>
-              <FormikInput
-                id="5"
-                type="password"
-                label={formatMessage({ id: "form.pwd" })}
-                name="password"
-                disabled={false}
-                required={newPwd}
-              />
-              <FormikInput
-                id="6"
-                type="password"
-                label={formatMessage({ id: "form.Newpwd" })}
-                name="newPassword"
-                disabled={false}
-                required={newPwd}
-              />
-              <FormikInput
-                id="7"
-                type="password"
-                label={formatMessage({ id: "form.Repeatpwd" })}
-                name="repeatPassword"
-                disabled={false}
-                required={newPwd}
-              />
+            <ShouldRender if={data?.getUserData}>
+              <ChangePwd onChangenewPwd={onChangenewPwd} newPwd={newPwd} />
             </ShouldRender>
             <Flex mt={2} justifyContent="flex-end">
               {children}

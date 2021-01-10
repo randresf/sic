@@ -1,0 +1,8 @@
+query getAdminData {
+  getAdminsData {
+    username
+    lastName
+    email
+    isActive
+  }
+}

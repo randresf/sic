@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Box, Flex, IconButton, Stack, Text } from "@chakra-ui/react"
 import ShouldRender from "../../../components/ShouldRender"
-import SearchMeeting from "../SearchMeeting"
 import ModalWrapper from "../../../components/ModalWrapper"
 import MeetingDataForm from "../../../container/MeetingData"
 import MeetingCard from "../../../container/MeetingCard"
@@ -64,12 +63,9 @@ export default function Meetings() {
     })
   }
 
-  const handleSearchField = (a: any) => {}
-
   if (fetching) return <Loading loading={fetching} />
   return (
     <Box>
-      {/* <SearchMeeting onData={handleSearchField} /> */}
       <Flex flex={1} alignItems="center" flexWrap="wrap">
         <AddCard
           onClick={() => {

@@ -56,7 +56,7 @@ const PlaceData = ({ children, place }: any) => {
       duration: 3000,
       isClosable: true,
     })
-    //window.location.reload()
+    window.location.reload()
   }
 
   return (
