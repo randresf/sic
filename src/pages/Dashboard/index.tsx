@@ -8,6 +8,7 @@ import Meetings from "./tabs/Meetings"
 import Locations from "./tabs/Locations"
 import { useHistory, useLocation } from "react-router-dom"
 import queryString from "query-string"
+import Admins from "./tabs/Admins"
 
 export default function Dashboard() {
   useIsAuth()
@@ -37,7 +38,7 @@ export default function Dashboard() {
       label: formatMessage({ id: "app.dashboard.tab3" }),
       content: (
         <Box mt="3em">
-          <Meetings />
+          <Admins />
         </Box>
       ),
     },

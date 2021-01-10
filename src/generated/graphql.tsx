@@ -336,12 +336,18 @@ export type Subscription = {
   __typename?: 'Subscription';
   meetingUpdated: MeetingUpdated;
   newMeeting: MeetingUpdated;
+  meetingDelete: MeetingDeleted;
   newReservation: SubsNewReservation;
 };
 
 export type MeetingUpdated = {
   __typename?: 'MeetingUpdated';
   data: Meeting;
+};
+
+export type MeetingDeleted = {
+  __typename?: 'MeetingDeleted';
+  data: Scalars['String'];
 };
 
 export type SubsNewReservation = {
@@ -750,6 +756,17 @@ export type SearchReservationQuery = (
         & Pick<Meeting, 'id' | 'title' | 'meetingDate'>
       ) }
     )> }
+  ) }
+);
+
+export type MeetingDeleteSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeetingDeleteSubscription = (
+  { __typename?: 'Subscription' }
+  & { meetingDelete: (
+    { __typename?: 'MeetingDeleted' }
+    & Pick<MeetingDeleted, 'data'>
   ) }
 );
 
@@ -1190,6 +1207,17 @@ export const SearchReservationDocument = gql`
 
 export function useSearchReservationQuery(options: Omit<Urql.UseQueryArgs<SearchReservationQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SearchReservationQuery>({ query: SearchReservationDocument, ...options });
+};
+export const MeetingDeleteDocument = gql`
+    subscription MeetingDelete {
+  meetingDelete {
+    data
+  }
+}
+    `;
+
+export function useMeetingDeleteSubscription<TData = MeetingDeleteSubscription>(options: Omit<Urql.UseSubscriptionArgs<MeetingDeleteSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<MeetingDeleteSubscription, TData>) {
+  return Urql.useSubscription<MeetingDeleteSubscription, TData, MeetingDeleteSubscriptionVariables>({ query: MeetingDeleteDocument, ...options }, handler);
 };
 export const MeetingUpdatedDocument = gql`
     subscription MeetingUpdated {

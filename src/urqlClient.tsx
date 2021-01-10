@@ -18,6 +18,7 @@ import {
   MeetingQueryFragment,
   SaveMeetingMutation,
   NewMeetingSubscription,
+  MeetingDeleteSubscription,
 } from "./generated/graphql"
 import { useHistory } from "react-router-dom"
 import { SubscriptionClient } from "subscriptions-transport-ws"
@@ -111,6 +112,26 @@ const createUrqlClient = () => {
                   else
                     que.meetings.meetings = que.meetings.meetings.filter(
                       (met) => met.id !== meeting.id
+                    )
+                  return que
+                }
+              )
+            },
+            meetingDelete: (result, _args, cache) => {
+              const variables = {
+                limit: 15,
+                cursor: null as null | string,
+              }
+              betterUpdateQuery<MeetingDeleteSubscription, MeetingsQuery>(
+                cache,
+                { query: MeetingsDocument, variables },
+                result,
+                (res, que) => {
+                  const meetingId = res.meetingDelete.data
+                  if (!meetingId) return que
+            
+                    que.meetings.meetings = que.meetings.meetings.filter(
+                      (met) => met.id !== meetingId
                     )
                   return que
                 }

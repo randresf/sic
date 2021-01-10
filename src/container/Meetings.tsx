@@ -5,6 +5,7 @@ import {
   useMeetingsQuery,
   useMeetingUpdatedSubscription,
   useNewMeetingSubscription,
+  useMeetingDeleteSubscription
 } from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
 import MeetingCard from "./MeetingCard"
@@ -22,6 +23,8 @@ const Meetings = () => {
   const [{ data, fetching, error }] = useMeetingsQuery({ variables })
   useMeetingUpdatedSubscription()
   useNewMeetingSubscription()
+  useMeetingDeleteSubscription()
+
 
   if (fetching) return <Loading loading />
   if (error || !data || data.meetings.meetings.length === 0)

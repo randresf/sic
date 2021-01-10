@@ -69,7 +69,7 @@ export default function Meetings() {
   if (fetching) return <Loading loading={fetching} />
   return (
     <Box>
-      <SearchMeeting onData={handleSearchField} />
+      {/* <SearchMeeting onData={handleSearchField} /> */}
       <Flex flex={1} alignItems="center" flexWrap="wrap">
         <AddCard
           onClick={() => {
