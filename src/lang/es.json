@@ -1,4 +1,6 @@
 {
+  "app.account.logOut": "salir",
+  "app.account.settings": "configuracion",
   "app.buttons.back": "volver",
   "app.buttons.cancel": "cancelar",
   "app.buttons.confirm": "confirmar",
@@ -37,6 +39,7 @@
   "app.modalQuestion.title": "IMPORTANTE",
   "app.modalReservation.cancelMessage": "Esta seguro de cancelar la reserva?",
   "app.navbar.greeting": "bienvenid@",
+  "app.navBar.home": "Inicio",
   "app.notification.cantDeletePlace": "No se puede eliminar el lugar",
   "app.notification.cancelReservationError": "no se pudo cancelar la reserva",
   "app.notification.cancelReservationOk": "reserva cancelada correctamente",
@@ -73,7 +76,7 @@
   "app.title": "Revisa muy bien la fecha y hora de la reunión que vas a seleccionar",
   "field.incorrect": "formato incorrecto",
   "field.incorrect_value": "valor incorrecto",
-  "form.Inactive": "Inactiva",
+  "form.inactive": "Inactiva",
   "form.SpaceAvailable": "Cupos disponibles",
   "form.active": "Activa",
   "form.address": "Dirección",

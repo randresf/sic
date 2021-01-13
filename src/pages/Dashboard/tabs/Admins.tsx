@@ -17,15 +17,11 @@ const Admins = ({ adminId }: any) => {
 
   const [{ data, fetching }] = useGetAdminDataQuery()
 
-  console.log(data)
-
   const onCloseFormAdmin = () => {
     setnewAdmin(false)
   }
 
   if (fetching) return <Loading loading={fetching} />
-
-  console.log(data)
 
   return (
     <Box>

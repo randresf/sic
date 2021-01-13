@@ -1,5 +1,7 @@
-import { Flex, Heading, Text } from "@chakra-ui/react"
+import { Box, Heading } from "@chakra-ui/react"
 import React from "react"
+import Card from "../components/Card"
+import Text from "../components/formElements/Text"
 import { MEETINGS_LIST } from "../ui/formIds"
 
 type MeetingProps = {
@@ -18,29 +20,17 @@ const PlaceCard = ({
   borderColor = "",
 }: MeetingProps) => {
   return (
-    <Flex
+    <Card
       key={id}
-      p={3}
-      shadow="md"
       borderColor={borderColor}
-      borderWidth={1}
-      m={2}
-      w="270px"
-      h="170px"
-      flexDir="column"
       className={MEETINGS_LIST.meetingCard}
     >
       <Heading as="h3" size="md" className={MEETINGS_LIST.meetingTitle}>
         {name}
       </Heading>
-      <Text as="h3" size="md" className={MEETINGS_LIST.spots}>
-        dirección: {address}
-      </Text>
-
-      <Flex flexDir="row-reverse">
-        <Flex alignItems="center">{children}</Flex>
-      </Flex>
-    </Flex>
+      <Text className={MEETINGS_LIST.spots}>dirección: {address}</Text>
+      <Box alignSelf="flex-end">{children}</Box>
+    </Card>
   )
 }
 

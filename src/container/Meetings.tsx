@@ -5,7 +5,7 @@ import {
   useMeetingsQuery,
   useMeetingUpdatedSubscription,
   useNewMeetingSubscription,
-  useMeetingDeleteSubscription
+  useMeetingDeleteSubscription,
 } from "../generated/graphql"
 import { MEETINGS_LIST } from "../ui/formIds"
 import MeetingCard from "./MeetingCard"
@@ -24,7 +24,6 @@ const Meetings = () => {
   useMeetingUpdatedSubscription()
   useNewMeetingSubscription()
   useMeetingDeleteSubscription()
-
 
   if (fetching) return <Loading loading />
   if (error || !data || data.meetings.meetings.length === 0)
@@ -51,19 +50,17 @@ const Meetings = () => {
               to={`/datos/${reu.id}`}
               className={MEETINGS_LIST.linkCitizenForm}
             >
-              <Flex alignItems="center">
-                <Text mr={3}>
-                  <DisplayText
-                    id="app.buttons.reserve"
-                    defaultMessage="Reserve"
-                  />
-                </Text>
-                <IconButton
-                  className={MEETINGS_LIST.btnReserve}
-                  aria-label="reservar"
-                  icon={<ArrowRightIcon />}
+              <Text mr={3}>
+                <DisplayText
+                  id="app.buttons.reserve"
+                  defaultMessage="Reserve"
                 />
-              </Flex>
+              </Text>
+              <IconButton
+                className={MEETINGS_LIST.btnReserve}
+                aria-label="reservar"
+                icon={<ArrowRightIcon />}
+              />
             </Link>
           </MeetingCard>
         ))}

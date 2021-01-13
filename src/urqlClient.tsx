@@ -4,8 +4,9 @@ import {
   Exchange,
   fetchExchange,
   subscriptionExchange,
+  stringifyVariables,
 } from "urql"
-import { cacheExchange, Cache } from "@urql/exchange-graphcache"
+import { cacheExchange, Cache, Resolver } from "@urql/exchange-graphcache"
 import { betterUpdateQuery } from "./utils/createBetterQuery"
 import { tap, pipe } from "wonka"
 import {
@@ -15,8 +16,6 @@ import {
   LogoutMutation,
   MeetingsDocument,
   MeetingsQuery,
-  MeetingQueryFragment,
-  SaveMeetingMutation,
   NewMeetingSubscription,
   MeetingDeleteSubscription,
 } from "./generated/graphql"
@@ -49,6 +48,35 @@ const invalidateQuerys = (cache: Cache, fName: string) => {
   })
 }
 
+const cursorPagination = (): Resolver => {
+  return (_parent, fieldArgs, cache, info) => {
+    const { parentKey: entityKey, fieldName } = info
+
+    const allFields = cache.inspectFields(entityKey)
+    const fieldInfos = allFields.filter((info) => info.fieldName === fieldName)
+    const size = fieldInfos.length
+    if (size === 0) {
+      return undefined
+    }
+    // check if the data is in the cache and return it
+    const fieldKey = `${fieldName}(${stringifyVariables(fieldArgs)})`
+    const isItInCache = cache.resolve(entityKey, fieldKey) as string[]
+    info.partial = !isItInCache // make sure it calls the BE when there is not data
+    const results: string[] = []
+    let hasMore = true
+    fieldInfos.forEach((fi) => {
+      const key = cache.resolve(entityKey, fi.fieldKey) as string
+      const data = cache.resolve(key, "meetings") as string[]
+      const _hasMore = cache.resolve(key, "hasMore")
+      if (!_hasMore) {
+        hasMore = _hasMore as boolean
+      }
+      results.push(...data)
+    })
+    return { __typename: "PaginatedMeetings", hasMore, posts: results }
+  }
+}
+
 const createUrqlClient = () => {
   return createClient({
     url: process.env.REACT_APP_API || `http:${app_uri}`,
@@ -62,6 +90,12 @@ const createUrqlClient = () => {
         keys: {
           Admin: (data) => data.name as string,
           PlaceResponse: () => null,
+          PaginatedMeetings: () => null,
+        },
+        resolvers: {
+          Query: {
+            meetings: cursorPagination(),
+          },
         },
         updates: {
           Mutation: {
@@ -129,10 +163,10 @@ const createUrqlClient = () => {
                 (res, que) => {
                   const meetingId = res.meetingDelete.data
                   if (!meetingId) return que
-            
-                    que.meetings.meetings = que.meetings.meetings.filter(
-                      (met) => met.id !== meetingId
-                    )
+
+                  que.meetings.meetings = que.meetings.meetings.filter(
+                    (met) => met.id !== meetingId
+                  )
                   return que
                 }
               )

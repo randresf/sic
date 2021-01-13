@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Flex, Stack, Text } from "@chakra-ui/react"
+import { Box, Center, Flex, Stack, Text } from "@chakra-ui/react"
 import ModalWrapper from "../../../components/ModalWrapper"
 import AddCard from "../../../components/AddCard"
 import isEmpty from "../../../utils/isEmpty"
@@ -121,23 +121,26 @@ export default function Locations() {
       <ModalWrapper
         titulo={formatMessage({ id: "app.modalLocation.titleDeletePlace" })}
         contenido={
-          <>
-            <Text>
-              <DisplayText id="app.modalLocation.deletePlace" />
-            </Text>
-            <Stack spacing={3}>
+          <Flex flexDir="column">
+            <Center>
+              <Text>
+                <DisplayText id="app.modalLocation.deletePlace" />
+              </Text>
+            </Center>
+            <Flex alignSelf="flex-end" mt="4" justifyContent="space-between">
               <CancelButton
                 onClick={() => {
                   deletePlace(placeData)
                 }}
+                mr="2"
               >
                 <DisplayText id="app.buttons.delete" defaultMessage="delete" />
               </CancelButton>
               <PrimaryButton onClick={onCloseDeletePlace} mr={3}>
                 <DisplayText id="app.buttons.back" defaultMessage="back" />
               </PrimaryButton>
-            </Stack>
-          </>
+            </Flex>
+          </Flex>
         }
         isOpen={deletePlaceModal}
         onClose={onCloseDeletePlace}

@@ -7,7 +7,7 @@ type wrapper = {
 
 const Wrapper = ({ children }: wrapper) => {
   return (
-    <Flex alignItems="flex-start" w="100%" p={4}>
+    <Flex alignItems="flex-start" width="100%" p={4}>
       {children}
     </Flex>
   )

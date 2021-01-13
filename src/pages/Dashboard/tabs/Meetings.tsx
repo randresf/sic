@@ -12,7 +12,10 @@ import isEmpty from "../../../utils/isEmpty"
 import NeutralButton from "../../../components/formElements/NeutralButton"
 import DisplayText from "../../../components/formElements/DisplayMessage"
 import Loading from "../../../components/formElements/Loading"
-import { useMeetingsQuery } from "../../../generated/graphql"
+import {
+  useMeetingDeleteSubscription,
+  useMeetingsQuery,
+} from "../../../generated/graphql"
 import { useDeleteMeetMutation } from "../../../generated/graphql"
 import Notify from "../../../utils/notify"
 import { useIntl } from "react-intl"
@@ -29,6 +32,8 @@ export default function Meetings() {
   const [deleteMeeting, setDeleteMeeting] = useState(false)
   const [meetingData, setMeeting] = useState({})
   const [, getIdMeetMutation] = useDeleteMeetMutation()
+
+  useMeetingDeleteSubscription()
 
   const onCloseFormMeeting = () => {
     setNewMeeting(false)
@@ -56,7 +61,7 @@ export default function Meetings() {
       })
     }
     setDeleteMeeting(false)
-    window.location.reload()
+
     return Notify({
       title: "reunión eliminada correctamente",
       type: "success",

@@ -2,7 +2,7 @@ import { InputGroup, InputRightElement } from "@chakra-ui/react"
 import React, { useState } from "react"
 import Loading from "../../components/formElements/Loading"
 import NormalInput from "../../components/formElements/NormalInput"
-import { useGetUserMutation } from "../../generated/graphql"
+import { useGetUserMutation, useMeetingsQuery } from "../../generated/graphql"
 import { DASHBOARD_MEETINGS } from "../../ui/formIds"
 
 type SearchMeetingFieldProps = {
@@ -10,7 +10,7 @@ type SearchMeetingFieldProps = {
 }
 
 const SearchMeetingField = ({ onData, ...props }: SearchMeetingFieldProps) => {
-  const [, searchUser] = useGetUserMutation()
+  const [, searchMeeting] = useMeetingsQuery()
   const [loading, setLoading] = useState(false)
 
   const onChange = () => {}
@@ -21,8 +21,8 @@ const SearchMeetingField = ({ onData, ...props }: SearchMeetingFieldProps) => {
         {...props}
         id={DASHBOARD_MEETINGS.searchMeeting}
         required
-        label="Documento"
-        name="citizenId"
+        label="Meeting"
+        name="title"
         onChange={onChange}
         disabled={loading}
       />

@@ -48,7 +48,7 @@ export default function Dashboard() {
   }
 
   return (
-    <Box mt="3em">
+    <Box mt="3em" width="100%">
       <DashboardTitle />
       <Box mt="3em">
         <TabsSection

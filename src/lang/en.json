@@ -1,4 +1,6 @@
 {
+  "app.account.logOut": "logout",
+  "app.account.settings": "settings",
   "app.buttons.back": "back",
   "app.buttons.cancel": "cancel",
   "app.buttons.confirm": "confirm",
@@ -32,6 +34,7 @@
   "app.modalQuestion.title": "IMPORTANT",
   "app.modalReservation.cancelMessage": "Are you sure to cancel the reservation?",
   "app.navbar.greeting": "signed as",
+  "app.navBar.home": "Home",
   "app.notification.cantDeletePlace": "Can´t delete this place",
   "app.notification.deletePlaceOk": "Place delete correctly",
   "app.notification.Couldn'tCreatePlace": "Couldn't create place",
@@ -63,7 +66,7 @@
   "app.title": "Please check the meeting info before booking",
   "field.incorrect": "incorrect format",
   "field.incorrect_value": "incorrect value",
-  "form.Inactive": "Inactive",
+  "form.inactive": "Inactive",
   "form.SpaceAvailable": "Space available",
   "form.active": "Active",
   "form.address": "Address",
