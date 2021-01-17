@@ -8,7 +8,7 @@ const LangDropDown = (props: any) => {
     <Box className="LangDropDown">
       <Select
         value={context.locale}
-        variant="unstled"
+        variant="unstyled"
         onChange={context.selectLanguage}
       >
         <option value="en">English</option>
