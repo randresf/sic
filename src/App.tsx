@@ -15,6 +15,7 @@ import Divider from "./components/formElements/Divider"
 import Dashboard from "./pages/Dashboard"
 import Footer from "./components/Footer"
 import Settings from "./pages/Settings"
+import "./app.css"
 
 const App = () => {
   return (

@@ -9,7 +9,7 @@ export default function DashboardTitle() {
   const [{ data, fetching }] = useHeartbeatQuery()
   if (fetching) return <Loading loading />
   return (
-    <Heading as="h2" size="xl" id={MEETINGS_LIST.title}>
+    <Heading as="h2" size="xl" id={MEETINGS_LIST.title} style= {{color: "#1a365d"}}>
       <DisplayText id="app.dashboard.title" defaultMessage="hello" />{" "}
       {data?.heartBeat?.firstName}!
     </Heading>

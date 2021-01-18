@@ -17,10 +17,10 @@ const NavBar = () => {
         <Box ml={3} w="100px">
           <Link to="/" id={NAVABAR_LIST.logo}>
             <Flex align="center">
-              <img style={{ width: "40px" }} src="/logo192.png" alt="logo" />
-              <Text ml={2}>
+              <img style={{ width: "60px" }} src="/logo_nuevo.jpeg" alt="logo" />
+              {/* <Text ml={2}>
                 <DisplayText id="app.navBar.home" defaultMessage="home" />
-              </Text>
+              </Text> */}
             </Flex>
           </Link>
         </Box>

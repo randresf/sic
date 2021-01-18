@@ -3,7 +3,7 @@ import React from "react"
 
 type TabsProps = {
   tabs: { label: string; content: React.ReactNode }[]
-  isFitted: boolean
+  isFitted?: boolean
   isLazy: boolean
   onChange?: (index: number) => void
   defaultIndex?: number
@@ -16,9 +16,10 @@ export default function TabsSection({
 }: TabsProps) {
   return (
     <Tabs
-      variant="enclosed"
+    align="end"
+      // variant="enclosed"
       {...props}
-      colorScheme="purple"
+      colorScheme="orange"
       defaultIndex={defaultIndex}
     >
       <TabList>

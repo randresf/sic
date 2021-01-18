@@ -53,7 +53,6 @@ export default function Dashboard() {
       <Box mt="3em">
         <TabsSection
           tabs={tabData}
-          isFitted
           isLazy
           onChange={onChange}
           defaultIndex={Number(tab)}
