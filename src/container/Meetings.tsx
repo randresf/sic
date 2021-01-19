@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Flex, IconButton, Text } from "@chakra-ui/react"
+import { Box, Flex, Text } from "@chakra-ui/react"
 import Loading from "../components/formElements/Loading"
 import {
   useMeetingsQuery,
@@ -7,6 +7,7 @@ import {
   useNewMeetingSubscription,
   useMeetingDeleteSubscription,
 } from "../generated/graphql"
+import IconButton from "../components/formElements/IconButton"
 import { MEETINGS_LIST } from "../ui/formIds"
 import MeetingCard from "./MeetingCard"
 import ShouldRender from "../components/ShouldRender"
@@ -46,22 +47,25 @@ const Meetings = () => {
       <ShouldRender if={data && data.meetings}>
         {data?.meetings.meetings.map(({ __typename, ...reu }) => (
           <MeetingCard {...reu}>
-            <Link
-              to={`/datos/${reu.id}`}
-              className={MEETINGS_LIST.linkCitizenForm}
-            >
-              <Text mr={3}>
-                <DisplayText
-                  id="app.buttons.reserve"
-                  defaultMessage="Reserve"
+            <Flex mt={"-15px"}>
+              <Link
+                to={`/datos/${reu.id}`}
+                className={MEETINGS_LIST.linkCitizenForm}
+              >
+                <Text mr={3}>
+                  <DisplayText
+                    id="app.buttons.reserve"
+                    defaultMessage="Reserve"
+                  />
+                </Text>
+                <IconButton
+                  className={MEETINGS_LIST.btnReserve}
+                  aria-label="reservar"
+                  iconType="IconReservation"
+                  icon={<ArrowRightIcon />}
                 />
-              </Text>
-              <IconButton
-                className={MEETINGS_LIST.btnReserve}
-                aria-label="reservar"
-                icon={<ArrowRightIcon />}
-              />
-            </Link>
+              </Link>
+            </Flex>
           </MeetingCard>
         ))}
         <ShouldRender if={data && data.meetings.hasMore}>

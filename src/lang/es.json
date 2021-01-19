@@ -41,6 +41,8 @@
   "app.navbar.greeting": "bienvenid@",
   "app.navBar.home": "Inicio",
   "app.notification.cantDeletePlace": "No se puede eliminar el lugar",
+  "app.notification.cantDeleteMeet": "No se puede eliminar la reunión",
+  "app.notification.deleteMeet": "reunión eliminada correctamente",
   "app.notification.cancelReservationError": "no se pudo cancelar la reserva",
   "app.notification.cancelReservationOk": "reserva cancelada correctamente",
   "app.notification.saveMeetingError": "no se pudo guardar la reunión",

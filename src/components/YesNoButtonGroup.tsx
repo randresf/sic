@@ -3,6 +3,7 @@ import React from "react"
 import DisplayText from "./formElements/DisplayMessage"
 import WrapperButton from "./formElements/PrimaryButton"
 import { DefaultFun } from "./types"
+import NeutralButton from "./formElements/NeutralButton"
 
 type GroupProps = {
   onYes: DefaultFun
@@ -21,9 +22,9 @@ const YesNoButtonGroup = ({
 }: GroupProps) => {
   return (
     <ButtonGroup spacing="3">
-      <WrapperButton onClick={onNo} {...noProps}>
+      <NeutralButton onClick={onNo} {...noProps}>
         <DisplayText id="app.buttons.cancel" defaultMessage="cancel" />
-      </WrapperButton>
+      </NeutralButton>
       <WrapperButton onClick={onYes} colorScheme="purple" {...yesProps}>
         <DisplayText id="app.buttons.continue" defaultMessage="continue" />
       </WrapperButton>

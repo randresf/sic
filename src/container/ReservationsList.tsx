@@ -1,15 +1,8 @@
 import { SearchIcon } from "@chakra-ui/icons"
-import {
-  Center,
-  Flex,
-  Heading,
-  IconButton,
-  Text,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react"
+import { Center, Flex, Heading, Text, Wrap, WrapItem } from "@chakra-ui/react"
 import React from "react"
 import { Link, useHistory } from "react-router-dom"
+import IconButton from "../components/formElements/IconButton"
 import { formatDate } from "../utils/formatDate"
 import { MEETINGS_LIST, RESERVATIONS_LIST } from "../ui/formIds"
 import CancelReservation from "../components/CancelReservation"
@@ -69,6 +62,7 @@ const ReservationsList = ({
                 onClick={() => {
                   history.push(`/reservation/${r.id}`)
                 }}
+                iconType="IconEdit"
                 icon={<SearchIcon />}
                 id={RESERVATIONS_LIST.btnOpenReservation}
                 mr={3}

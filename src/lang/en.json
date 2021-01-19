@@ -36,6 +36,8 @@
   "app.navbar.greeting": "signed as",
   "app.navBar.home": "Home",
   "app.notification.cantDeletePlace": "Can´t delete this place",
+  "app.notification.cantDeleteMeet": "Can´t delete this meeting",
+  "app.notification.deleteMeet": "Meeting delete correctly",
   "app.notification.deletePlaceOk": "Place delete correctly",
   "app.notification.Couldn'tCreatePlace": "Couldn't create place",
   "app.notification.placeCreatedCorrectly": "The place was created correctly",

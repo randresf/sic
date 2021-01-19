@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Center, Flex, Stack, Text } from "@chakra-ui/react"
+import { Text } from "@chakra-ui/react"
 import ModalWrapper from "../../../components/ModalWrapper"
 import AddCard from "../../../components/AddCard"
 import isEmpty from "../../../utils/isEmpty"
@@ -18,10 +18,7 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
 import CancelButton from "../../../components/formElements/CancelButton"
 import PrimaryButton from "../../../components/formElements/PrimaryButton"
 import Notify from "../../../utils/notify"
-import {
-  ACTIVE_MEETING_COLOR,
-  INACTIVE_MEETING_COLOR,
-} from "../../../constants"
+import { ACTIVE_CARD_COLOR, INACTIVE_CARD_COLOR } from "../../../constants"
 import { useIntl } from "react-intl"
 import { v4 } from "uuid"
 import DefaultContainer from "../../../components/DefaultContainer"
@@ -62,41 +59,45 @@ export default function Locations() {
   }
 
   return (
-    <Loading loading={fetching}>
+    <>
       <DefaultContainer>
-        <AddCard
-          onClick={() => {
-            setPlace({})
-            setnewPlace(true)
-          }}
-        />
+        <Loading loading={fetching}>
+          <AddCard
+            onClick={() => {
+              setPlace({})
+              setnewPlace(true)
+            }}
+          />
+        </Loading>
         <ShouldRender if={data && data.getUserPlaces}>
           {data?.getUserPlaces.place?.map(({ __typename, ...place }: any) => (
             <PlaceCard
               key={v4()}
               {...place}
               bg={
-                String(place.isActive) === "false"
-                  ? INACTIVE_MEETING_COLOR
-                  : ACTIVE_MEETING_COLOR
+                String(place.isActive) === "true"
+                  ? ACTIVE_CARD_COLOR
+                  : INACTIVE_CARD_COLOR
               }
             >
-              <IconButton
-                onClick={() => {
-                  setPlace(place)
-                  setnewPlace(true)
-                }}
-                mr={2}
-                aria-label="editar"
-                icon={<EditIcon />}
-              />
               <IconButton
                 onClick={() => {
                   setdeletePlaceModal(true)
                   setPlace(place.id)
                 }}
                 aria-label="eliminar"
+                iconType="IconDelete"
+                mr={2}
                 icon={<DeleteIcon />}
+              />
+              <IconButton
+                onClick={() => {
+                  setPlace(place)
+                  setnewPlace(true)
+                }}
+                iconType="IconEdit"
+                aria-label="editar"
+                icon={<EditIcon />}
               />
             </PlaceCard>
           ))}
@@ -142,6 +143,6 @@ export default function Locations() {
         isOpen={deletePlaceModal}
         onClose={onCloseDeletePlace}
       />
-    </Loading>
+    </>
   )
 }

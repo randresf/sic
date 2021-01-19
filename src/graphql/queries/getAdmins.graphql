@@ -1,8 +1,8 @@
 query getAdminData {
   getAdminsData {
-    username
+    firstName
     lastName
     email
-    isActive
+    phone
   }
 }

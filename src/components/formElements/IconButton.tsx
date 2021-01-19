@@ -1,6 +1,7 @@
 import React from "react"
-import { IconButton } from "@chakra-ui/react"
+import { IconButton, useStyleConfig } from "@chakra-ui/react"
 
-export default function IconButtonWrapper(props: any) {
-  return <IconButton bg="brand.100" {...props} />
+export default function IconButtonWrapper({ iconType, ...props }: any) {
+  const style = useStyleConfig(iconType, props)
+  return <IconButton sx={style} {...props} />
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Flex, IconButton, Stack, Text } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react"
 import ShouldRender from "../../../components/ShouldRender"
 import ModalWrapper from "../../../components/ModalWrapper"
 import MeetingDataForm from "../../../container/MeetingData"
@@ -12,6 +12,7 @@ import isEmpty from "../../../utils/isEmpty"
 import NeutralButton from "../../../components/formElements/NeutralButton"
 import DisplayText from "../../../components/formElements/DisplayMessage"
 import Loading from "../../../components/formElements/Loading"
+import IconButton from "../../../components/formElements/IconButton"
 import {
   useMeetingDeleteSubscription,
   useMeetingsQuery,
@@ -19,6 +20,7 @@ import {
 import { useDeleteMeetMutation } from "../../../generated/graphql"
 import Notify from "../../../utils/notify"
 import { useIntl } from "react-intl"
+import { ACTIVE_CARD_COLOR, INACTIVE_CARD_COLOR } from "../../../constants"
 import { v4 } from "uuid"
 
 export default function Meetings() {
@@ -56,50 +58,58 @@ export default function Meetings() {
     if (res.data?.deleteMeeting.errors) {
       setDeleteMeeting(false)
       return Notify({
-        title: "No se puede eliminar la reunión",
+        title: formatMessage({ id: "app.notification.cantDeleteMeet" }),
         type: "error",
       })
     }
     setDeleteMeeting(false)
 
     return Notify({
-      title: "reunión eliminada correctamente",
+      title: formatMessage({ id: "app.notification.deleteMeet" }),
       type: "success",
     })
   }
 
   return (
-    <Loading loading={fetching}>
+    <>
       <Flex justifyContent="center" flexWrap="wrap">
-        <AddCard
-          onClick={() => {
-            setMeeting({})
-            setNewMeeting(true)
-          }}
-        />
+        <Loading loading={fetching}>
+          <AddCard
+            onClick={() => {
+              setMeeting({})
+              setNewMeeting(true)
+            }}
+          />
+        </Loading>
         <ShouldRender if={data && data.meetings.meetings}>
           {data?.meetings.meetings.map(({ __typename, ...reu }) => (
             <MeetingCard
               {...reu}
-              borderColor={reu.isActive === "false" ? "tomato" : "#269e39"}
+              bg={
+                reu.isActive === "false"
+                  ? INACTIVE_CARD_COLOR
+                  : ACTIVE_CARD_COLOR
+              }
               key={v4()}
             >
               <IconButton
                 onClick={() => {
                   setMeeting(reu)
-                  setNewMeeting(true)
+                  setDeleteMeeting(true)
                 }}
                 mr={2}
-                aria-label="editar"
-                icon={<EditIcon />}
+                aria-label="eliminar"
+                iconType="IconDelete"
+                icon={<DeleteIcon />}
               />
               <IconButton
                 onClick={() => {
                   setMeeting(reu)
-                  setDeleteMeeting(true)
+                  setNewMeeting(true)
                 }}
-                aria-label="eliminar"
-                icon={<DeleteIcon />}
+                aria-label="editar"
+                iconType="IconEdit"
+                icon={<EditIcon />}
               />
             </MeetingCard>
           ))}
@@ -166,6 +176,6 @@ export default function Meetings() {
         isOpen={deleteMeeting}
         onClose={onCloseDeleteMeeting}
       />
-    </Loading>
+    </>
   )
 }

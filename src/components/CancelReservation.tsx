@@ -1,5 +1,5 @@
 import { DeleteIcon } from "@chakra-ui/icons"
-import { IconButton, useToast } from "@chakra-ui/react"
+import { useToast } from "@chakra-ui/react"
 import moment from "moment"
 import React from "react"
 import { useIntl } from "react-intl"
@@ -8,6 +8,7 @@ import { RESERVATIONS_LIST } from "../ui/formIds"
 import CancelButton from "./formElements/CancelButton"
 import Loading from "./formElements/Loading"
 import ShouldRender from "./ShouldRender"
+import IconButton from "../components/formElements/IconButton"
 
 type CancelProps = {
   reservationId: string
@@ -56,7 +57,12 @@ const CancelReservation = ({
       {labeled ? (
         <CancelButton {...props}>cancelar</CancelButton>
       ) : (
-        <IconButton {...props} aria-label="cancelar" icon={<DeleteIcon />} />
+        <IconButton
+          {...props}
+          iconType="IconDelete"
+          aria-label="cancelar"
+          icon={<DeleteIcon />}
+        />
       )}
     </ShouldRender>
   )

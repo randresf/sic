@@ -167,7 +167,7 @@ const PersonalDataForm = () => {
                     id={CITIZEN_FORM.age}
                   />
                 </Flex>
-                <Box mt={3}>
+                <Box alignSelf="flex-end" mt={"1.75rem"}>
                   <ShouldRender if={reservations && !booked}>
                     <PrimaryButton
                       type="submit"

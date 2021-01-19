@@ -11,7 +11,6 @@ import Login from "./pages/Login"
 import urqlClient from "./urqlClient"
 import { Provider } from "urql"
 import NavBar from "./components/NavBar"
-import Divider from "./components/formElements/Divider"
 import Dashboard from "./pages/Dashboard"
 import Footer from "./components/Footer"
 import Settings from "./pages/Settings"
@@ -21,7 +20,6 @@ const App = () => {
     <Provider value={urqlClient()}>
       <Router>
         <NavBar />
-        <Divider style={{ marginBottom: "10px", marginTop: "10px" }} />
         <Wrapper>
           <Switch>
             <Route exact path="/datos/:meetingId">

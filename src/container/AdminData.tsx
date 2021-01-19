@@ -7,6 +7,7 @@ import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import Notify from "../utils/notify"
 import { useAddAdminMutation } from "../generated/graphql"
+import ModalActions from "../components/ModalActions"
 
 const AdminData = ({ children, admin }: any) => {
   const { formatMessage } = useIntl()
@@ -108,12 +109,12 @@ const AdminData = ({ children, admin }: any) => {
                   disabled={false}
                   required
                 />
-                <Flex mt={2} justifyContent="flex-end">
+                <ModalActions>
                   {children}
-                  <PrimaryButton ml={3} type="submit" isLoading={isSubmitting}>
+                  <PrimaryButton type="submit" isLoading={isSubmitting}>
                     <DisplayText id="app.buttons.save" defaultMessage="save" />
                   </PrimaryButton>
-                </Flex>
+                </ModalActions>
               </Flex>
             </Box>
           </Form>

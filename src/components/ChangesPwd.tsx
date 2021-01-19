@@ -16,7 +16,7 @@ const ChangePwd = ({ onChangenewPwd, newPwd }: any) => {
           onChangenewPwd(!newPwd)
         }}
         href="#"
-        color="purple.500"
+        color="#01579b"
       >
         {newPwd ? (
           <DisplayText id="app.label.hide" defaultMessage="hide" />

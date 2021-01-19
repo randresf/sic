@@ -8,6 +8,7 @@ import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import isEmpty from "../utils/isEmpty"
 import { useAddPlaceMutation } from "../generated/graphql"
+import ModalActions from "../components/ModalActions"
 
 const PlaceData = ({ children, place }: any) => {
   const toast = useToast()
@@ -101,12 +102,12 @@ const PlaceData = ({ children, place }: any) => {
                     </Radio>
                   </RadioGroupControl>
                 </Box>
-                <Box mt={3}>
+                <ModalActions>
                   {children}
                   <PrimaryButton type="submit" isLoading={isSubmitting}>
                     <DisplayText id="app.buttons.save" defaultMessage="save" />
                   </PrimaryButton>
-                </Box>
+                </ModalActions>
               </Flex>
             </Box>
           </Form>

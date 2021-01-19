@@ -14,6 +14,7 @@ import { QUESTION_VIEW } from "../ui/formIds"
 import { useIntl } from "react-intl"
 import CancelButton from "../components/formElements/CancelButton"
 import DisplayText from "../components/formElements/DisplayMessage"
+import NeutralButton from "../components/formElements/NeutralButton"
 
 const Question = () => {
   const { formatMessage } = useIntl()
@@ -173,8 +174,8 @@ const Question = () => {
                 </Text>
                 <Flex flexDir="column" w="100%" align="center">
                   {QUESTIONS && <YesNoRadioGroup questions={QUESTIONS} />}
-                  <Box mt={3}>
-                    <CancelButton
+                  <Box alignSelf="flex-end" mt={5}>
+                    <NeutralButton
                       id={QUESTION_VIEW.btnGoBack}
                       mr={3}
                       onClick={() => {
@@ -185,7 +186,7 @@ const Question = () => {
                         id="app.buttons.back"
                         defaultMessage="back"
                       />
-                    </CancelButton>
+                    </NeutralButton>
                     <PrimaryButton
                       id={QUESTION_VIEW.btnSubmit}
                       type="submit"

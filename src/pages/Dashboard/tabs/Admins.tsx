@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react"
 import React, { useState } from "react"
 import AddCard from "../../../components/AddCard"
 import ModalWrapper from "../../../components/ModalWrapper"
@@ -17,19 +17,23 @@ const Admins = ({ adminId }: any) => {
 
   const [{ data, fetching }] = useGetAdminDataQuery()
 
+  console.log(data)
+
   const onCloseFormAdmin = () => {
     setnewAdmin(false)
   }
 
   return (
-    <Loading loading={fetching}>
+    <>
       <Flex flex={1} justifyContent="center" flexWrap="wrap">
-        <AddCard
-          onClick={() => {
-            setPlace({})
-            setnewAdmin(true)
-          }}
-        />
+        <Loading loading={fetching}>
+          <AddCard
+            onClick={() => {
+              setPlace({})
+              setnewAdmin(true)
+            }}
+          />
+        </Loading>
       </Flex>
       <ModalWrapper
         titulo={
@@ -47,7 +51,7 @@ const Admins = ({ adminId }: any) => {
         isOpen={newAdmin}
         onClose={onCloseFormAdmin}
       />
-    </Loading>
+    </>
   )
 }
 

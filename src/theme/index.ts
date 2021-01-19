@@ -4,6 +4,7 @@ import { extendTheme } from "@chakra-ui/react"
 import styles from "./styles"
 import { PrimaryButton, DefaultButton } from "./components/Buttons"
 import { brand } from "./components/general"
+import { IconReservation, IconEdit, IconDelete } from "./components/Icons"
 
 const overrides = {
   styles,
@@ -36,6 +37,9 @@ const overrides = {
   components: {
     PrimaryButton,
     DefaultButton,
+    IconReservation,
+    IconEdit,
+    IconDelete,
   },
   //borders,
   // Other foundational style overrides go here

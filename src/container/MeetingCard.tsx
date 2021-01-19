@@ -15,7 +15,7 @@ type MeetingProps = {
   title: string
   meetingDate: string
   children: any
-  borderColor?: string
+  bg?: string
 }
 
 const MeetingCard = ({
@@ -23,24 +23,20 @@ const MeetingCard = ({
   id,
   title,
   meetingDate,
-  borderColor = "",
   children,
+  bg,
 }: MeetingProps) => {
   return (
-    <Card
-      key={id}
-      borderColor={borderColor}
-      className={MEETINGS_LIST.meetingCard}
-    >
-      <Heading className={MEETINGS_LIST.meetingTitle}>{title}</Heading>
-      <Flex>
+    <Card backgroundColor={bg} className={MEETINGS_LIST.meetingCard}>
+      <Flex justifyContent="left" flexWrap="wrap">
+        <Heading mr={170} className={MEETINGS_LIST.meetingTitle}>
+          {title}
+        </Heading>
         <BoldText className={MEETINGS_LIST.meetingDate}>
           <DisplayText id="app.label.date" defaultMessage="date" />
         </BoldText>
         <Text>{formatDate(meetingDate)}</Text>
-      </Flex>
 
-      <Flex>
         <BoldText className={MEETINGS_LIST.spots}>
           <DisplayText id="app.label.spots" defaultMessage="spots: " />{" "}
         </BoldText>
