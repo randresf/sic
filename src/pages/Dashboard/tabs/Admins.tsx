@@ -21,11 +21,9 @@ const Admins = ({ adminId }: any) => {
     setnewAdmin(false)
   }
 
-  if (fetching) return <Loading loading={fetching} />
-
   return (
-    <Box>
-      <Flex flex={1} alignItems="center" flexWrap="wrap">
+    <Loading loading={fetching}>
+      <Flex flex={1} justifyContent="center" flexWrap="wrap">
         <AddCard
           onClick={() => {
             setPlace({})
@@ -49,7 +47,7 @@ const Admins = ({ adminId }: any) => {
         isOpen={newAdmin}
         onClose={onCloseFormAdmin}
       />
-    </Box>
+    </Loading>
   )
 }
 

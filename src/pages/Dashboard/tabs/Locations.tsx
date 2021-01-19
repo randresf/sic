@@ -24,6 +24,7 @@ import {
 } from "../../../constants"
 import { useIntl } from "react-intl"
 import { v4 } from "uuid"
+import DefaultContainer from "../../../components/DefaultContainer"
 
 export default function Locations() {
   const [newPlace, setnewPlace] = useState(false)
@@ -60,10 +61,9 @@ export default function Locations() {
     })
   }
 
-  if (fetching) return <Loading loading={fetching} />
   return (
-    <Box>
-      <Flex flex={1} alignItems="center" flexWrap="wrap">
+    <Loading loading={fetching}>
+      <DefaultContainer>
         <AddCard
           onClick={() => {
             setPlace({})
@@ -75,7 +75,7 @@ export default function Locations() {
             <PlaceCard
               key={v4()}
               {...place}
-              borderColor={
+              bg={
                 String(place.isActive) === "false"
                   ? INACTIVE_MEETING_COLOR
                   : ACTIVE_MEETING_COLOR
@@ -101,7 +101,7 @@ export default function Locations() {
             </PlaceCard>
           ))}
         </ShouldRender>
-      </Flex>
+      </DefaultContainer>
       <ModalWrapper
         titulo={
           isEmpty(placeData)
@@ -121,30 +121,27 @@ export default function Locations() {
       <ModalWrapper
         titulo={formatMessage({ id: "app.modalLocation.titleDeletePlace" })}
         contenido={
-          <Flex flexDir="column">
-            <Center>
-              <Text>
-                <DisplayText id="app.modalLocation.deletePlace" />
-              </Text>
-            </Center>
-            <Flex alignSelf="flex-end" mt="4" justifyContent="space-between">
-              <CancelButton
-                onClick={() => {
-                  deletePlace(placeData)
-                }}
-                mr="2"
-              >
-                <DisplayText id="app.buttons.delete" defaultMessage="delete" />
-              </CancelButton>
-              <PrimaryButton onClick={onCloseDeletePlace} mr={3}>
-                <DisplayText id="app.buttons.back" defaultMessage="back" />
-              </PrimaryButton>
-            </Flex>
-          </Flex>
+          <Text>
+            <DisplayText id="app.modalLocation.deletePlace" />
+          </Text>
+        }
+        actions={
+          <>
+            <CancelButton
+              onClick={() => {
+                deletePlace(placeData)
+              }}
+            >
+              <DisplayText id="app.buttons.delete" defaultMessage="delete" />
+            </CancelButton>
+            <PrimaryButton onClick={onCloseDeletePlace}>
+              <DisplayText id="app.buttons.back" defaultMessage="back" />
+            </PrimaryButton>
+          </>
         }
         isOpen={deletePlaceModal}
         onClose={onCloseDeletePlace}
       />
-    </Box>
+    </Loading>
   )
 }

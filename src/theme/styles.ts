@@ -1,11 +1,10 @@
 import { mode } from "@chakra-ui/theme-tools"
-export default {
+const Globals = {
   global: (props: any) => ({
     body: {
-      fontFamily: "'Lato', sans-serif;",
-      color: mode("teal.900", "whiteAlpha.900")(props),
-      bg: mode("white", "teal.900")(props),
+      color: mode("teal.900", "orange.50")(props),
+      bg: mode("orange.50", "teal.900")(props),
     },
-
   }),
 }
+export default Globals

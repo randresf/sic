@@ -68,10 +68,9 @@ export default function Meetings() {
     })
   }
 
-  if (fetching) return <Loading loading={fetching} />
   return (
-    <Box>
-      <Flex flex={1} alignItems="center" flexWrap="wrap">
+    <Loading loading={fetching}>
+      <Flex justifyContent="center" flexWrap="wrap">
         <AddCard
           onClick={() => {
             setMeeting({})
@@ -85,25 +84,23 @@ export default function Meetings() {
               borderColor={reu.isActive === "false" ? "tomato" : "#269e39"}
               key={v4()}
             >
-              <ShouldRender if={!reu.hasReservation}>
-                <IconButton
-                  onClick={() => {
-                    setMeeting(reu)
-                    setNewMeeting(true)
-                  }}
-                  mr={2}
-                  aria-label="editar"
-                  icon={<EditIcon />}
-                />
-                <IconButton
-                  onClick={() => {
-                    setMeeting(reu)
-                    setDeleteMeeting(true)
-                  }}
-                  aria-label="eliminar"
-                  icon={<DeleteIcon />}
-                />
-              </ShouldRender>
+              <IconButton
+                onClick={() => {
+                  setMeeting(reu)
+                  setNewMeeting(true)
+                }}
+                mr={2}
+                aria-label="editar"
+                icon={<EditIcon />}
+              />
+              <IconButton
+                onClick={() => {
+                  setMeeting(reu)
+                  setDeleteMeeting(true)
+                }}
+                aria-label="eliminar"
+                icon={<DeleteIcon />}
+              />
             </MeetingCard>
           ))}
         </ShouldRender>
@@ -145,30 +142,30 @@ export default function Meetings() {
       <ModalWrapper
         titulo={formatMessage({ id: "app.meetingForm.deleteMeeting" })}
         contenido={
+          <Text>
+            <DisplayText
+              id="app.meetingForm.deleteMessage"
+              defaultMessage="Are you sure you want to delete this meeting?"
+            />
+          </Text>
+        }
+        actions={
           <>
-            <Text>
-              <DisplayText
-                id="app.meetingForm.deleteMessage"
-                defaultMessage="Are you sure you want to delete this meeting?"
-              />
-            </Text>
-            <Stack spacing={3}>
-              <CancelButton
-                onClick={() => {
-                  deleteThisMeeting(meetingData)
-                }}
-              >
-                <DisplayText id="app.buttons.delete" defaultMessage="delete" />
-              </CancelButton>
-              <PrimaryButton onClick={onCloseDeleteMeeting} mr={3}>
-                <DisplayText id="app.buttons.back" defaultMessage="back" />
-              </PrimaryButton>
-            </Stack>
+            <CancelButton
+              onClick={() => {
+                deleteThisMeeting(meetingData)
+              }}
+            >
+              <DisplayText id="app.buttons.delete" defaultMessage="delete" />
+            </CancelButton>
+            <PrimaryButton onClick={onCloseDeleteMeeting}>
+              <DisplayText id="app.buttons.back" defaultMessage="back" />
+            </PrimaryButton>
           </>
         }
         isOpen={deleteMeeting}
         onClose={onCloseDeleteMeeting}
       />
-    </Box>
+    </Loading>
   )
 }

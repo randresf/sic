@@ -8,6 +8,7 @@ import DisplayText from "./formElements/DisplayMessage"
 import DividerWrapper from "./formElements/Divider"
 import Account from "./Account"
 import OrganizationTitle from "./OrganizationTitle"
+import Logo from "./Logo"
 
 const NavBar = () => {
   return (
@@ -17,10 +18,10 @@ const NavBar = () => {
         <Box ml={3} w="100px">
           <Link to="/" id={NAVABAR_LIST.logo}>
             <Flex align="center">
-              <img style={{ width: "60px" }} src="/logo_nuevo.jpeg" alt="logo" />
-              {/* <Text ml={2}>
+              <Logo />
+              <Text ml={2}>
                 <DisplayText id="app.navBar.home" defaultMessage="home" />
-              </Text> */}
+              </Text>
             </Flex>
           </Link>
         </Box>

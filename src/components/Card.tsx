@@ -2,7 +2,6 @@ import React from "react"
 import { Flex } from "@chakra-ui/react"
 const Card = (props: any) => (
   <Flex
-    {...props}
     p={3}
     shadow="md"
     borderWidth={1}
@@ -11,6 +10,7 @@ const Card = (props: any) => (
     h="170px"
     flexDir="column"
     justifyContent="space-between"
+    {...props}
   >
     {props.children}
   </Flex>

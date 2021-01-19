@@ -19,13 +19,12 @@ export const QUESTIONS = [
 
 export const DATE_FORMAT = `dddd Do MMMM, h:mm a`
 
-export const ACTIVE_MEETING_COLOR = "#269e39"
+export const ACTIVE_MEETING_COLOR = "teal.500"
 
-export const INACTIVE_MEETING_COLOR = "tomato"
+export const INACTIVE_MEETING_COLOR = "gray.100"
 
 export const BTN_PROPS = {
   size: "md",
   height: "48px",
   width: "120px",
-  colorSchema: "purple",
 }

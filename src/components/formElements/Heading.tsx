@@ -2,9 +2,7 @@ import React from "react"
 import { Heading as ChHeading } from "@chakra-ui/react"
 
 const Heading = (props: any) => (
-  <ChHeading as="h1">
-    {props.children}
-  </ChHeading>
+  <ChHeading fontWeight="900" fontSize="xl" size="md" {...props} />
 )
 
 export default Heading

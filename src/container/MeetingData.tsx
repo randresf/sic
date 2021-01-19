@@ -18,6 +18,7 @@ import { formatAgeDate } from "../utils/formatDate"
 import { RadioGroupControl } from "formik-chakra-ui"
 import DisplayText from "../components/formElements/DisplayMessage"
 import Notify from "../utils/notify"
+import ModalActions from "../components/ModalActions"
 
 const MeetingDataForm = ({ children, meeting, onChange }: any) => {
   const [, saveMeeting] = useSaveMeetingMutation()
@@ -146,12 +147,12 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
                     </Text>
                   </ShouldRender>
                 </Box>
-                <Box mt={3}>
+                <ModalActions>
                   {children}
                   <PrimaryButton type="submit" isLoading={isSubmitting}>
                     <DisplayText id="app.buttons.save" defaultMessage="save" />
                   </PrimaryButton>
-                </Box>
+                </ModalActions>
               </Flex>
             </Box>
           </Form>

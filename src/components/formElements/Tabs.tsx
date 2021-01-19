@@ -16,10 +16,9 @@ export default function TabsSection({
 }: TabsProps) {
   return (
     <Tabs
-    align="end"
+      align="end"
       // variant="enclosed"
       {...props}
-      colorScheme="orange"
       defaultIndex={defaultIndex}
     >
       <TabList>
