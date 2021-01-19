@@ -62,13 +62,15 @@ const Login = () => {
                 status: "error",
               })
             }
-            toast({
-              description: `${formatMessage({ id: "app.reservation.title" })} ${
-                data?.login.admin?.firstName
-              }`,
-              status: "success",
-            })
-            history.push(String(next))
+            if (data?.login.admin) {
+              toast({
+                description: `${formatMessage({
+                  id: "app.reservation.title",
+                })} ${data.login.admin.firstName}`,
+                status: "success",
+              })
+              history.push(String(next))
+            }
           }}
         >
           {({ isSubmitting }) => (

@@ -1,15 +1,14 @@
 import { mode } from "@chakra-ui/theme-tools"
-import { btnProps } from "./general"
+import { app_brand, btnProps } from "./general"
 
 export const PrimaryButton = {
   baseStyle: (props: Record<string, any>) => ({
-    color: mode("brand.600", "brand.600")(props),
-    bg: mode("brand.100", "brand.300")(props),
-    fontWeight: 500,
+    color: mode(app_brand.font, app_brand.font)(props),
+    bg: mode(app_brand.actions, app_brand.actionsDark)(props),
     ...btnProps,
-    _hover: {
-      bg: mode("#183A66", "#008fff")(props),
-    },
+    // _hover: {
+    //   bg: mode("#183A66", "#008fff")(props),
+    // },
   }),
 }
 

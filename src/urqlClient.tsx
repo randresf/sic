@@ -21,6 +21,7 @@ import {
 } from "./generated/graphql"
 import { useHistory } from "react-router-dom"
 import { SubscriptionClient } from "subscriptions-transport-ws"
+import Notify from "./utils/notify"
 
 const app_uri = "//localhost:4000/graphql"
 const subscriptionClient = new SubscriptionClient(`ws:${app_uri}`, {
@@ -34,6 +35,12 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
     tap(({ error }) => {
       if (error?.message.includes("not authenticated")) {
         history ? history.replace("/login") : window.location.replace("/login")
+      }
+      if (error && error.message) {
+        return Notify({
+          title: error.message,
+          type: "error",
+        })
       }
     })
   )
