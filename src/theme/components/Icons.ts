@@ -1,31 +1,29 @@
 import { mode } from "@chakra-ui/theme-tools"
+import { app_brand, iconBtnProps } from "./general"
 
 export const IconEdit = {
   baseStyle: (props: Record<string, any>) => ({
-    color: mode("brand.600", "brand.600")(props),
-    bg: mode("brand.100", "brand.300")(props),
-    _hover: {
-      bg: mode("#183A66", "#008fff")(props),
-    },
+    color: mode(app_brand.actionsFont, app_brand.darkFont)(props),
+    bg: mode(app_brand.actions, app_brand.darkActions)(props),
+    ...iconBtnProps,
   }),
 }
 
 export const IconDelete = {
   baseStyle: (props: Record<string, any>) => ({
-    color: mode("brand.600", "brand.600")(props),
-    bg: mode("brand.200", "brand.200")(props),
-    _hover: {
-      bg: mode("#afb2b4", "#bebebe")(props),
-    },
+    color: mode(app_brand.actions, app_brand.darkActions)(props),
+    border: `1px solid ${mode(
+      app_brand.actions,
+      app_brand.darkActions
+    )(props)}`,
+    ...iconBtnProps,
   }),
 }
 
 export const IconReservation = {
   baseStyle: (props: Record<string, any>) => ({
-    color: mode("brand.600", "brand.600")(props),
-    bg: mode("brand.100", "brand.300")(props),
-    _hover: {
-      bg: mode("#183A66", "#008fff")(props),
-    },
+    color: mode(app_brand.actionsFont, app_brand.darkFont)(props),
+    bg: mode(app_brand.actions, app_brand.darkActions)(props),
+    ...iconBtnProps,
   }),
 }

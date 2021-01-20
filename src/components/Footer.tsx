@@ -1,5 +1,6 @@
 import { Box, Divider, Flex, Text } from "@chakra-ui/react"
 import React from "react"
+import { app_brand } from "../theme/components/general"
 
 const Footer = () => {
   return (
@@ -9,9 +10,10 @@ const Footer = () => {
         textAlign: "center",
         width: "100%",
         bottom: 0,
+        borderTop: "1px solid",
+        borderTopColor: app_brand.titles,
       }}
     >
-      <Divider style={{ marginBottom: "10px", marginTop: "10px" }} />
       <Flex ml={2} w="100%" alignContent="center" p={2} flexWrap="wrap">
         <Box flexGrow={0}>
           <img style={{ width: "25px" }} src="/logoSvg.svg" alt="logo" />

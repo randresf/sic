@@ -1,41 +1,33 @@
-// export const brand = {
-//   100: "#01579b", //azul metalico
-//   200: "#8f8f8f", //gris metalico
-//   300: "#1777c2", //azul mar
-//   400: "#161116",
-//   500: "#539DC5",
-//   600: "#ffffff", //blanco
-// }
-
-// 100: "#01579b",
-// 200: "#23233e",
-// 300: "#6F849C",
-// 400: "#161116",
-// 500: "#539DC5"
-
-//#46cac7 - verde chimbita
-//#ee7373 - rojo chimbita
-
-// F4F1F1
-// B98F6C
-// 9B99A2
-// 786E68
-// 4A4C47
+//purpleVersion
+// btn: #8f6bbb
+// tabSection: #8f6bbb12
+// font: #414141
+// btnFont: #8f6bbb
 export const brand = {
-  100: "#E8E4E7", //bg
-  200: "#BAA04E", //actions
-  300: "#42484B", //font
-  400: "#876071", // titles
-  500: "#85949D", // other
+  100: "#f1f5fc", //bg
+  200: "#3e4685", //actions
+  300: "#87888a", //font
+  400: "#3e4685", // titles
+  500: "#96B4D5", // bgDark
+  600: "#E8E4E7", // darkActions
+  700: "#486AE5", // darkFont
+  800: "#252E48", // darkTitles
 }
 
 export const app_brand = {
-  bg: 100, // "#E8E4E7", //bg
-  actions: 200, // "#BAA04E", //actions
-  font: 300, // "#42484B", //font
-  titles: 400, // "#876071", // titles
-  other: 500, // "#85949D", // other
-  actionsDark: 100,
+  bg: "#f1f5fc",
+  section: "#f3f8fe",
+  secondIcon: "#e5e8f7",
+  actions: "#3e4685",
+  actionsFont: "white",
+  font: "black",
+  titles: "#3e4685",
+  darkBg: "#252E48",
+  darkActions: "#dbe4f3",
+  darkFont: "brand.500",
+  darkTitles: "#dbe4f3",
+  darkSection: "#f3f8fe",
+  darkSecondIcon: "#e5e8f7",
 }
 
 export const defaultFont = '"Lato", sans-serif'
@@ -48,4 +40,25 @@ export const btnProps = {
   height: "3rem",
   width: "7.5rem",
   borderRadius: "0.375rem",
+  _hover: {
+    opacity: "0.8",
+  },
+}
+
+export const iconBtnProps = {
+  _hover: {
+    opacity: "0.8",
+  },
+}
+
+export const TabSectionStyles = {
+  borderRadius: "5%",
+}
+
+export const TabStyles = {
+  _focus: {
+    fontWeight: "600",
+  },
+  minHeight: "400px",
+  shadow: "md",
 }

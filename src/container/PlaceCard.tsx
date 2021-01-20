@@ -5,6 +5,7 @@ import Heading from "../components/formElements/Heading"
 import Text from "../components/formElements/Text"
 import { MEETINGS_LIST } from "../ui/formIds"
 import DisplayText from "../components/formElements/DisplayMessage"
+import BoldText from "../components/formElements/BoldText"
 
 type MeetingProps = {
   id: string | number | undefined
@@ -16,14 +17,17 @@ type MeetingProps = {
 
 const PlaceCard = ({ id, name, address, children, bg = "" }: MeetingProps) => {
   return (
-    <Card key={id} backgroundColor={bg} className={MEETINGS_LIST.meetingCard}>
+    <Card key={id} className={MEETINGS_LIST.meetingCard}>
       <Flex justifyContent="left" flexWrap="wrap">
         <Heading mr={170} className={MEETINGS_LIST.meetingTitle}>
           {name}
         </Heading>
-        <Text className={MEETINGS_LIST.spots}>
-          <DisplayText id="form.address" defaultMessage="address" /> : {address}
-        </Text>
+        <Flex>
+          <BoldText className={MEETINGS_LIST.spots}>
+            <DisplayText id="form.address" defaultMessage="address" /> :{" "}
+          </BoldText>
+          <Text> {` ${address}`}</Text>
+        </Flex>
       </Flex>
       <Box alignSelf="flex-end">{children}</Box>
     </Card>

@@ -3,23 +3,20 @@ import { app_brand, btnProps } from "./general"
 
 export const PrimaryButton = {
   baseStyle: (props: Record<string, any>) => ({
-    color: mode(app_brand.font, app_brand.font)(props),
-    bg: mode(app_brand.actions, app_brand.actionsDark)(props),
+    color: mode(app_brand.actionsFont, app_brand.darkFont)(props),
+    bg: mode(app_brand.actions, app_brand.darkActions)(props),
     ...btnProps,
-    // _hover: {
-    //   bg: mode("#183A66", "#008fff")(props),
-    // },
+    fontWeight: 600,
   }),
 }
 
 export const DefaultButton = {
   baseStyle: (props: Record<string, any>) => ({
-    color: mode("brand.600", "brand.600")(props),
-    bg: mode("brand.200", "brand.200")(props),
-    fontWeight: 500,
+    color: mode(app_brand.actions, app_brand.darkActions)(props),
+    border: `1px solid ${mode(
+      app_brand.actions,
+      app_brand.darkActions
+    )(props)}`,
     ...btnProps,
-    _hover: {
-      bg: mode("#afb2b4", "#bebebe")(props),
-    },
   }),
 }

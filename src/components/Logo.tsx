@@ -1,5 +1,6 @@
 import { useColorMode } from "@chakra-ui/react"
 import React from "react"
+import { app_brand } from "../theme/components/general"
 const Logo = () => {
   const { colorMode } = useColorMode()
   return (
@@ -7,7 +8,7 @@ const Logo = () => {
       id="svg"
       viewBox="0 0 149.27 93.58"
       width="60px"
-      fill={colorMode === "dark" ? "#EFE6E9" : "#1D4044"}
+      fill={colorMode === "dark" ? app_brand.darkActions : app_brand.actions}
     >
       <g id="Capa_2" data-name="Capa 2">
         <g id="Capa_3" data-name="Capa 3">

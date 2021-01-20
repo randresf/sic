@@ -19,9 +19,9 @@ const NavBar = () => {
           <Link to="/" id={NAVABAR_LIST.logo}>
             <Flex align="center">
               <Logo />
-              <Text ml={2}>
+              {/* <Text ml={2}>
                 <DisplayText id="app.navBar.home" defaultMessage="home" />
-              </Text>
+              </Text> */}
             </Flex>
           </Link>
         </Box>

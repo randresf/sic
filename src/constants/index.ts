@@ -19,9 +19,9 @@ export const QUESTIONS = [
 
 export const DATE_FORMAT = `dddd Do MMMM, h:mm a`
 
-export const ACTIVE_CARD_COLOR = "#89bde5"
+export const ACTIVE_CARD_COLOR = "white"
 
-export const INACTIVE_CARD_COLOR = "#dddddd"
+export const INACTIVE_CARD_COLOR = "#dbe4f3"
 
 export const BTN_PROPS = {
   size: "md",

@@ -26,7 +26,6 @@ const Meetings = () => {
   useNewMeetingSubscription()
   useMeetingDeleteSubscription()
 
-  if (fetching) return <Loading loading />
   if (error || !data || data.meetings.meetings.length === 0)
     return (
       <Box id={MEETINGS_LIST.noMeetings}>
@@ -44,6 +43,7 @@ const Meetings = () => {
 
   return (
     <Flex flex={1} alignItems="center" flexWrap="wrap">
+      <Loading loading={fetching}></Loading>
       <ShouldRender if={data && data.meetings}>
         {data?.meetings.meetings.map(({ __typename, ...reu }) => (
           <MeetingCard {...reu}>

@@ -1,4 +1,11 @@
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react"
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  useStyleConfig,
+} from "@chakra-ui/react"
 import React from "react"
 
 type TabsProps = {
@@ -14,11 +21,13 @@ export default function TabsSection({
   defaultIndex = 0,
   ...props
 }: TabsProps) {
+  const style = useStyleConfig("Tabs", {})
   return (
     <Tabs
       align="end"
       // variant="enclosed"
       {...props}
+      sx={style}
       defaultIndex={defaultIndex}
     >
       <TabList>

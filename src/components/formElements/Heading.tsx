@@ -1,8 +1,6 @@
 import React from "react"
-import { Heading as ChHeading } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 
-const Heading = (props: any) => (
-  <ChHeading fontWeight="900" fontSize="xl" size="md" {...props} />
-)
+const Heading = (props: any) => <Box as="h1" {...props} />
 
 export default Heading

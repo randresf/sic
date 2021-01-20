@@ -1,9 +1,9 @@
 import React from "react"
-import { Text } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 
 const BoldText = (props: any) => (
-  <Text size="md" fontWeight="500">
+  <Box as="h3" fontWeight="bold">
     {props.children}
-  </Text>
+  </Box>
 )
 export default BoldText

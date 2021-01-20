@@ -5,6 +5,8 @@ import styles from "./styles"
 import { PrimaryButton, DefaultButton } from "./components/Buttons"
 import { brand } from "./components/general"
 import { IconReservation, IconEdit, IconDelete } from "./components/Icons"
+import { Tabs, TabSection } from "./components/Tabs"
+import { Card } from "./components/Card"
 
 const overrides = {
   styles,
@@ -40,6 +42,9 @@ const overrides = {
     IconReservation,
     IconEdit,
     IconDelete,
+    Tabs,
+    TabSection,
+    Card,
   },
   //borders,
   // Other foundational style overrides go here

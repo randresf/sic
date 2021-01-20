@@ -14,12 +14,14 @@ import NavBar from "./components/NavBar"
 import Dashboard from "./pages/Dashboard"
 import Footer from "./components/Footer"
 import Settings from "./pages/Settings"
+import Divider from "./components/formElements/Divider"
 
 const App = () => {
   return (
     <Provider value={urqlClient()}>
       <Router>
         <NavBar />
+        <Divider mt={0} mb={0} />
         <Wrapper>
           <Switch>
             <Route exact path="/datos/:meetingId">
