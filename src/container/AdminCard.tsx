@@ -9,13 +9,24 @@ import BoldText from "../components/formElements/BoldText"
 
 type MeetingProps = {
   id: string | number | undefined
-  name: string
-  address: string
+  firstName: string
+  lastName: string
+  phone: string
+  email: string
+  username: string
   children: any
   bg?: string
 }
 
-const PlaceCard = ({ id, name, address, children, bg = "" }: MeetingProps) => {
+const PlaceCard = ({
+  id,
+  firstName,
+  lastName,
+  phone,
+  email,
+  children,
+  username,
+}: MeetingProps) => {
   return (
     <Card key={id} className={MEETINGS_LIST.meetingCard}>
       <Flex
@@ -24,14 +35,29 @@ const PlaceCard = ({ id, name, address, children, bg = "" }: MeetingProps) => {
         flexWrap="wrap"
         flexDir="column"
       >
-        <Heading className={MEETINGS_LIST.meetingTitle}>{name}</Heading>
+        <Heading className={MEETINGS_LIST.meetingTitle}>
+          {firstName} {lastName}
+        </Heading>
+        <Flex>
+          <BoldText className={MEETINGS_LIST.meetingCard}>
+            <DisplayText id="form.phone" defaultMessage="Phone" /> :{" "}
+          </BoldText>
+          <Text> {` ${phone}`}</Text>
+        </Flex>
         <Flex>
           <BoldText className={MEETINGS_LIST.spots}>
-            <DisplayText id="form.address" defaultMessage="address" /> :{" "}
+            <DisplayText id="form.email" defaultMessage="Email" /> :{" "}
           </BoldText>
-          <Text> {` ${address}`}</Text>
+          <Text> {` ${email}`}</Text>
+        </Flex>
+        <Flex>
+          <BoldText className={MEETINGS_LIST.spots}>
+            <DisplayText id="form.user" defaultMessage="User" /> :{" "}
+          </BoldText>
+          <Text> {` ${username}`}</Text>
         </Flex>
       </Flex>
+
       <Box alignSelf="flex-end">{children}</Box>
     </Card>
   )

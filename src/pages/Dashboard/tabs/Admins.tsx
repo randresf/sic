@@ -1,4 +1,3 @@
-import { Flex } from "@chakra-ui/react"
 import React, { useState } from "react"
 import AddCard from "../../../components/AddCard"
 import ModalWrapper from "../../../components/ModalWrapper"
@@ -9,6 +8,10 @@ import NeutralButton from "../../../components/formElements/NeutralButton"
 import DisplayText from "../../../components/formElements/DisplayMessage"
 import { useGetAdminDataQuery } from "../../../generated/graphql"
 import Loading from "../../../components/formElements/Loading"
+import ShouldRender from "../../../components/ShouldRender"
+import AdminCard from "../../../container/AdminCard"
+import { v4 } from "uuid"
+import DefaultContainer from "../../../components/DefaultContainer"
 
 const Admins = ({ adminId }: any) => {
   const { formatMessage } = useIntl()
@@ -17,24 +20,48 @@ const Admins = ({ adminId }: any) => {
 
   const [{ data, fetching }] = useGetAdminDataQuery()
 
-  console.log(data)
-
   const onCloseFormAdmin = () => {
     setnewAdmin(false)
   }
 
   return (
     <>
-      <Flex flex={1} justifyContent="center" flexWrap="wrap">
+      <DefaultContainer>
         <Loading loading={fetching}>
-          <AddCard
-            onClick={() => {
-              setPlace({})
-              setnewAdmin(true)
-            }}
-          />
+          <ShouldRender if={data && data?.getAdminsData.length < 2}>
+            <AddCard
+              onClick={() => {
+                setPlace({})
+                setnewAdmin(true)
+              }}
+            />
+          </ShouldRender>
         </Loading>
-      </Flex>
+        <ShouldRender if={data && data.getAdminsData}>
+          {data?.getAdminsData.map(
+            ({
+              id,
+              firstName,
+              lastName,
+              phone,
+              email,
+              children,
+              username,
+            }: any) => (
+              <AdminCard
+                key={v4()}
+                id={id}
+                firstName={firstName}
+                lastName={lastName}
+                phone={phone}
+                email={email}
+                children={children}
+                username={username}
+              ></AdminCard>
+            )
+          )}
+        </ShouldRender>
+      </DefaultContainer>
       <ModalWrapper
         titulo={
           isEmpty(adminId)
