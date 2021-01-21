@@ -19,7 +19,7 @@ export const QUESTIONS = [
 
 export const DATE_FORMAT = `dddd Do MMMM, h:mm a`
 
-export const ACTIVE_CARD_COLOR = "white"
+export const ACTIVE_CARD_COLOR = ""
 
 export const INACTIVE_CARD_COLOR = "#dbe4f3"
 

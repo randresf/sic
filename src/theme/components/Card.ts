@@ -3,7 +3,7 @@ import { app_brand } from "./general"
 
 export const Card = {
   baseStyle: (props: Record<string, any>) => ({
-    bg: mode("white", app_brand.darkActions)(props),
+    bg: mode("white", "")(props),
     borderRadius: "5%",
     padding: "1rem",
     shadow: "md",

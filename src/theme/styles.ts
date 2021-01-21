@@ -6,16 +6,16 @@ const Globals = {
       color: mode(app_brand.font, app_brand.darkFont)(props),
       bg: mode(app_brand.bg, app_brand.darkBg)(props),
       h1: {
-        color: app_brand.titles,
+        color: mode(app_brand.titles, app_brand.darkTitles)(props),
         fontWeight: "700",
         fontSize: "large",
         marginRight: "0px",
       },
       h2: {
-        color: app_brand.font,
+        color: mode(app_brand.font, app_brand.darkSection)(props),
       },
       a: {
-        color: app_brand.titles,
+        color: mode(app_brand.titles, app_brand.darkActions)(props),
         fontWeight: "600",
       },
     },

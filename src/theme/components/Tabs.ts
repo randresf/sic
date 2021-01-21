@@ -3,8 +3,8 @@ import { app_brand, TabSectionStyles, TabStyles } from "./general"
 
 export const Tabs = {
   baseStyle: (props: Record<string, any>) => ({
-    color: mode(app_brand.titles, app_brand.darkFont)(props),
-    bg: mode(app_brand.section, app_brand.darkActions)(props),
+    color: mode(app_brand.titles, "")(props),
+    bg: mode(app_brand.section, "")(props),
     ...TabStyles,
   }),
 }

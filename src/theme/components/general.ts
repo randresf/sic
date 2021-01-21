@@ -22,12 +22,12 @@ export const app_brand = {
   actionsFont: "white",
   font: "black",
   titles: "#3e4685",
-  darkBg: "#252E48",
-  darkActions: "#dbe4f3",
-  darkFont: "brand.500",
-  darkTitles: "#dbe4f3",
-  darkSection: "#f3f8fe",
-  darkSecondIcon: "#e5e8f7",
+  darkBg: "#414141",
+  darkActions: "#8f6bbb",
+  darkFont: "white",
+  darkTitles: "white",
+  darkSection: "white",
+  darkSecondIcon: "#8f6bbb",
 }
 
 export const defaultFont = '"Lato", sans-serif'
