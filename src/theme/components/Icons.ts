@@ -27,3 +27,9 @@ export const IconReservation = {
     ...iconBtnProps,
   }),
 }
+
+export const IconPlus = {
+  baseStyle: (props: Record<string, any>) => ({
+    color: mode(app_brand.actions, app_brand.darkActions)(props),
+  }),
+}

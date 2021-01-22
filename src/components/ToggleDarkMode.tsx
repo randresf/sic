@@ -13,7 +13,8 @@ const Toggle = () => {
       icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
       id={NAVABAR_LIST.darkMode}
       color={colorMode === "dark" ? app_brand.darkActions : app_brand.actions}
-      bg={colorMode === "dark" ? app_brand.actions : app_brand.darkActions}
+      borderColor={colorMode === "dark" ? app_brand.darkActions : app_brand.actions}
+      borderWidth="1px"
     />
   )
 }

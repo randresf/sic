@@ -88,7 +88,7 @@ const Login = () => {
                   required
                 />
               </Flex>
-              <PrimaryButton type="submit" isLoading={isSubmitting}>
+              <PrimaryButton type="submit" data-qa="submit" isLoading={isSubmitting}>
                 <DisplayText
                   id="app.buttons.continue"
                   defaultMessage="continue"

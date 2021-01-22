@@ -12,7 +12,7 @@ const Globals = {
         marginRight: "0px",
       },
       h2: {
-        color: mode(app_brand.font, app_brand.darkSection)(props),
+        color: mode(app_brand.font, app_brand.darkFont)(props),
       },
       a: {
         color: mode(app_brand.titles, app_brand.darkActions)(props),

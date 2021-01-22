@@ -23,9 +23,9 @@ export const app_brand = {
   font: "black",
   titles: "#3e4685",
   darkBg: "#414141",
-  darkActions: "#8f6bbb",
+  darkActions: "#63b3ed",
   darkFont: "white",
-  darkTitles: "white",
+  darkTitles: "#63b3ed",
   darkSection: "white",
   darkSecondIcon: "#8f6bbb",
 }

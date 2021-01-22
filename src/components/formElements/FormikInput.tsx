@@ -29,6 +29,7 @@ const WrapperInput = ({
             placeholder={placeholder || label.toLowerCase()}
             {...props}
             id={id}
+            data-qa={`${name}-field`}
           />
           <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
         </FormControl>

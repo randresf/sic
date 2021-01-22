@@ -11,7 +11,7 @@ export default function AddCard(props: any) {
         height="100%"
         id={MEETINGS_LIST.btnNewMeeting}
         aria-label="newMeeting"
-        background="none"
+        iconType="IconPlus"
         fontSize="50px"
         onClick={props?.onClick}
         icon={<PlusSquareIcon />}

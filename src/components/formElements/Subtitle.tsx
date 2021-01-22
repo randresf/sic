@@ -1,6 +1,5 @@
 import React from "react"
 import { Box } from "@chakra-ui/react"
-import { app_brand } from "../../theme/components/general"
 
 type subtitleProps = {
   value: string
@@ -8,7 +7,7 @@ type subtitleProps = {
 }
 const Subtitle = ({ value, id }: subtitleProps) => {
   return (
-    <Box as="h2" id={id} color={app_brand.font}>
+    <Box as="h2" id={id} >
       {value}
     </Box>
   )

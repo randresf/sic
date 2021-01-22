@@ -1,13 +1,15 @@
 import React from "react"
-import { Menu, MenuButton, MenuList, MenuItem, Text } from "@chakra-ui/react"
+import { Menu, MenuButton, MenuList, MenuItem, Text, useColorMode } from "@chakra-ui/react"
 import { useHeartbeatQuery, useLogoutMutation } from "../generated/graphql"
 import Loading from "./formElements/Loading"
 import DisplayText from "./formElements/DisplayMessage"
 import ShouldRender from "./ShouldRender"
 import { SettingsIcon } from "@chakra-ui/icons"
 import { useHistory } from "react-router-dom"
+import { app_brand } from "../theme/components/general"
 
 export default function Account() {
+  const {colorMode } = useColorMode()
   const [{ data }] = useHeartbeatQuery()
   const history = useHistory()
   const [{ fetching }, logout] = useLogoutMutation()
@@ -15,8 +17,8 @@ export default function Account() {
 
   return (
     <ShouldRender if={data && data.heartBeat}>
-      <Menu>
-        <MenuButton as={Text}>
+      <Menu >
+        <MenuButton as={Text} >
           <DisplayText
             id="app.navbar.greeting"
             defaultMessage="registrado como"
@@ -24,7 +26,7 @@ export default function Account() {
           {data?.heartBeat?.firstName}
           <SettingsIcon ml={3} />
         </MenuButton>
-        <MenuList>
+        <MenuList background={colorMode === "dark" ? app_brand.darkBg : app_brand.bg}>
           <MenuItem
             onClick={async () => {
               history.push("/settings")
