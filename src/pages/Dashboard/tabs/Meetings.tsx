@@ -70,67 +70,6 @@ export default function Meetings() {
     })
   }
 
-  const getMeetingModalProps = () => {
-    return {
-      titulo: isEmpty(meetingData)
-        ? formatMessage({ id: "app.meetingForm.newMeeting" })
-        : formatMessage({ id: "app.meetingForm.updateMeeting" }),
-
-      contenido: (
-        <MeetingDataForm meeting={meetingData} onChange={onCloseFormMeeting}>
-          <NeutralButton onClick={onCloseFormMeeting} mr={3}>
-            <DisplayText id="app.buttons.back" defaultMessage="back" />
-          </NeutralButton>
-        </MeetingDataForm>
-      ),
-      actions: undefined,
-      isOpen: newMeeting,
-      onClose: onCloseFormMeeting,
-    }
-  }
-  const getDeleteMeetingMpdalProps = () => {
-    return {
-      titulo: formatMessage({ id: "app.meetingForm.deleteMeeting" }),
-      contenido: (
-        <Text>
-          <DisplayText
-            id="app.meetingForm.deleteMessage"
-            defaultMessage="Are you sure you want to delete this meeting?"
-          />
-        </Text>
-      ),
-      actions: (
-        <>
-          <CancelButton
-            onClick={() => {
-              deleteThisMeeting(meetingData)
-            }}
-          >
-            <DisplayText id="app.buttons.delete" defaultMessage="delete" />
-          </CancelButton>
-          <PrimaryButton onClick={onCloseDeleteMeeting}>
-            <DisplayText id="app.buttons.back" defaultMessage="back" />
-          </PrimaryButton>
-        </>
-      ),
-
-      isOpen: deleteMeeting,
-      onClose: onCloseDeleteMeeting,
-    }
-  }
-  const modalProps = newMeeting
-    ? getMeetingModalProps()
-    : getDeleteMeetingMpdalProps()
-
-  if (newMeeting || deleteMeeting)
-    return (
-      <Flex>
-        <Box>{modalProps.titulo}</Box>
-        <Box>{modalProps.contenido}</Box>
-        <Box>{modalProps.actions}</Box>
-      </Flex>
-    )
-
   return (
     <>
       <Flex justifyContent="center" flexWrap="wrap">
@@ -194,8 +133,7 @@ export default function Meetings() {
           </Flex>
         ) : null}
       </Flex>
-      <ModalWrapper {...modalProps} />
-      {/* <ModalWrapper
+      <ModalWrapper
         titulo={formatMessage({ id: "app.meetingForm.deleteMeeting" })}
         contenido={
           <Text>
@@ -221,7 +159,23 @@ export default function Meetings() {
         }
         isOpen={deleteMeeting}
         onClose={onCloseDeleteMeeting}
-      /> */}
+      />
+      <ModalWrapper
+        titulo={
+          isEmpty(meetingData)
+            ? formatMessage({ id: "app.meetingForm.newMeeting" })
+            : formatMessage({ id: "app.meetingForm.updateMeeting" })
+        }
+        contenido={
+          <MeetingDataForm meeting={meetingData}>
+            <NeutralButton onClick={onCloseFormMeeting} mr={3}>
+              <DisplayText id="app.buttons.back" defaultMessage="back" />
+            </NeutralButton>
+          </MeetingDataForm>
+        }
+        isOpen={newMeeting}
+        onClose={onCloseFormMeeting}
+      />
     </>
   )
 }
