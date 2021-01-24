@@ -14,10 +14,6 @@ const Globals = {
       h2: {
         color: mode(app_brand.font, app_brand.darkFont)(props),
       },
-      a: {
-        color: mode(app_brand.titles, app_brand.darkActions)(props),
-        fontWeight: "600",
-      },
     },
   }),
 }

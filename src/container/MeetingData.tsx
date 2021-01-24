@@ -139,7 +139,7 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
                     </Radio>
                   </RadioGroupControl>
                   <ShouldRender if={String(values.isActive) === "true"}>
-                    <Text color="tomato" as="i" fontSize="md" noOfLines={2}>
+                    <Text color="tomato" as="i" fontSize="md" noOfLines={2} style={{paddingTop:"3px", paddingBottom:"10px"}}>
                       <DisplayText
                         id="app.meetingForm.activeMessage"
                         defaultMessage="When activating the meeting, users will be able to reserve quotas Meetings with reservations cannot be modified / deleted"

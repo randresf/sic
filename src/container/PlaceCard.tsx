@@ -27,7 +27,7 @@ const PlaceCard = ({ id, name, address, children, bg = "" }: MeetingProps) => {
         <Heading className={MEETINGS_LIST.meetingTitle}>{name}</Heading>
         <Flex>
           <BoldText className={MEETINGS_LIST.spots}>
-            <DisplayText id="form.address" defaultMessage="address" /> :{" "}
+            <DisplayText id="form.address" defaultMessage="address"/>:{" "}
           </BoldText>
           <Text> {` ${address}`}</Text>
         </Flex>

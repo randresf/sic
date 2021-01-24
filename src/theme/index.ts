@@ -7,6 +7,7 @@ import { brand } from "./components/general"
 import { IconReservation, IconEdit, IconDelete, IconPlus } from "./components/Icons"
 import { Tabs, TabSection } from "./components/Tabs"
 import { Card } from "./components/Card"
+import { Link } from "./components/Links"
 
 const overrides = {
   styles,
@@ -46,6 +47,7 @@ const overrides = {
     Tabs,
     TabSection,
     Card,
+    Link
   },
   //borders,
   // Other foundational style overrides go here

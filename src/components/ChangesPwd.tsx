@@ -1,4 +1,4 @@
-import { Link } from "@chakra-ui/react"
+import { Link, useStyleConfig } from "@chakra-ui/react"
 import React from "react"
 import DisplayText from "./formElements/DisplayMessage"
 import FormikInput from "./formElements/FormikInput"
@@ -16,7 +16,7 @@ const ChangePwd = ({ onChangenewPwd, newPwd }: any) => {
           onChangenewPwd(!newPwd)
         }}
         href="#"
-        color="#01579b"
+        sx={useStyleConfig('Link', {})}
       >
         {newPwd ? (
           <DisplayText id="app.label.hide" defaultMessage="hide" />
