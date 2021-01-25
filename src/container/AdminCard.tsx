@@ -6,6 +6,7 @@ import Text from "../components/formElements/Text"
 import { MEETINGS_LIST } from "../ui/formIds"
 import DisplayText from "../components/formElements/DisplayMessage"
 import BoldText from "../components/formElements/BoldText"
+import DisplayPair from "../components/DisplayPairText"
 
 type MeetingProps = {
   id: string | number | undefined
@@ -28,37 +29,26 @@ const PlaceCard = ({
   username,
 }: MeetingProps) => {
   return (
-    <Card key={id} className={MEETINGS_LIST.meetingCard}>
-      <Flex
-        textAlign="left"
-        justifyContent="left"
-        flexWrap="wrap"
-        flexDir="column"
-      >
-        <Heading className={MEETINGS_LIST.meetingTitle}>
-          {firstName} {lastName}
-        </Heading>
-        <Flex>
-          <BoldText className={MEETINGS_LIST.meetingCard}>
-            <DisplayText id="form.phone" defaultMessage="Phone" /> :{" "}
-          </BoldText>
-          <Text> {` ${phone}`}</Text>
-        </Flex>
-        <Flex>
-          <BoldText className={MEETINGS_LIST.spots}>
-            <DisplayText id="form.email" defaultMessage="Email" /> :{" "}
-          </BoldText>
-          <Text> {` ${email}`}</Text>
-        </Flex>
-        <Flex>
-          <BoldText className={MEETINGS_LIST.spots}>
-            <DisplayText id="form.user" defaultMessage="User" /> :{" "}
-          </BoldText>
-          <Text> {` ${username}`}</Text>
-        </Flex>
-      </Flex>
-
-      <Box alignSelf="flex-end">{children}</Box>
+    <Card
+      key={id}
+      className={MEETINGS_LIST.meetingCard}
+      actions={<Box alignSelf="flex-end">{children}</Box>}
+    >
+      <Heading mb={3} className={MEETINGS_LIST.meetingTitle}>
+        {firstName} {lastName}
+      </Heading>
+      <DisplayPair
+        bold={<DisplayText id="form.phone" defaultMessage="Phone" />}
+        text={phone}
+      />
+      <DisplayPair
+        bold={<DisplayText id="form.email" defaultMessage="Email" />}
+        text={email}
+      />
+      <DisplayPair
+        bold={<DisplayText id="form.user" defaultMessage="User" />}
+        text={username}
+      />
     </Card>
   )
 }

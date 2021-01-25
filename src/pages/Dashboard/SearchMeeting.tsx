@@ -1,6 +1,5 @@
-import { InputGroup, InputRightElement } from "@chakra-ui/react"
+import { InputGroup, InputRightElement, Spinner } from "@chakra-ui/react"
 import React, { useState } from "react"
-import Loading from "../../components/formElements/Loading"
 import NormalInput from "../../components/formElements/NormalInput"
 import { useGetUserMutation, useMeetingsQuery } from "../../generated/graphql"
 import { DASHBOARD_MEETINGS } from "../../ui/formIds"
@@ -26,7 +25,7 @@ const SearchMeetingField = ({ onData, ...props }: SearchMeetingFieldProps) => {
         onChange={onChange}
         disabled={loading}
       />
-      <InputRightElement children={<Loading loading={loading} />} />
+      <InputRightElement children={loading ? <Spinner /> : null} />
     </InputGroup>
   )
 }

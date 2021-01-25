@@ -1,6 +1,12 @@
 import React, { useState } from "react"
-import { Box, Flex, useToast, Stack, ModalFooter } from "@chakra-ui/react"
-import Loading from "../components/formElements/Loading"
+import {
+  Box,
+  Flex,
+  useToast,
+  Stack,
+  ModalFooter,
+  Spinner,
+} from "@chakra-ui/react"
 import {
   useSearchReservationQuery,
   useCancelReservationMutation,
@@ -39,7 +45,7 @@ const ReservationView = ({ reservationId, external = false }: any) => {
   const userId = localStorage.getItem("userId") || ""
 
   // handle edge cases
-  if (fetching || saving) return <Loading loading={fetching || saving} />
+  if (fetching || saving) return <Spinner />
   if (error) return <div>{error?.message}</div>
   const reservation = data?.searchReservation?.reservation as Reservation
   if (!reservation)

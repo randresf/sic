@@ -57,7 +57,7 @@ const Admins = ({ adminId }: any) => {
                 email={email}
                 children={children}
                 username={username}
-              ></AdminCard>
+              />
             )
           )}
         </ShouldRender>

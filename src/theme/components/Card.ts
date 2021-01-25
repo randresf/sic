@@ -10,7 +10,7 @@ export const Card = {
     borderWidth: "1px",
     margin: "0.6rem",
     width: "270px",
-    height: "190px",
+    height: "220px",
     flexDirection: "column",
     justifyContent: "space-between",
   }),

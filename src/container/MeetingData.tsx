@@ -1,7 +1,6 @@
-import { Box, Flex, Text, Radio } from "@chakra-ui/react"
+import { Box, Flex, Text, Radio, Spinner } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import React from "react"
-import Loading from "../components/formElements/Loading"
 import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import Select from "../components/formElements/Select"
@@ -68,7 +67,7 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
     })
   }
 
-  if (placeLoading) return <Loading loading={placeLoading} />
+  if (placeLoading) return <Spinner />
   return (
     <Box minW="300px">
       <Formik

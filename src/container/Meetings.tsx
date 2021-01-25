@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import { Box, Flex, Text } from "@chakra-ui/react"
-import Loading from "../components/formElements/Loading"
+import { Box, Flex, Spinner, Text } from "@chakra-ui/react"
 import {
   useMeetingsQuery,
   useMeetingUpdatedSubscription,
@@ -26,6 +25,8 @@ const Meetings = () => {
   useNewMeetingSubscription()
   useMeetingDeleteSubscription()
 
+  if (fetching) return <Spinner />
+
   if (error || !data || data.meetings.meetings.length === 0)
     return (
       <Box id={MEETINGS_LIST.noMeetings}>
@@ -43,7 +44,6 @@ const Meetings = () => {
 
   return (
     <Flex flex={1} alignItems="center" flexWrap="wrap">
-      <Loading loading={fetching}></Loading>
       <ShouldRender if={data && data.meetings}>
         {data?.meetings.meetings.map(({ __typename, ...reu }) => (
           <MeetingCard {...reu}>

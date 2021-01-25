@@ -1,7 +1,6 @@
-import { Stack, InputGroup, InputRightElement } from "@chakra-ui/react"
+import { InputGroup, InputRightElement, Spinner } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { useGetUserMutation } from "../generated/graphql"
-import Loading from "./formElements/Loading"
 import FormikInput from "./formElements/FormikInput"
 
 type SearchUserFieldProps = {
@@ -34,7 +33,7 @@ const SearchUserField = ({ onData, ...props }: SearchUserFieldProps) => {
           setLoading(false)
         }}
       />
-      <InputRightElement children={<Loading loading={loading} />} />
+      <InputRightElement children={loading ? <Spinner /> : null} />
     </InputGroup>
   )
 }

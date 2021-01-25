@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Skeleton } from "@chakra-ui/react"
+import { Skeleton } from "@chakra-ui/react"
 
 const Loading = ({
   children,
@@ -8,11 +8,7 @@ const Loading = ({
   children?: string | React.ReactNode
   loading: boolean
 }) => {
-  return (
-    <Box>
-      <Skeleton isLoaded={!loading}>{children}</Skeleton>
-    </Box>
-  )
+  return <Skeleton isLoaded={!loading}>{children}</Skeleton>
 }
 
 export default Loading

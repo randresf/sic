@@ -167,7 +167,7 @@ export default function Meetings() {
             : formatMessage({ id: "app.meetingForm.updateMeeting" })
         }
         contenido={
-          <MeetingDataForm meeting={meetingData}>
+          <MeetingDataForm meeting={meetingData} onChange={onCloseFormMeeting}>
             <NeutralButton onClick={onCloseFormMeeting} mr={3}>
               <DisplayText id="app.buttons.back" defaultMessage="back" />
             </NeutralButton>

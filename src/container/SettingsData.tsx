@@ -2,13 +2,12 @@ import React, { useState } from "react"
 import { useIntl } from "react-intl"
 import { useHistory } from "react-router-dom"
 
-import { Flex } from "@chakra-ui/react"
+import { Flex, Spinner } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import DisplayText from "../components/formElements/DisplayMessage"
 import { useUserQuery, useUpdateUserMutation } from "../generated/graphql"
-import Loading from "../components/formElements/Loading"
 import isEmpty from "../utils/isEmpty"
 import ShouldRender from "../components/ShouldRender"
 import Notify from "../utils/notify"
@@ -61,7 +60,7 @@ const SettingsData = ({ children }: any) => {
     })
   }
 
-  if (fetching) return <Loading loading />
+  if (fetching) return <Spinner />
   return (
     <Formik
       enableReinitialize

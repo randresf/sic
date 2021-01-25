@@ -40,7 +40,6 @@ const Login = () => {
   if (data && data.heartBeat) history.push("/dashboard")
   return (
     <Wrapper>
-      <Loading loading={fetching} />
       <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
         <Heading mb={5}>
           <DisplayText id="app.login.title" defaultMessage="Aforo Admin" />
@@ -88,7 +87,11 @@ const Login = () => {
                   required
                 />
               </Flex>
-              <PrimaryButton type="submit" data-qa="submit" isLoading={isSubmitting}>
+              <PrimaryButton
+                type="submit"
+                data-qa="submit"
+                isLoading={isSubmitting}
+              >
                 <DisplayText
                   id="app.buttons.continue"
                   defaultMessage="continue"

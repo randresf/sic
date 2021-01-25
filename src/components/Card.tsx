@@ -4,7 +4,10 @@ const Card = (props: any) => {
   const styles = useStyleConfig("Card", props)
   return (
     <Flex sx={styles} {...props}>
-      {props.children}
+      <Flex flexWrap="wrap" flexDir="column" textAlign="left">
+        {props.children}
+      </Flex>
+      {props.actions}
     </Flex>
   )
 }

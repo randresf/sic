@@ -1,4 +1,12 @@
-import { Box, Center, Flex, Heading, Text, useToast } from "@chakra-ui/react"
+import {
+  Box,
+  Center,
+  Flex,
+  Heading,
+  Spinner,
+  Text,
+  useToast,
+} from "@chakra-ui/react"
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import Loading from "../components/formElements/Loading"
@@ -13,7 +21,7 @@ import { CONFIRM_RESERVATION } from "../ui/formIds"
 import { formatDate } from "../utils/formatDate"
 import useValidUser from "../utils/validUserInfo"
 import DisplayText from "../components/formElements/DisplayMessage"
-
+// TODO: move msgs to lang file
 const Confirm = () => {
   const userId = useValidUser()
   const history = useHistory()
@@ -30,8 +38,7 @@ const Confirm = () => {
     { data: meetingData, fetching: meetingFetching, error: meetingError },
   ] = useGetMeetingQuery({ variables: { id: meetingId } })
 
-  if (userFetching || meetingFetching)
-    return <Loading loading={userFetching || meetingFetching} />
+  if (userFetching || meetingFetching) return <Spinner />
   if (userError || !userData)
     return <Box>No se pudo obtener la informacion del usuario</Box>
   if (meetingError || !meetingData)
@@ -137,12 +144,13 @@ const Confirm = () => {
           </Box>
         </Flex>
         <Flex mt={3}>
-          <YesNoButtonGroup
-            onNo={() => history.replace("/")}
-            onYes={onConfirm}
-            yesProps={{ disabled: confirming }}
-          />
-          <Loading loading={confirming} />
+          <Loading loading={confirming}>
+            <YesNoButtonGroup
+              onNo={() => history.replace("/")}
+              onYes={onConfirm}
+              yesProps={{ disabled: confirming }}
+            />
+          </Loading>
         </Flex>
       </Flex>
     </Wrapper>

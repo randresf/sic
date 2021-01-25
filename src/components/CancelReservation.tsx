@@ -1,12 +1,11 @@
 import { DeleteIcon } from "@chakra-ui/icons"
-import { useToast } from "@chakra-ui/react"
+import { Spinner, useToast } from "@chakra-ui/react"
 import moment from "moment"
 import React from "react"
 import { useIntl } from "react-intl"
 import { useCancelReservationMutation } from "../generated/graphql"
 import { RESERVATIONS_LIST } from "../ui/formIds"
 import CancelButton from "./formElements/CancelButton"
-import Loading from "./formElements/Loading"
 import ShouldRender from "./ShouldRender"
 import IconButton from "../components/formElements/IconButton"
 
@@ -44,7 +43,7 @@ const CancelReservation = ({
     })
     if (typeof onChange === "function") onChange()
   }
-  if (fetching) return <Loading loading={fetching} />
+  if (fetching) return <Spinner />
 
   const canDelete = moment(meetingDate) > moment()
   const props = {

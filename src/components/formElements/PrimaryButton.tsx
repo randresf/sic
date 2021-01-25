@@ -1,9 +1,9 @@
 import React from "react"
-import { Box, useStyleConfig } from "@chakra-ui/react"
+import { Button, useStyleConfig } from "@chakra-ui/react"
 
 const PrimaryButton = (props: any) => {
   const style = useStyleConfig("PrimaryButton", props)
-  return <Box as="button" sx={style} {...props} />
+  return <Button as="button" sx={style} {...props} />
 }
 
 export default PrimaryButton
