@@ -19,6 +19,7 @@ import { RadioGroupControl } from "formik-chakra-ui"
 import DisplayText from "../components/formElements/DisplayMessage"
 import Notify from "../utils/notify"
 import ModalActions from "../components/ModalActions"
+import isMeetingDataValid from "../utils/isMeetingDataValid"
 
 const MeetingDataForm = ({ children, meeting, onChange }: any) => {
   const [, saveMeeting] = useSaveMeetingMutation()
@@ -30,6 +31,7 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
         meetingDate: "",
         spots: 0,
         place: "",
+        isActive: "true",
       }
     : {
         ...meeting,
@@ -39,20 +41,8 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
       }
 
   const validateInputs = (values: any) => {
-    const { title, meetingDate, spots, place } = values
-    const errors: any = {}
-    if (!place) {
-      errors.place = formatMessage({ id: "form.required" })
-    }
-    if (!title) {
-      errors.title = formatMessage({ id: "form.required" })
-    }
-    if (!meetingDate) {
-      errors.meetingDate = formatMessage({ id: "form.required" })
-    }
-    if (!spots) {
-      errors.spots = formatMessage({ id: "form.required" })
-    }
+    const errors = isMeetingDataValid({ ...values, formatMessage })
+
     return errors
   }
 
@@ -139,7 +129,13 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
                     </Radio>
                   </RadioGroupControl>
                   <ShouldRender if={String(values.isActive) === "true"}>
-                    <Text color="tomato" as="i" fontSize="md" noOfLines={2} style={{paddingTop:"3px", paddingBottom:"10px"}}>
+                    <Text
+                      color="tomato"
+                      as="i"
+                      fontSize="md"
+                      noOfLines={2}
+                      style={{ paddingTop: "3px", paddingBottom: "10px" }}
+                    >
                       <DisplayText
                         id="app.meetingForm.activeMessage"
                         defaultMessage="When activating the meeting, users will be able to reserve quotas Meetings with reservations cannot be modified / deleted"

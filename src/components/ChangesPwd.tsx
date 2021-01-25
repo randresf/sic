@@ -16,7 +16,7 @@ const ChangePwd = ({ onChangenewPwd, newPwd }: any) => {
           onChangenewPwd(!newPwd)
         }}
         href="#"
-        sx={useStyleConfig('Link', {})}
+        sx={useStyleConfig("Link", {})}
       >
         {newPwd ? (
           <DisplayText id="app.label.hide" defaultMessage="hide" />

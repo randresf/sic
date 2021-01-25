@@ -1,4 +1,4 @@
-import { Box, Flex, Radio, useToast } from "@chakra-ui/react"
+import { Box, Flex, Radio } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import { RadioGroupControl } from "formik-chakra-ui"
 import React from "react"
@@ -9,9 +9,10 @@ import PrimaryButton from "../components/formElements/PrimaryButton"
 import isEmpty from "../utils/isEmpty"
 import { useAddPlaceMutation } from "../generated/graphql"
 import ModalActions from "../components/ModalActions"
+import isPlaceDataValid from "../utils/isPlaceDataValid"
+import Notify from "../utils/notify"
 
 const PlaceData = ({ children, place }: any) => {
-  const toast = useToast()
   const { formatMessage } = useIntl()
   const [, addPlaceMutation] = useAddPlaceMutation()
   const initialValues = isEmpty(place)
@@ -19,45 +20,31 @@ const PlaceData = ({ children, place }: any) => {
         id: "",
         name: "",
         address: "",
-        isActive: "",
+        isActive: "true",
       }
     : {
         ...place,
       }
 
   const validateInputs = (values: any) => {
-    const { name, address, isActive } = values
-    const errors: any = {}
-    if (!name) {
-      errors.name = formatMessage({ id: "form.required" })
-    }
-    if (!address) {
-      errors.address = formatMessage({ id: "form.required" })
-    }
-    if (!isActive) {
-      errors.isActive = formatMessage({ id: "form.required" })
-    }
+    const errors = isPlaceDataValid({ ...values, formatMessage })
+
     return errors
   }
 
   const onSubmit = async ({ id, ...values }: any) => {
     const place = await addPlaceMutation({ placeId: id, data: values })
     if (place.error) {
-      return toast({
+      return Notify({
         title: formatMessage({ id: "app.notification.Couldn'tCreatePlace" }),
-        status: "error",
-        duration: 3000,
-        isClosable: true,
+        type: "error",
       })
     }
-
-    toast({
-      title: formatMessage({ id: "app.notification.placeCreatedCorrectly" }),
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    })
     window.location.reload()
+    return Notify({
+      title: formatMessage({ id: "app.notification.placeCreatedCorrectly" }),
+      type: "success",
+    })
   }
 
   return (
@@ -94,7 +81,7 @@ const PlaceData = ({ children, place }: any) => {
                     <Radio value="false">
                       <DisplayText
                         id="form.inactive"
-                        defaultMessage="Inactiva"
+                        defaultMessage="Inactive"
                       />
                     </Radio>
                     <Radio value="true">

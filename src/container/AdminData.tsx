@@ -8,8 +8,9 @@ import PrimaryButton from "../components/formElements/PrimaryButton"
 import Notify from "../utils/notify"
 import { useAddAdminMutation } from "../generated/graphql"
 import ModalActions from "../components/ModalActions"
+import isAdminDataValid from "../utils/isAdminDataValid"
 
-const AdminData = ({ children, admin }: any) => {
+const AdminData = ({ children }: any) => {
   const { formatMessage } = useIntl()
   const [, saveAdmin] = useAddAdminMutation()
   const initialValues = {
@@ -22,16 +23,13 @@ const AdminData = ({ children, admin }: any) => {
     repeatPassword: "",
   }
 
-  const validateInputs = (values: any) => {}
+  const validateInputs = (values: any) => {
+    const errors = isAdminDataValid({ ...values, formatMessage })
+    return errors
+  }
 
   const onSubmit = async ({ ...values }: any) => {
-    const { repeatPassword, ...data } = values
-    if (data.password !== repeatPassword) {
-      return Notify({
-        title: formatMessage({ id: "app.login.pwdIncorret" }),
-        type: "error",
-      })
-    }
+    const { ...data } = values
     const res = await saveAdmin({ data: data })
     if (res.data?.register.errors) {
       return Notify({

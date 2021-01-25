@@ -12,9 +12,9 @@ import FormikInput from "../components/formElements/FormikInput"
 import ModalWrapper from "../components/ModalWrapper"
 import { QUESTION_VIEW } from "../ui/formIds"
 import { useIntl } from "react-intl"
-import CancelButton from "../components/formElements/CancelButton"
 import DisplayText from "../components/formElements/DisplayMessage"
 import NeutralButton from "../components/formElements/NeutralButton"
+import isQuestionDataValid from "../utils/isQuestionDataValid"
 
 const Question = () => {
   const { formatMessage } = useIntl()
@@ -49,26 +49,7 @@ const Question = () => {
   }
 
   const validateInputs = (values: any) => {
-    const { contactNumber, emergenceContact } = values
-    const errors: any = {}
-    const regex = /^[A-Z _]+$/i
-
-    if (!contactNumber) {
-      errors.emergencyPhone = formatMessage({ id: "form.required" })
-    }
-    if (
-      String(contactNumber).length !== 7 &&
-      String(contactNumber).length !== 10
-    ) {
-      errors.contactNumber = formatMessage({ id: "field.incorrect" })
-    }
-
-    if (!emergenceContact) {
-      errors.emergenceContact = formatMessage({ id: "form.required" })
-    }
-    if (!regex.test(emergenceContact)) {
-      errors.emergenceContact = formatMessage({ id: "field.incorrect" })
-    }
+    const errors = isQuestionDataValid({ ...values, formatMessage })
 
     return errors
   }

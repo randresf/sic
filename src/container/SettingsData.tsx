@@ -13,6 +13,7 @@ import isEmpty from "../utils/isEmpty"
 import ShouldRender from "../components/ShouldRender"
 import Notify from "../utils/notify"
 import ChangePwd from "../components/ChangesPwd"
+import isSettingsAdminDataValid from "../utils/isSettingsAdminDataValid"
 
 const SettingsData = ({ children }: any) => {
   const { formatMessage } = useIntl()
@@ -25,7 +26,7 @@ const SettingsData = ({ children }: any) => {
   const initialValues = isEmpty(data?.getUserData)
     ? {
         firstName: "",
-        lastname: "",
+        lastName: "",
         phone: 0,
         email: "",
         password: "",
@@ -39,13 +40,13 @@ const SettingsData = ({ children }: any) => {
         repeatPassword: "",
       }
 
+  const validateInputs = (values: any) => {
+    const errors = isSettingsAdminDataValid({ ...values, formatMessage })
+    return errors
+  }
+
   const onSubmit = async ({ __typename, repeatPassword, ...values }: any) => {
-    if (repeatPassword !== values.newPassword) {
-      return Notify({
-        title: formatMessage({ id: "app.login.pwdIncorret" }),
-        type: "error",
-      })
-    }
+    console.log(values)
     const update = await updateUser({ userData: values })
     if (update.error) {
       return Notify({
@@ -53,7 +54,7 @@ const SettingsData = ({ children }: any) => {
         type: "error",
       })
     }
-    history.push("/dashboard")
+    history.push("/dashboard?tab=2")
     return Notify({
       title: formatMessage({ id: "app.notification.userUpdate" }),
       type: "success",
@@ -66,6 +67,7 @@ const SettingsData = ({ children }: any) => {
       enableReinitialize
       initialValues={initialValues}
       onSubmit={onSubmit}
+      validate={validateInputs}
     >
       {({ isSubmitting }) => (
         <Form>
