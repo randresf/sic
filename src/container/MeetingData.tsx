@@ -94,7 +94,9 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
                     label={formatMessage({ id: "form.place" })}
                     name="place"
                     placeholder={formatMessage({ id: "form.place" })}
-                    options={placeData?.getUserPlaces.place}
+                    options={placeData?.getUserPlaces.place?.filter(
+                      (i) => String(i.isActive) === "true"
+                    )}
                   />
                 </ShouldRender>
                 <FormikInput
