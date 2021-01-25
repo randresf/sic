@@ -104,7 +104,9 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
                     label={formatMessage({ id: "form.place" })}
                     name="place"
                     placeholder={formatMessage({ id: "form.place" })}
-                    options={placeData?.getUserPlaces.place}
+                    options={placeData?.getUserPlaces.place?.filter(
+                      (i) => String(i.isActive) === "true"
+                    )}
                   />
                 </ShouldRender>
                 <FormikInput
@@ -139,7 +141,13 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
                     </Radio>
                   </RadioGroupControl>
                   <ShouldRender if={String(values.isActive) === "true"}>
-                    <Text color="tomato" as="i" fontSize="md" noOfLines={2} style={{paddingTop:"3px", paddingBottom:"10px"}}>
+                    <Text
+                      color="tomato"
+                      as="i"
+                      fontSize="md"
+                      noOfLines={2}
+                      style={{ paddingTop: "3px", paddingBottom: "10px" }}
+                    >
                       <DisplayText
                         id="app.meetingForm.activeMessage"
                         defaultMessage="When activating the meeting, users will be able to reserve quotas Meetings with reservations cannot be modified / deleted"
