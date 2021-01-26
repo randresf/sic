@@ -54,6 +54,7 @@ const SettingsData = ({ children }: any) => {
       })
     }
     history.push("/dashboard?tab=2")
+    window.location.reload()
     return Notify({
       title: formatMessage({ id: "app.notification.userUpdate" }),
       type: "success",
