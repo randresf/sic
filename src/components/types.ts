@@ -7,8 +7,11 @@ export type FormikType = {
 }
 
 export type CheckboxPropsType = {
-  text: string
-  color: string
+  name: string
+  colorScheme: string
+  children: any
+  defaultIsChecked: boolean
+  type: string
 }
 
 export type PersonalDataType = {
@@ -18,6 +21,50 @@ export type PersonalDataType = {
   phone: number | string
   email: string
   birthDate: string
+  formatMessage?: any | undefined
+}
+
+export type AdminDataType = {
+  firstName: string
+  lastName: string
+  phone: number | string
+  email: string
+  username: string
+  password: string
+  repeatPassword: string
+  formatMessage?: any | undefined
+}
+
+export type PlaceDataType = {
+  name: string
+  address: string
+  formatMessage?: any | undefined
+}
+
+export type MeetingDataType = {
+  title: string
+  meetingDate: any
+  spots: number
+  place: string
+  isActive: string
+  formatMessage?: any | undefined
+}
+
+export type SettingsDataType = {
+  firstName: string
+  lastName: string
+  phone: number
+  email: string
+  password?: string
+  newPassword?: string
+  repeatPassword?: string
+  formatMessage?: any | undefined
+}
+
+export type QuestionDataType = {
+  contactNumber: number
+  emergenceContact: string
+  formatMessage?: any | undefined
 }
 
 export type DefaultFun = (param: any) => void

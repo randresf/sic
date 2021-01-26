@@ -1,0 +1,9 @@
+fragment MeetingQuery on Meeting {
+  ...MeetingData
+  hasReservation
+  place {
+    id
+    name
+    address
+  }
+}

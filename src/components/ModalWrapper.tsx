@@ -7,22 +7,31 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react"
 import React from "react"
+import ModalActions from "./ModalActions"
 
 type ModalProps = {
   titulo: string
   contenido: any
   isOpen: boolean
   onClose: any
+  actions?: React.ReactNode
 }
 
-const ModalWrapper = ({ titulo, contenido, isOpen, onClose }: ModalProps) => {
+const ModalWrapper = ({
+  titulo,
+  contenido,
+  isOpen,
+  onClose,
+  actions,
+}: ModalProps) => {
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader textAlign="center">{titulo}</ModalHeader>
+      <ModalContent justifyContent="start">
+        <ModalHeader>{titulo}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody mb={3}>{contenido}</ModalBody>
+        <ModalBody>{contenido}</ModalBody>
+        <ModalActions>{actions}</ModalActions>
       </ModalContent>
     </Modal>
   )

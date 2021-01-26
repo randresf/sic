@@ -1,0 +1,148 @@
+import React, { useState } from "react"
+import { Text } from "@chakra-ui/react"
+import ModalWrapper from "../../../components/ModalWrapper"
+import AddCard from "../../../components/AddCard"
+import isEmpty from "../../../utils/isEmpty"
+import NeutralButton from "../../../components/formElements/NeutralButton"
+import DisplayText from "../../../components/formElements/DisplayMessage"
+import Loading from "../../../components/formElements/Loading"
+import PlaceData from "../../../container/PlaceData"
+import {
+  useGetPlacesQuery,
+  useDeletePlaceMutation,
+} from "../../../generated/graphql"
+import ShouldRender from "../../../components/ShouldRender"
+import IconButton from "../../../components/formElements/IconButton"
+import PlaceCard from "../../../container/PlaceCard"
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
+import CancelButton from "../../../components/formElements/CancelButton"
+import PrimaryButton from "../../../components/formElements/PrimaryButton"
+import Notify from "../../../utils/notify"
+import { ACTIVE_CARD_COLOR, INACTIVE_CARD_COLOR } from "../../../constants"
+import { useIntl } from "react-intl"
+import { v4 } from "uuid"
+import DefaultContainer from "../../../components/DefaultContainer"
+
+export default function Locations() {
+  const [newPlace, setnewPlace] = useState(false)
+  const [deletePlaceModal, setdeletePlaceModal] = useState(false)
+  const [placeData, setPlace] = useState({})
+  const [{ data, fetching }] = useGetPlacesQuery()
+  const [, idPlaceDelete] = useDeletePlaceMutation()
+  const { formatMessage } = useIntl()
+
+  const onCloseFormPlace = () => {
+    setnewPlace(false)
+  }
+
+  const onCloseDeletePlace = () => {
+    setdeletePlaceModal(false)
+  }
+
+  const deletePlace = async (placeId: any) => {
+    if (!placeId) return
+    const res = await idPlaceDelete({ placeId: placeId })
+
+    if (res.data?.deletePlace.errors || res.error) {
+      setdeletePlaceModal(false)
+      return Notify({
+        title: formatMessage({ id: "app.notification.cantDeletePlace" }),
+        type: "error",
+      })
+    }
+    setdeletePlaceModal(false)
+    window.location.reload()
+    return Notify({
+      title: formatMessage({ id: "app.notification.deletePlaceOk" }),
+      type: "success",
+    })
+  }
+
+  return (
+    <>
+      <DefaultContainer>
+        <Loading loading={fetching}>
+          <AddCard
+            onClick={() => {
+              setPlace({})
+              setnewPlace(true)
+            }}
+          />
+        </Loading>
+        <ShouldRender if={data && data.getUserPlaces}>
+          {data?.getUserPlaces.place?.map(({ __typename, ...place }: any) => (
+            <PlaceCard
+              key={v4()}
+              {...place}
+              bg={
+                String(place.isActive) === "true"
+                  ? ACTIVE_CARD_COLOR
+                  : INACTIVE_CARD_COLOR
+              }
+            >
+              <IconButton
+                onClick={() => {
+                  setdeletePlaceModal(true)
+                  setPlace(place.id)
+                }}
+                aria-label="eliminar"
+                iconType="IconDelete"
+                mr={2}
+                icon={<DeleteIcon />}
+              />
+              <IconButton
+                onClick={() => {
+                  setPlace(place)
+                  setnewPlace(true)
+                }}
+                iconType="IconEdit"
+                aria-label="editar"
+                icon={<EditIcon />}
+              />
+            </PlaceCard>
+          ))}
+        </ShouldRender>
+      </DefaultContainer>
+      <ModalWrapper
+        titulo={
+          isEmpty(placeData)
+            ? formatMessage({ id: "app.modalLocation.newPlace" })
+            : formatMessage({ id: "app.modalLocation.modifyPlace" })
+        }
+        contenido={
+          <PlaceData place={placeData}>
+            <NeutralButton onClick={onCloseFormPlace} mr={3}>
+              <DisplayText id="app.buttons.back" defaultMessage="back" />
+            </NeutralButton>
+          </PlaceData>
+        }
+        isOpen={newPlace}
+        onClose={onCloseFormPlace}
+      />
+      <ModalWrapper
+        titulo={formatMessage({ id: "app.modalLocation.titleDeletePlace" })}
+        contenido={
+          <Text>
+            <DisplayText id="app.modalLocation.deletePlace" />
+          </Text>
+        }
+        actions={
+          <>
+            <CancelButton
+              onClick={() => {
+                deletePlace(placeData)
+              }}
+            >
+              <DisplayText id="app.buttons.delete" defaultMessage="delete" />
+            </CancelButton>
+            <PrimaryButton onClick={onCloseDeletePlace}>
+              <DisplayText id="app.buttons.back" defaultMessage="back" />
+            </PrimaryButton>
+          </>
+        }
+        isOpen={deletePlaceModal}
+        onClose={onCloseDeletePlace}
+      />
+    </>
+  )
+}

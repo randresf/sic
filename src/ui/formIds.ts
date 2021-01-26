@@ -39,6 +39,7 @@ export const MEETINGS_LIST = {
   spots: "lbl-meeting-spots",
   linkCitizenForm: "link-citizen-form",
   btnReserve: "btn-reserve",
+  btnNewMeeting: "btn-new-meeting",
 }
 
 export const NAVABAR_LIST = {
@@ -100,4 +101,8 @@ export const QUESTIONS_FORM = {
   questionText: "my-radio-group",
   responseYes: "rbtn-response-yes",
   responseNo: "rbtn-response-no",
+}
+
+export const DASHBOARD_MEETINGS = {
+  searchMeeting: "input-search-meeting",
 }

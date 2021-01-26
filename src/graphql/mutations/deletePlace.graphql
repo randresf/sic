@@ -1,0 +1,11 @@
+mutation deletePlace($placeId: String!) {
+  deletePlace(placeId: $placeId) {
+    place {
+      id
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

@@ -3,4 +3,6 @@ fragment MeetingData on Meeting {
   title
   meetingDate
   spots
+  isActive
+  createdAt
 }

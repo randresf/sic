@@ -17,22 +17,14 @@ export const QUESTIONS = [
   },
 ]
 
-export const AVISO_PROTECCION_DATOS =
-  "Nos tomamos muy enserio los datos personales que nos facilitas al usar nuestros servicios, por esta razón " +
-  "nos comprometemos a maneterlos completamente a salvo, a ser transparentes sobre los datos que recopilamos " +
-  "y a garantizar los derechos que te asisten para controlar dicha información"
-
-export const TITULO_AVISO_MODAL = "IMPORTANTE"
-
-export const MENSAJE_DE_CANCELAR_RESERVA = "Esta seguro de cancelar la reserva?"
-
-export const MENSAJE_NO_INGRESO = `No puedes asistir a nuestro servicio porque no cumples con las condiciones minimas de seguridad.
-  Te invitamos a que te conectes a nuestro servicio a través del canal de YouTube: `
-
-export const MENSAJE_DE_CONFIRMACION = `Lleva esta confirmación impresa o en tu celular, puede volver a obtenerla ingresando al enlace de esta página.
-  Si no va a asistir recuerda cancelar esta reserva con anterioridad.
-  Recuerde llegar con 30 minutos de anticipación.
-  Esta reserva será válida hasta 20 minutos después de haber iniciado la reunión a la cual se inscribió. Pasado este tiempo ya no se podrá ingresar,
-  puesto que la duración total del evento es de tan solo una hora.`
-
 export const DATE_FORMAT = `dddd Do MMMM, h:mm a`
+
+export const ACTIVE_CARD_COLOR = ""
+
+export const INACTIVE_CARD_COLOR = "#dbe4f3"
+
+export const BTN_PROPS = {
+  size: "md",
+  height: "48px",
+  width: "120px",
+}

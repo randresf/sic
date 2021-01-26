@@ -1,0 +1,10 @@
+mutation addAdmin($data: AdminInput!) {
+  register(options: $data) {
+    admin {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}
