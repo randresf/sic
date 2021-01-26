@@ -29,7 +29,7 @@ const AdminData = ({ children }: any) => {
   }
 
   const onSubmit = async ({ ...values }: any) => {
-    const { ...data } = values
+    const { repeatPassword, ...data } = values
     const res = await saveAdmin({ data: data })
     if (res.data?.register.errors) {
       return Notify({
