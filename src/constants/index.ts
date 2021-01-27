@@ -28,3 +28,156 @@ export const BTN_PROPS = {
   height: "48px",
   width: "120px",
 }
+
+export const ADDRESS_VALUES = {
+  way: [
+    {
+      id: "calle",
+      name: "calle",
+    },
+    {
+      id: "carrera",
+      name: "carrera",
+    },
+    {
+      id: "transversal",
+      name: "transversal",
+    },
+    {
+      id: "Diagonal",
+      name: "Diagonal",
+    },
+    {
+      id: "Avenida",
+      name: "Avenida",
+    },
+    {
+      id: "Bulevar",
+      name: "Bulevar",
+    },
+    {
+      id: "Autopista",
+      name: "Autopista",
+    },
+    {
+      id: "Esquina",
+      name: "Esquina",
+    },
+  ],
+  letter: [
+    {
+      id: "A",
+      name: "A",
+    },
+    {
+      id: "B",
+      name: "B",
+    },
+    {
+      id: "C",
+      name: "C",
+    },
+    {
+      id: "D",
+      name: "D",
+    },
+    {
+      id: "E",
+      name: "E",
+    },
+    {
+      id: "F",
+      name: "F",
+    },
+    {
+      id: "G",
+      name: "G",
+    },
+    {
+      id: "H",
+      name: "H",
+    },
+    {
+      id: "I",
+      name: "I",
+    },
+    {
+      id: "J",
+      name: "J",
+    },
+    {
+      id: "K",
+      name: "K",
+    },
+    {
+      id: "L",
+      name: "L",
+    },
+    {
+      id: "M",
+      name: "M",
+    },
+    {
+      id: "N",
+      name: "N",
+    },
+    {
+      id: "Ñ",
+      name: "Ñ",
+    },
+    {
+      id: "O",
+      name: "O",
+    },
+    {
+      id: "P",
+      name: "P",
+    },
+    {
+      id: "Q",
+      name: "Q",
+    },
+    {
+      id: "R",
+      name: "R",
+    },
+    {
+      id: "S",
+      name: "S",
+    },
+    {
+      id: "T",
+      name: "T",
+    },
+    {
+      id: "U",
+      name: "U",
+    },
+    {
+      id: "V",
+      name: "V",
+    },
+    {
+      id: "W",
+      name: "W",
+    },
+    {
+      id: "X",
+      name: "X",
+    },
+    {
+      id: "Y",
+      name: "Y",
+    },
+    {
+      id: "Z",
+      name: "Z",
+    },
+  ],
+  cardinal: [
+    { id: "norte", name: "norte" },
+    { id: "sur", name: "sur" },
+    { id: "este", name: "este" },
+    { id: "oeste", name: "oeste" },
+  ],
+}

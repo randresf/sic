@@ -86,6 +86,7 @@
   "app.modalAdmin.modifyAdmin": "Modify admin",
   "form.names": "Name",
   "form.phone": "Phone",
+  "form.number": "Number",
   "form.place": "Place",
   "form.pwd": "Password",
   "form.Newpwd": "New password",
@@ -97,5 +98,7 @@
   "form.user": "User",
   "radio.question.no": "No",
   "radio.question.yes": "Yes",
-  "app.settings.title": "Settings"
+  "app.settings.title": "Settings",
+  "form.way": "Way",
+  "form.finalAddress": "Final address"
 }
