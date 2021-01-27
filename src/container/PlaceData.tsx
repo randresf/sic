@@ -13,6 +13,7 @@ import ModalActions from "../components/ModalActions"
 import isPlaceDataValid from "../utils/isPlaceDataValid"
 import { ADDRESS_VALUES } from "../constants/index"
 import Notify from "../utils/notify"
+import ShouldRender from "../components/ShouldRender"
 
 const PlaceData = ({ children, place }: any) => {
   const { formatMessage } = useIntl()
@@ -85,79 +86,81 @@ const PlaceData = ({ children, place }: any) => {
                   disabled={false}
                   required
                 />
-                <Flex>
-                  <Box w="100%" mr={2}>
-                    <Select
-                      id="way"
-                      label={formatMessage({ id: "form.way" })}
-                      name="way"
-                      placeholder=" "
-                      options={ADDRESS_VALUES?.way}
-                    />
-                  </Box>
-                  <Box w="100%" mr={2}>
-                    <FormikInput
-                      id="firstWayNumber"
-                      label={formatMessage({ id: "form.number" })}
-                      name="firstWayNumber"
-                      type="number"
-                      disabled={false}
-                      required
-                    />
-                  </Box>
-                  <Box w="50%" mr={2}>
-                    <Select
-                      id="firstLetter"
-                      label="A"
-                      name="firstLetter"
-                      placeholder=" "
-                      options={ADDRESS_VALUES?.letter}
-                    />
-                  </Box>
-                  <Box w="50%">
-                    <Select
-                      id="secondLetter"
-                      label="B"
-                      name="secondLetter"
-                      placeholder=" "
-                      options={ADDRESS_VALUES?.letter}
-                    />
-                  </Box>
-                </Flex>
-                <Flex>
-                  <Box w="100%" mr={2}>
-                    <FormikInput
-                      id="secondWayNumber"
-                      type="number"
-                      label={formatMessage({ id: "form.number" })}
-                      name="secondWayNumber"
-                      disabled={false}
-                      required
-                    />
-                  </Box>
-                  <Box w="100%" mr={2}>
-                    <Select
-                      id="cardinal"
-                      label="Cardinal"
-                      name="cardinal"
-                      options={ADDRESS_VALUES?.cardinal}
-                    />
-                  </Box>
-                  <Box w="100%">
-                    <FormikInput
-                      id="thirdWayNumber"
-                      type="number"
-                      label={formatMessage({ id: "form.number" })}
-                      name="thirdWayNumber"
-                      disabled={false}
-                    />
-                  </Box>
-                </Flex>
+                <ShouldRender if={!place.id}>
+                  <Flex>
+                    <Box w="100%" mr={2}>
+                      <Select
+                        id="way"
+                        label={formatMessage({ id: "form.way" })}
+                        name="way"
+                        placeholder=" "
+                        options={ADDRESS_VALUES?.way}
+                      />
+                    </Box>
+                    <Box w="100%" mr={2}>
+                      <FormikInput
+                        id="firstWayNumber"
+                        label={formatMessage({ id: "form.number" })}
+                        name="firstWayNumber"
+                        type="number"
+                        disabled={false}
+                        required
+                      />
+                    </Box>
+                    <Box w="50%" mr={2}>
+                      <Select
+                        id="firstLetter"
+                        label="A"
+                        name="firstLetter"
+                        placeholder=" "
+                        options={ADDRESS_VALUES?.letter}
+                      />
+                    </Box>
+                    <Box w="50%">
+                      <Select
+                        id="secondLetter"
+                        label="B"
+                        name="secondLetter"
+                        placeholder=" "
+                        options={ADDRESS_VALUES?.letter}
+                      />
+                    </Box>
+                  </Flex>
+                  <Flex>
+                    <Box w="100%" mr={2}>
+                      <FormikInput
+                        id="secondWayNumber"
+                        type="number"
+                        label={formatMessage({ id: "form.number" })}
+                        name="secondWayNumber"
+                        disabled={false}
+                        required
+                      />
+                    </Box>
+                    <Box w="100%" mr={2}>
+                      <Select
+                        id="cardinal"
+                        label="Cardinal"
+                        name="cardinal"
+                        options={ADDRESS_VALUES?.cardinal}
+                      />
+                    </Box>
+                    <Box w="100%">
+                      <FormikInput
+                        id="thirdWayNumber"
+                        type="number"
+                        label={formatMessage({ id: "form.number" })}
+                        name="thirdWayNumber"
+                        disabled={false}
+                      />
+                    </Box>
+                  </Flex>
+                </ShouldRender>
                 <FormikInput
                   id="2"
                   label={formatMessage({ id: "form.finalAddress" })}
                   name="address"
-                  disabled={false}
+                  disabled={!place.id}
                   required
                 />
                 <Box mt={3}>
