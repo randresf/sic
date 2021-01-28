@@ -23,7 +23,9 @@ import { useHistory } from "react-router-dom"
 import { SubscriptionClient } from "subscriptions-transport-ws"
 import Notify from "./utils/notify"
 
-const app_uri = `//${process.env.API_URL || "localhost:4000"}/graphql`
+const app_uri = process.env.REACT_APP_API
+  ? process.env.REACT_APP_API.replace("https:", "")
+  : "//localhost:4000/graphql"
 const subscriptionClient = new SubscriptionClient(`ws:${app_uri}`, {
   reconnect: true,
 })
