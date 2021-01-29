@@ -39,7 +39,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "generate": "graphql-codegen"
+    "generate": "graphql-codegen",
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": [
