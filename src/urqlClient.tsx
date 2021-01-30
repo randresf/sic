@@ -26,9 +26,12 @@ import Notify from "./utils/notify"
 const app_uri = process.env.REACT_APP_API
   ? process.env.REACT_APP_API.replace("https:", "")
   : "//localhost:4000/graphql"
-const subscriptionClient = new SubscriptionClient(`ws:${app_uri}`, {
-  reconnect: true,
-})
+const subscriptionClient = new SubscriptionClient(
+  process.env.REACT_APP_API ? `wss:${app_uri}` : `ws:${app_uri}`,
+  {
+    reconnect: true,
+  }
+)
 
 const errorExchange: Exchange = ({ forward }) => (ops$) => {
   const history = useHistory()
