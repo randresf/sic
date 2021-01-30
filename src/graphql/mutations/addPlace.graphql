@@ -3,6 +3,7 @@ mutation addPlace($placeId: String!, $data: PlaceInput!) {
     place {
       name
       address
+      jsonAddress
       isActive
     }
     errors {

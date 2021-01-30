@@ -4,6 +4,7 @@ query getPlaces {
       id
       name
       address
+      jsonAddress
       isActive
     }
     errors {
