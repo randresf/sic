@@ -75,6 +75,7 @@ export type Place = {
   id: Scalars["String"]
   name: Scalars["String"]
   address: Scalars["String"]
+  jsonAddress: Scalars["String"]
   createdAt: Scalars["String"]
   updatedAt: Scalars["String"]
   isActive: Scalars["String"]
@@ -310,6 +311,7 @@ export type UserUpdateInput = {
 export type PlaceInput = {
   id?: Maybe<Scalars["String"]>
   name: Scalars["String"]
+  jsonAddress: Scalars["String"]
   address: Scalars["String"]
   isActive?: Maybe<Scalars["String"]>
 }
@@ -388,7 +390,10 @@ export type AddPlaceMutation = { __typename?: "Mutation" } & {
   addPlace: { __typename?: "PlaceResponse" } & {
     place?: Maybe<
       Array<
-        { __typename?: "Place" } & Pick<Place, "name" | "address" | "isActive">
+        { __typename?: "Place" } & Pick<
+          Place,
+          "name" | "address" | "jsonAddress" | "isActive"
+        >
       >
     >
     errors?: Maybe<
@@ -606,7 +611,7 @@ export type GetPlacesQuery = { __typename?: "Query" } & {
       Array<
         { __typename?: "Place" } & Pick<
           Place,
-          "id" | "name" | "address" | "isActive"
+          "id" | "name" | "address" | "jsonAddress" | "isActive"
         >
       >
     >
@@ -811,6 +816,7 @@ export const AddPlaceDocument = gql`
       place {
         name
         address
+        jsonAddress
         isActive
       }
       errors {
@@ -1070,6 +1076,7 @@ export const GetPlacesDocument = gql`
         id
         name
         address
+        jsonAddress
         isActive
       }
       errors {

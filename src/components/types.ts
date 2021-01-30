@@ -37,6 +37,10 @@ export type AdminDataType = {
 
 export type PlaceDataType = {
   name: string
+  way: string
+  firstWayNumber: number
+  secondWayNumber: number
+  thirdWayNumber: number
   address: string
   formatMessage?: any | undefined
 }
