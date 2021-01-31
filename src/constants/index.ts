@@ -1,5 +1,5 @@
 export const LIMITE_RESERVA_POR_MES = 2
-
+export const __IsProd__ = process.env.NODE_ENV === "production"
 export const QUESTIONS = [
   {
     id: 1,
