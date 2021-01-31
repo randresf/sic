@@ -22,12 +22,16 @@ import {
 import { useHistory } from "react-router-dom"
 import { SubscriptionClient } from "subscriptions-transport-ws"
 import Notify from "./utils/notify"
+import { __IsProd__ } from "./constants"
 
-const app_uri = process.env.REACT_APP_API
-  ? process.env.REACT_APP_API.replace("https:", "")
-  : "//localhost:4000/graphql"
+const apiUrl =
+  __IsProd__ && process.env.REACT_APP_API
+    ? process.env.REACT_APP_API
+    : "//localhost:4000/graphql"
+
+const app_uri = apiUrl.replace("https:", "")
 const subscriptionClient = new SubscriptionClient(
-  process.env.REACT_APP_API ? `wss:${app_uri}` : `ws:${app_uri}`,
+  __IsProd__ ? `wss:${app_uri}` : `ws:${app_uri}`,
   {
     reconnect: true,
   }
@@ -91,7 +95,10 @@ const cursorPagination = (): Resolver => {
 
 const createUrqlClient = () => {
   return createClient({
-    url: process.env.REACT_APP_API || `http:${app_uri}`,
+    url:
+      __IsProd__ && process.env.REACT_APP_API
+        ? process.env.REACT_APP_API
+        : `http:${app_uri}`,
     requestPolicy: "cache-first",
     fetchOptions: {
       credentials: "include",
