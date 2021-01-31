@@ -103,7 +103,7 @@ const MeetingDataForm = ({ children, meeting, onChange }: any) => {
                   label={formatMessage({ id: "form.date" })}
                   name="meetingDate"
                   type="datetime-local"
-                  min={moment().format("yyyy-MM-ddThh:mm")}
+                  min={moment().format("yyyy-MM-DDThh:mm")}
                   required
                 />
                 <FormikInput
