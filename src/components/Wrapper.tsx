@@ -12,6 +12,7 @@ const Wrapper = ({ children }: wrapper) => {
       width={["90%", "90%", "100%"]}
       ml={["75px", "75px", "0px"]}
       p={4}
+      minHeight="85vh"
     >
       {children}
     </Flex>

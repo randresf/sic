@@ -1,26 +1,27 @@
-import { Box, Divider, Flex, Text } from "@chakra-ui/react"
+import { Box, Flex, Icon, Text } from "@chakra-ui/react"
 import React from "react"
 import { app_brand } from "../theme/components/general"
+import { EmailIcon } from "@chakra-ui/icons"
 
 const Footer = () => {
   return (
     <Box
-      style={{
-        position: "fixed",
-        textAlign: "center",
-        width: "100%",
-        bottom: 0,
-        borderTop: "1px solid",
-        borderTopColor: app_brand.titles,
-      }}
+      borderTopColor={app_brand.titles}
+      padding="1rem"
+      borderTop="1px solid rgb(62, 70, 133)"
+      display="flex"
     >
       <Flex ml={2} w="100%" alignContent="center" p={2} flexWrap="wrap">
-        <Box flexGrow={0}>
+        <Flex flexGrow={0}>
           <img style={{ width: "25px" }} src="/logoSvg.svg" alt="logo" />
-        </Box>
-        <Box>
           <Text ml={2}>© 2020 Dnsic </Text>
-        </Box>
+        </Flex>
+      </Flex>
+      <Flex w="100%" alignContent="center" p={2} display="contents">
+        <Flex alignItems="center">
+          <Icon as={EmailIcon} />
+          <Text m={2}>aforo.meetings@gmail.com </Text>
+        </Flex>
       </Flex>
     </Box>
   )
