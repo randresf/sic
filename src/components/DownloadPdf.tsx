@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     width: "60px",
     height: "60px",
+    margin: "25px",
   },
   paragraph: {
     fontSize: 12,

@@ -1,4 +1,5 @@
 import { MeetingDataType } from "../components/types"
+import moment from "moment"
 
 const isMeetingDataValid = ({
   title,
@@ -20,6 +21,8 @@ const isMeetingDataValid = ({
 
   if (!meetingDate) {
     errors.meetingDate = IS_REQUIRED
+  } else if (meetingDate < moment().format("yyyy-MM-DDThh:mm")) {
+    errors.meetingDate = IS_INCORRECT
   }
 
   if (!place) {
