@@ -6,16 +6,16 @@ import { useIntl } from "react-intl"
 import DisplayText from "../components/formElements/DisplayMessage"
 import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
-import isEmpty from "../utils/isEmpty"
 import Select from "../components/formElements/Select"
-import { useAddPlaceMutation } from "../generated/graphql"
 import ModalActions from "../components/ModalActions"
-import isPlaceDataValid from "../utils/isPlaceDataValid"
 import { ADDRESS_VALUES } from "../constants/index"
-import Notify from "../utils/notify"
+import { useAddPlaceMutation } from "../generated/graphql"
 import { formatAddress, jsonAddres } from "../utils/formatAddress"
+import isEmpty from "../utils/isEmpty"
+import isPlaceDataValid from "../utils/isPlaceDataValid"
+import Notify from "../utils/notify"
 
-const PlaceData = ({ children, place }: any) => {
+const PlaceData = ({ children, place, onDone }: any) => {
   const { formatMessage } = useIntl()
   const [, addPlaceMutation] = useAddPlaceMutation()
 
@@ -52,7 +52,7 @@ const PlaceData = ({ children, place }: any) => {
       way,
       ...valuesAddress
     } = values
-    console.log(valuesAddress)
+
     const place = await addPlaceMutation({ placeId: id, data: valuesAddress })
     if (place.error) {
       return Notify({
@@ -60,7 +60,7 @@ const PlaceData = ({ children, place }: any) => {
         type: "error",
       })
     }
-    window.location.reload()
+    if (typeof onDone === "function") onDone(true)
     return Notify({
       title: formatMessage({ id: "app.notification.placeCreatedCorrectly" }),
       type: "success",

@@ -1,5 +1,5 @@
-query User {
-  getUserData {
+query Admin {
+  getAdminData {
     firstName
     lastName
     email

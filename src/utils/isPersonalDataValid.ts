@@ -1,4 +1,5 @@
 import { PersonalDataType } from "../components/types"
+import { DOCUMENT_RGX, EMAIL_RGX, ONLY_LETTERS_RGX } from "./fieldsRegex"
 
 const isPersonalDataValid = ({
   document,
@@ -28,9 +29,7 @@ const isPersonalDataValid = ({
   if (!phone) {
     errors.phone = IS_REQUIRED
   }
-  // if (!email) {
-  //   errors.email = GetDisplayText('form.required', 'requerido')
-  // }
+
   if (!birthDate) {
     errors.birthDate = IS_REQUIRED
   } else if (Number(birthDate.substr(0, 4)) >= 2017) {
@@ -42,18 +41,15 @@ const isPersonalDataValid = ({
     errors.phone = IS_INCORRECT
   }
 
-  const regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i
-  if (!regex.test(email)) {
+  if (!EMAIL_RGX.test(email)) {
     errors.email = IS_INCORRECT
   }
 
-  const docRegex = /^[0-9*]+$/g
-  if (document && !docRegex.test(document)) {
+  if (document && !DOCUMENT_RGX.test(document)) {
     errors.document = IS_INCORRECT
   }
 
-  const textRegex = /^[a-zA-Z*]+(([',. -*][a-zA-Z ])?[a-zA-Z]*)*$/g
-  if (firstName && !textRegex.test(firstName)) {
+  if (firstName && !ONLY_LETTERS_RGX.test(firstName)) {
     errors.firstName = IS_INCORRECT
   }
   // if (lastName && !textRegex.test(lastName)) {

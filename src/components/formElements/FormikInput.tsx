@@ -1,11 +1,11 @@
-import React from "react"
-import { Field } from "formik"
 import {
-  Input,
   FormControl,
-  FormLabel,
   FormErrorMessage,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react"
+import { Field } from "formik"
+import React from "react"
 import { FormikType } from "../types"
 
 const WrapperInput = ({

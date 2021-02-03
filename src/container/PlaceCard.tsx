@@ -1,10 +1,10 @@
-import { Box, Flex } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 import React from "react"
 import Card from "../components/Card"
+import DisplayPair from "../components/DisplayPairText"
+import DisplayText from "../components/formElements/DisplayMessage"
 import Heading from "../components/formElements/Heading"
 import { MEETINGS_LIST } from "../ui/formIds"
-import DisplayText from "../components/formElements/DisplayMessage"
-import DisplayPair from "../components/DisplayPairText"
 
 type MeetingProps = {
   id: string | number | undefined

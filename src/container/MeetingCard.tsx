@@ -1,13 +1,12 @@
-import { Box, Flex, useStyleConfig } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import React from "react"
+import Card from "../components/Card"
+import DisplayPair from "../components/DisplayPairText"
+import DisplayText from "../components/formElements/DisplayMessage"
+import Heading from "../components/formElements/Heading"
+import ShouldRender from "../components/ShouldRender"
 import { MEETINGS_LIST } from "../ui/formIds"
 import { formatDate } from "../utils/formatDate"
-import DisplayText from "../components/formElements/DisplayMessage"
-import ShouldRender from "../components/ShouldRender"
-import Heading from "../components/formElements/Heading"
-import Card from "../components/Card"
-import { ACTIVE_CARD_COLOR } from "../constants"
-import DisplayPair from "../components/DisplayPairText"
 
 type MeetingProps = {
   spots: number

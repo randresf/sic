@@ -4,6 +4,7 @@ export type FormikType = {
     errors: any
     touched: any
   }
+  errors: any
 }
 
 export type CheckboxPropsType = {

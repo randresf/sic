@@ -1,15 +1,14 @@
 import { Flex, Heading, useToast } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
+import queryString from "query-string"
 import React from "react"
-import Wrapper from "../components/Wrapper"
+import { useIntl } from "react-intl"
+import { useHistory, useLocation } from "react-router-dom"
+import DisplayText from "../components/formElements/DisplayMessage"
 import FormikInput from "../components/formElements/FormikInput"
 import PrimaryButton from "../components/formElements/PrimaryButton"
 import { useHeartbeatQuery, useLoginMutation } from "../generated/graphql"
-import { useHistory, useLocation } from "react-router-dom"
-import { useIntl } from "react-intl"
-import Loading from "../components/formElements/Loading"
-import queryString from "query-string"
-import DisplayText from "../components/formElements/DisplayMessage"
+import Layout from "../layouts"
 
 const Login = () => {
   const [, login] = useLoginMutation()
@@ -39,69 +38,67 @@ const Login = () => {
 
   if (data && data.heartBeat) history.push("/dashboard")
   return (
-    <Wrapper>
-      <Flex w="100%" alignItems="center" flex={1} p={5} flexDir="column">
-        <Heading mb={5}>
-          <DisplayText id="app.login.title" defaultMessage="Aforo Admin" />
-        </Heading>
-        <Formik
-          initialValues={{
-            user: "",
-            pwd: "",
-          }}
-          validate={(values) => {
-            const errors = validateInputs(values)
-            return errors
-          }}
-          onSubmit={async ({ pwd, user }: any) => {
-            const { data } = await login({ pwd, usr: user })
-            if (data?.login.errors) {
-              return toast({
-                description: data?.login.errors[0].message,
-                status: "error",
-              })
-            }
-            if (data?.login.admin) {
-              toast({
-                description: `${formatMessage({
-                  id: "app.reservation.title",
-                })} ${data.login.admin.firstName}`,
-                status: "success",
-              })
-              history.push(String(next))
-            }
-          }}
-        >
-          {({ isSubmitting }) => (
-            <Form style={{ width: "90%" }}>
-              <Flex mb={5} justifyContent="space-around" flexDir="column">
-                <FormikInput
-                  label={formatMessage({ id: "form.user" })}
-                  name="user"
-                  required
-                />
-                <FormikInput
-                  label={formatMessage({ id: "form.pwd" })}
-                  type="password"
-                  name="pwd"
-                  required
-                />
-              </Flex>
-              <PrimaryButton
-                type="submit"
-                data-qa="submit"
-                isLoading={isSubmitting}
-              >
-                <DisplayText
-                  id="app.buttons.continue"
-                  defaultMessage="continue"
-                />
-              </PrimaryButton>
-            </Form>
-          )}
-        </Formik>
-      </Flex>
-    </Wrapper>
+    <Layout>
+      <Heading mb={5}>
+        <DisplayText id="app.login.title" defaultMessage="Aforo Admin" />
+      </Heading>
+      <Formik
+        initialValues={{
+          user: "",
+          pwd: "",
+        }}
+        validate={(values) => {
+          const errors = validateInputs(values)
+          return errors
+        }}
+        onSubmit={async ({ pwd, user }: any) => {
+          const { data } = await login({ pwd, usr: user })
+          if (data?.login.errors) {
+            return toast({
+              description: data?.login.errors[0].message,
+              status: "error",
+            })
+          }
+          if (data?.login.admin) {
+            toast({
+              description: `${formatMessage({
+                id: "app.reservation.title",
+              })} ${data.login.admin.firstName}`,
+              status: "success",
+            })
+            history.push(String(next))
+          }
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form style={{ width: "90%" }}>
+            <Flex mb={5} justifyContent="space-around" flexDir="column">
+              <FormikInput
+                label={formatMessage({ id: "form.user" })}
+                name="user"
+                required
+              />
+              <FormikInput
+                label={formatMessage({ id: "form.pwd" })}
+                type="password"
+                name="pwd"
+                required
+              />
+            </Flex>
+            <PrimaryButton
+              type="submit"
+              data-qa="submit"
+              isLoading={isSubmitting}
+            >
+              <DisplayText
+                id="app.buttons.continue"
+                defaultMessage="continue"
+              />
+            </PrimaryButton>
+          </Form>
+        )}
+      </Formik>
+    </Layout>
   )
 }
 

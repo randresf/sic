@@ -1,0 +1,11 @@
+query GetClients($name: String!) {
+  getOrganizationByName(orgName: $name) {
+    organization {
+      id
+      name
+    }
+    errors {
+      message
+    }
+  }
+}
