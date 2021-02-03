@@ -1,13 +1,13 @@
 import { Flex, Heading } from "@chakra-ui/react"
 import React from "react"
-import Wrapper from "../components/Wrapper"
-import PersonalDataForm from "../container/PersonalDataForm"
-import { CITIZEN_FORM } from "../ui/formIds"
 import DisplayText from "../components/formElements/DisplayMessage"
+import PersonalDataForm from "../container/PersonalDataForm"
+import Layout from "../layouts"
+import { CITIZEN_FORM } from "../ui/formIds"
 
 const UserData = () => {
   return (
-    <Wrapper>
+    <Layout>
       <Flex alignItems="center" flex={1} p={5} flexDir="column">
         <Heading id={CITIZEN_FORM.headingTitle}>
           <DisplayText
@@ -17,7 +17,7 @@ const UserData = () => {
         </Heading>
         <PersonalDataForm />
       </Flex>
-    </Wrapper>
+    </Layout>
   )
 }
 

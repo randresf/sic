@@ -1,14 +1,15 @@
-import React from "react"
 import { Box } from "@chakra-ui/react"
-import { useIsAuth } from "../../hooks/useIsAuth"
-import DashboardTitle from "./Title"
-import TabsSection from "../../components/formElements/Tabs"
-import { useIntl } from "react-intl"
-import Meetings from "./tabs/Meetings"
-import Locations from "./tabs/Locations"
-import { useHistory, useLocation } from "react-router-dom"
 import queryString from "query-string"
+import React from "react"
+import { useIntl } from "react-intl"
+import { useHistory, useLocation } from "react-router-dom"
+import TabsSection from "../../components/formElements/Tabs"
+import { useIsAuth } from "../../hooks/useIsAuth"
+import Layout from "../../layouts"
 import Admins from "./tabs/Admins"
+import Locations from "./tabs/Locations"
+import Meetings from "./tabs/Meetings"
+import DashboardTitle from "./Title"
 
 export default function Dashboard() {
   useIsAuth()
@@ -48,7 +49,7 @@ export default function Dashboard() {
   }
 
   return (
-    <Box mt="3em" width="100%">
+    <Layout>
       <DashboardTitle />
       <Box mt="3em">
         <TabsSection
@@ -58,6 +59,6 @@ export default function Dashboard() {
           defaultIndex={Number(tab)}
         />
       </Box>
-    </Box>
+    </Layout>
   )
 }

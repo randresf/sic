@@ -5,14 +5,14 @@ type wrapper = {
   children: "" | React.ReactNode
 }
 
-const Wrapper = ({ children }: wrapper) => {
+const Wrapper = ({ children, ...props }: wrapper) => {
   return (
     <Flex
-      alignItems="flex-start"
-      width={["90%", "90%", "100%"]}
-      ml={["75px", "75px", "0px"]}
-      p={4}
-      minHeight="85vh"
+      direction="column"
+      //align="center"
+      maxW={{ xl: "1700px" }}
+      m="0 auto"
+      {...props}
     >
       {children}
     </Flex>

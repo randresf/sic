@@ -1,5 +1,5 @@
-mutation updateUser($userData: userUpdateInput!) {
-  updateUser(userData: $userData) {
+mutation updateAdmin($userData: userUpdateInput!) {
+  updateAdmin(userData: $userData) {
     errors {
       field
       message

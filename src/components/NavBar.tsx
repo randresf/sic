@@ -1,46 +1,102 @@
-import React from "react"
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons"
+import { Box, Flex, Stack, Text } from "@chakra-ui/react"
+import React, { ReactNode } from "react"
 import { Link } from "react-router-dom"
-import LangDropDown from "./LangDropDown"
 import { NAVABAR_LIST } from "../ui/formIds"
-import ToggleDarkMode from "./ToggleDarkMode"
-import { Box, Flex, Text } from "@chakra-ui/react"
-import DisplayText from "./formElements/DisplayMessage"
-import DividerWrapper from "./formElements/Divider"
 import Account from "./Account"
-import OrganizationTitle from "./OrganizationTitle"
+import LangDropDown from "./LangDropDown"
 import Logo from "./Logo"
+import ToggleDarkMode from "./ToggleDarkMode"
 
-const NavBar = () => {
+type MenuItemProps = {
+  children?: ReactNode
+  isLast?: boolean
+}
+
+const MenuItems = (props: MenuItemProps) => {
+  const { children, isLast, ...rest } = props
   return (
-    <Box style={{ position: "sticky" }} pl={5} pr={5} pt={2}>
-      <Flex alignItems="center" flexWrap="wrap" height="60px">
-        <ToggleDarkMode />
-        <Box ml={3} w="100px">
+    <Text
+      mb={{ base: isLast ? 0 : 3, sm: 0 }}
+      mr={{ base: 0, sm: isLast ? 0 : 3 }}
+      display="block"
+      {...rest}
+    >
+      {children}
+    </Text>
+  )
+}
+
+const NavBar = (props: any) => {
+  const [show, setShow] = React.useState(false)
+  const toggleMenu = () => setShow(!show)
+  return (
+    <Flex
+      as="nav"
+      align="center"
+      justify="space-between"
+      wrap="wrap"
+      w="100%"
+      mb={8}
+      p={8}
+      {...props}
+    >
+      <Flex align="flex-start">
+        <Box display={{ base: "flex", md: "none" }} onClick={toggleMenu}>
+          {show ? <CloseIcon /> : <HamburgerIcon />}
+        </Box>
+        <Box w={["30px", "30px", "50px"]} ml={["1rem"]}>
           <Link to="/" id={NAVABAR_LIST.logo}>
-            <Flex align="center">
-              <Logo />
-              {/* <Text ml={2}>
-                <DisplayText id="app.navBar.home" defaultMessage="home" />
-              </Text> */}
-            </Flex>
+            <Logo />
           </Link>
         </Box>
-        <DividerWrapper mr={5} ml={5} orientation="vertical" />
-        <OrganizationTitle />
-        <Flex
-          flexDir="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          flexGrow={1}
-          height="100%"
-        >
-          <DividerWrapper mr={5} ml={5} orientation="vertical" />
-          <LangDropDown />
-          <DividerWrapper mr={5} ml={5} orientation="vertical" />
-          <Account />
-        </Flex>
       </Flex>
-    </Box>
+
+      <Box
+        display={{ base: show ? "block" : "none", md: "block" }}
+        flexBasis={{ base: "100%", md: "auto" }}
+      >
+        <Flex
+          align="flex-start"
+          justify={["center", "space-between", "flex-end", "flex-end"]}
+          direction={["column", "row", "row", "row"]}
+          pt={[4, 4, 0, 0]}
+        >
+          <Box display={{ base: show ? "block" : "none", md: "none" }}>
+            <MenuItems>
+              <Account />
+            </MenuItems>
+          </Box>
+          <MenuItems>
+            <Link to="/meetings">Eventos</Link>{" "}
+          </MenuItems>
+          <MenuItems isLast={!show}>
+            <Link to="/reservation">Reservas</Link>
+          </MenuItems>
+          <Box display={{ base: show ? "block" : "none", md: "none" }}>
+            <MenuItems isLast={show}>
+              <LangDropDown />
+            </MenuItems>
+          </Box>
+        </Flex>
+      </Box>
+      <Flex>
+        <Flex
+          display={["none", "none", "flex"]}
+          align={"center"}
+          justify={"flex-end"}
+          direction={"row"}
+          pt={[4, 4, 0, 0]}
+          mr="1rem"
+        >
+          <Stack spacing="1rem" direction="row">
+            <Account />
+            <LangDropDown />
+          </Stack>
+        </Flex>
+        {show ? null : <ToggleDarkMode />}
+      </Flex>
+    </Flex>
   )
 }
 

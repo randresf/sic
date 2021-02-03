@@ -7,7 +7,8 @@ const Logo = () => {
     <svg
       id="svg"
       viewBox="0 0 149.27 93.58"
-      width="60px"
+      width="100%"
+      height="100%"
       fill={colorMode === "dark" ? app_brand.darkActions : app_brand.actions}
     >
       <g id="Capa_2" data-name="Capa 2">

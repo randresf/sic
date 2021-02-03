@@ -1,5 +1,5 @@
-import { MeetingDataType } from "../components/types"
 import moment from "moment"
+import { MeetingDataType } from "../components/types"
 
 const isMeetingDataValid = ({
   title,

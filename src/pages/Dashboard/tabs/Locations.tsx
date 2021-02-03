@@ -1,33 +1,33 @@
-import React, { useState } from "react"
-import { Text } from "@chakra-ui/react"
-import ModalWrapper from "../../../components/ModalWrapper"
-import AddCard from "../../../components/AddCard"
-import isEmpty from "../../../utils/isEmpty"
-import NeutralButton from "../../../components/formElements/NeutralButton"
-import DisplayText from "../../../components/formElements/DisplayMessage"
-import Loading from "../../../components/formElements/Loading"
-import PlaceData from "../../../container/PlaceData"
-import {
-  useGetPlacesQuery,
-  useDeletePlaceMutation,
-} from "../../../generated/graphql"
-import ShouldRender from "../../../components/ShouldRender"
-import IconButton from "../../../components/formElements/IconButton"
-import PlaceCard from "../../../container/PlaceCard"
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
-import CancelButton from "../../../components/formElements/CancelButton"
-import PrimaryButton from "../../../components/formElements/PrimaryButton"
-import Notify from "../../../utils/notify"
-import { ACTIVE_CARD_COLOR, INACTIVE_CARD_COLOR } from "../../../constants"
+import { Text } from "@chakra-ui/react"
+import React, { useState } from "react"
 import { useIntl } from "react-intl"
 import { v4 } from "uuid"
+import AddCard from "../../../components/AddCard"
 import DefaultContainer from "../../../components/DefaultContainer"
+import CancelButton from "../../../components/formElements/CancelButton"
+import DisplayText from "../../../components/formElements/DisplayMessage"
+import IconButton from "../../../components/formElements/IconButton"
+import Loading from "../../../components/formElements/Loading"
+import NeutralButton from "../../../components/formElements/NeutralButton"
+import PrimaryButton from "../../../components/formElements/PrimaryButton"
+import ModalWrapper from "../../../components/ModalWrapper"
+import ShouldRender from "../../../components/ShouldRender"
+import { ACTIVE_CARD_COLOR, INACTIVE_CARD_COLOR } from "../../../constants"
+import PlaceCard from "../../../container/PlaceCard"
+import PlaceData from "../../../container/PlaceData"
+import {
+  useDeletePlaceMutation,
+  useGetPlacesQuery,
+} from "../../../generated/graphql"
+import isEmpty from "../../../utils/isEmpty"
+import Notify from "../../../utils/notify"
 
 export default function Locations() {
   const [newPlace, setnewPlace] = useState(false)
-  const [deletePlaceModal, setdeletePlaceModal] = useState(false)
+  const [deletePlaceModal, setDeletePlaceModal] = useState(false)
   const [placeData, setPlace] = useState({})
-  const [{ data, fetching }] = useGetPlacesQuery()
+  const [{ data, fetching }, fetchAgain] = useGetPlacesQuery()
   const [, idPlaceDelete] = useDeletePlaceMutation()
   const { formatMessage } = useIntl()
 
@@ -35,8 +35,9 @@ export default function Locations() {
     setnewPlace(false)
   }
 
-  const onCloseDeletePlace = () => {
-    setdeletePlaceModal(false)
+  const onCloseDeletePlace = (addedNew: boolean | undefined) => {
+    setDeletePlaceModal(false)
+    if (addedNew) fetchAgain()
   }
 
   const deletePlace = async (placeId: any) => {
@@ -44,14 +45,13 @@ export default function Locations() {
     const res = await idPlaceDelete({ placeId: placeId })
 
     if (res.data?.deletePlace.errors || res.error) {
-      setdeletePlaceModal(false)
+      setDeletePlaceModal(false)
       return Notify({
         title: formatMessage({ id: "app.notification.cantDeletePlace" }),
         type: "error",
       })
     }
-    setdeletePlaceModal(false)
-    window.location.reload()
+    setDeletePlaceModal(false)
     return Notify({
       title: formatMessage({ id: "app.notification.deletePlaceOk" }),
       type: "success",
@@ -82,7 +82,7 @@ export default function Locations() {
             >
               <IconButton
                 onClick={() => {
-                  setdeletePlaceModal(true)
+                  setDeletePlaceModal(true)
                   setPlace(place.id)
                 }}
                 aria-label="eliminar"
@@ -110,7 +110,7 @@ export default function Locations() {
             : formatMessage({ id: "app.modalLocation.modifyPlace" })
         }
         contenido={
-          <PlaceData place={placeData}>
+          <PlaceData place={placeData} onDone={onCloseFormPlace}>
             <NeutralButton onClick={onCloseFormPlace} mr={3}>
               <DisplayText id="app.buttons.back" defaultMessage="back" />
             </NeutralButton>

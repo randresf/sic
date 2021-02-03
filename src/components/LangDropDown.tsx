@@ -1,19 +1,21 @@
-import { Box, Select } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 import React, { useContext } from "react"
 import { Context } from "../context/LangWrapper"
 
 const LangDropDown = (props: any) => {
-  const context = useContext(Context)
+  const { locale, selectLanguage } = useContext(Context)
+  const otherOption = locale === "es" ? "en" : "es"
   return (
     <Box className="LangDropDown">
-      <Select
-        value={context.locale}
-        variant="unstyled"
-        onChange={context.selectLanguage}
+      <Box
+        as="a"
+        onClick={(e) => {
+          selectLanguage({ target: { value: otherOption } })
+        }}
+        cursor="pointer"
       >
-        <option value="en">English</option>
-        <option value="es">Español</option>
-      </Select>
+        Lang: {otherOption.toUpperCase()}
+      </Box>
     </Box>
   )
 }
