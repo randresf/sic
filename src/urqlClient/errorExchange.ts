@@ -8,9 +8,9 @@ export const errorExchange: Exchange = ({ forward }) => (ops$) => {
   return pipe(
     forward(ops$),
     tap(({ error }) => {
-      // if (error?.message.includes("not authenticated")) {
-      //   history ? history.replace("/login") : window.location.replace("/login")
-      // }
+      if (error?.message.includes("not authenticated")) {
+        history ? history.replace("/login") : window.location.replace("/login")
+      }
       if (error && error.message) {
         return Notify({
           title: error.message,
