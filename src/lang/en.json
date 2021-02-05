@@ -48,6 +48,7 @@
   "app.notification.saveMeetingOk": "meeting successfully saved",
   "app.notification.userDontUpdate": "User could not update correctly",
   "app.notification.userUpdate": "User updated successfully",
+  "app.notification.pageNotFound": "PAGE NOT FOUND",
   "app.pdf.title": "Reservation",
   "app.modalLocation.newPlace": "New place",
   "app.modalLocation.modifyPlace": "Modify place",
