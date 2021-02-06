@@ -18,6 +18,7 @@ import ReservationData from "./pages/Reservation"
 import Settings from "./pages/Settings"
 import UserData from "./pages/UserData"
 import createUrqlClient from "./urqlClient"
+import ErrorPage from "./pages/ErrorPage"
 
 const App = () => {
   return (
@@ -38,6 +39,9 @@ const App = () => {
           </Route>
           <Route exact path="/">
             <ClientListPage />
+          </Route>
+          <Route path="*">
+            <ErrorPage />
           </Route>
           <Route exact path="/:client" component={AppRoutes} />
           <Route exact path="/:client/meetings">

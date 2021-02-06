@@ -44,6 +44,7 @@
   "app.notification.cantDeleteMeet": "No se puede eliminar la reunión",
   "app.notification.deleteMeet": "Reunión eliminada correctamente",
   "app.notification.cancelReservationError": "no se pudo cancelar la reserva",
+  "app.notification.pageNotFound": "PÁGINA NO ENCONTRADA",
   "app.notification.cancelReservationOk": "Reserva cancelada correctamente",
   "app.notification.saveMeetingError": "No se pudo guardar la reunión",
   "app.notification.saveMeetingOk": "Reunión guardada correctamente",
