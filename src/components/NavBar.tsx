@@ -36,9 +36,10 @@ const NavBar = (props: any) => {
       align="center"
       justify="space-between"
       wrap="wrap"
+      borderBottom="1px solid rgb(62, 70, 133)"
       w="100%"
       mb={8}
-      p={8}
+      p={5}
       {...props}
     >
       <Flex align="flex-start">

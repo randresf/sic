@@ -12,13 +12,14 @@ import AdminPage from "./pages/Admin"
 import { ClientListPage } from "./pages/ClientListPage"
 import Confirm from "./pages/Confirm"
 import Dashboard from "./pages/Dashboard"
-import Landing from "./pages/Landing"
+import Landing from "./pages/MeetingsPage"
 import Login from "./pages/Login"
 import ReservationData from "./pages/Reservation"
 import Settings from "./pages/Settings"
 import UserData from "./pages/UserData"
 import createUrqlClient from "./urqlClient"
 import ErrorPage from "./pages/ErrorPage"
+import ReservationsPage from "./pages/ReservationsPage"
 
 const App = () => {
   return (
@@ -40,12 +41,12 @@ const App = () => {
           <Route exact path="/">
             <ClientListPage />
           </Route>
-          <Route path="*">
-            <ErrorPage />
-          </Route>
           <Route exact path="/:client" component={AppRoutes} />
           <Route exact path="/:client/meetings">
             <Landing />
+          </Route>
+          <Route path="/:client/reservations">
+            <ReservationsPage />
           </Route>
         </Switch>
       </Router>
@@ -71,8 +72,14 @@ const AppRoutes = () => {
         <Route exact path="/confirm/:userId">
           <Confirm />
         </Route>
+        <Route exact path="/reservations">
+          <ReservationsPage />
+        </Route>
         <Route path="/">
           <Landing />
+        </Route>
+        <Route path="*">
+          <ErrorPage />
         </Route>
       </Switch>
     </Router>

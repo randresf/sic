@@ -4,10 +4,11 @@ import { useHistory } from "react-router-dom"
 import DisplayText from "../components/formElements/DisplayMessage"
 import { Title } from "../components/Title"
 import Meetings from "../container/Meetings"
-import SearchReservation from "../container/SearchReservation"
 import { useHeartbeatQuery } from "../generated/graphql"
 import Layout from "../layouts"
 import { MEETINGS_LIST } from "../ui/formIds"
+import BtnSearchReservation from "../components/BtnSearchReservation"
+import Slider from "../components/Slide"
 
 const Landing = () => {
   const [{ data }] = useHeartbeatQuery()
@@ -16,17 +17,16 @@ const Landing = () => {
     history.replace("/dashboard")
   }
   return (
-    <Layout>
-      <Title />
-      <Heading as="h2" size="md" id={MEETINGS_LIST.title}>
-        <DisplayText
-          id="app.meetings.title"
-          defaultMessage="Próximos eventos:"
-        />
-      </Heading>
-      <Meetings />
-      <SearchReservation />
-    </Layout>
+    <Slider direction="top">
+      <Layout>
+        <Title />
+        <Heading mt={10} as="h2" size="md" id={MEETINGS_LIST.title}>
+          <DisplayText id="app.title" defaultMessage="Próximos eventos:" />
+        </Heading>
+        <Meetings />
+        <BtnSearchReservation />
+      </Layout>
+    </Slider>
   )
 }
 
