@@ -67,6 +67,7 @@
   "app.reservation.noReservation": "There is no reservation with this id",
   "app.reservation.title": "Welcome",
   "app.reservations.title": "Reservations",
+  "app.reservations.noResults": "⚠ no reservations found",
   "app.title": "⚠ Please check the meeting info before booking",
   "app.subTitle": "Reserve space for your next meetings",
   "field.incorrect": "incorrect format",

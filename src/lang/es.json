@@ -74,7 +74,7 @@
   "app.reservation.noReservation": "No hay una reserva con este id",
   "app.reservation.title": "Bienvenid@",
   "app.reservationList.booked": "Nota: el usuario ya tiene esta reunion reservada",
-  "app.reservations.noResults": "no se encontraron reservas",
+  "app.reservations.noResults": "⚠ no se encontraron reservas",
   "app.reservations.title": "Reservas",
   "app.title": "⚠ Recuerda revisar muy bien la fecha y la hora de la reunión que vas a seleccionar",
   "app.subTitle": "Reserva cupo para tus próximas reuniones",

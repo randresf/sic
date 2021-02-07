@@ -3,7 +3,11 @@ import { Slide } from "@chakra-ui/react"
 
 const Slider = ({ children, direction }: any) => {
   return (
-    <Slide style={{ position: "-moz-initial" }} direction={direction} in={true}>
+    <Slide
+      style={{ position: "initial", transition: "400ms " }}
+      direction={direction}
+      in={true}
+    >
       {children}
     </Slide>
   )
