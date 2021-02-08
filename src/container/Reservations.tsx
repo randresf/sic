@@ -1,26 +1,27 @@
-import React from "react"
+import React, { useState } from "react"
+import { useHistory } from "react-router-dom"
 import {
+  Box,
   Flex,
   Input,
   InputGroup,
   InputRightElement,
-  Link,
-  Text,
 } from "@chakra-ui/react"
-import { ArrowRightIcon, Search2Icon } from "@chakra-ui/icons"
+import { Search2Icon, ViewIcon } from "@chakra-ui/icons"
 import ShouldRender from "../components/ShouldRender"
 import DisplayText from "../components/formElements/DisplayMessage"
 import { useIntl } from "react-intl"
-import { useGetUserMutation } from "../generated/graphql"
-import { useState } from "react"
-import isEmpty from "../utils/isEmpty"
+import { useGetUserMutation, Reservation } from "../generated/graphql"
 import ReservationCard from "./ReservationCard"
 import IconButton from "../components/formElements/IconButton"
 
 const Reservations = () => {
   const { formatMessage } = useIntl()
+  const history = useHistory()
   const [, searchUser] = useGetUserMutation()
-  const [reservationData, setReservationData] = useState([{}])
+  const [reservationData, setReservationData] = useState<[Reservation] | any>(
+    []
+  )
 
   const searchReservationByDocument = async (e: any) => {
     const value = e.target.value
@@ -31,8 +32,6 @@ const Reservations = () => {
       }
     }
   }
-
-  console.log(...reservationData)
 
   return (
     <Flex flexDir="column">
@@ -49,33 +48,42 @@ const Reservations = () => {
         border="1px solid #606060 "
         flex={1}
         alignItems="center"
-        flexDir="column"
+        height="500px"
+        flexDir={["column", "column", "row"]}
       >
-        <ShouldRender if={isEmpty(reservationData)}>
+        <ShouldRender if={reservationData.length === 0}>
           <Flex w="100%" height="500px" justifyContent="center">
-            <DisplayText
-              id="app.reservations.noResults"
-              defaultMessage="settings"
-            />
+            <Box>
+              <DisplayText
+                id="app.reservations.noResults"
+                defaultMessage="settings"
+              />
+            </Box>
           </Flex>
         </ShouldRender>
-        <ShouldRender if={!isEmpty(reservationData)}>
-          {reservationData?.map(({ ...reservationData }) => (
-            <Flex mt="-10rem">
-              <ReservationCard {...reservationData}>
-                <Flex mt={"-15px"}>
-                  <IconButton
-                    aria-label="reservar"
-                    iconType="IconReservation"
-                    icon={<ArrowRightIcon />}
-                  />
-                  <IconButton
-                    aria-label="reservar"
-                    iconType="IconReservation"
-                    icon={<ArrowRightIcon />}
-                  />
-                </Flex>
-              </ReservationCard>
+        <ShouldRender if={reservationData.length !== 0}>
+          {reservationData?.map((data: any) => (
+            <Flex height={["250px", "250px", "500px"]}>
+              <Box>
+                <ReservationCard {...data}>
+                  <Flex>
+                    <IconButton
+                      aria-label="reservar"
+                      iconType="IconReservation"
+                      mr={2}
+                      onClick={() => {
+                        history.push(`/reservation/${data.id}`)
+                      }}
+                      icon={<ViewIcon />}
+                    />
+                    {/* <IconButton
+                      aria-label="reservar"
+                      iconType="IconReservation"
+                      icon={<DeleteIcon />}
+                    /> */}
+                  </Flex>
+                </ReservationCard>
+              </Box>
             </Flex>
           ))}
         </ShouldRender>

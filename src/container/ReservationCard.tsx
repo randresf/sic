@@ -8,7 +8,6 @@ import { RESERVATIONS_LIST } from "../ui/formIds"
 import { formatDate } from "../utils/formatDate"
 
 const ReservationCard = ({ id, meeting, children }: any) => {
-  console.log(meeting)
   const { title, meetingDate } = meeting
   return (
     <Card
