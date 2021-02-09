@@ -43,30 +43,37 @@ const Meetings = () => {
   }
 
   return (
-    <Flex flex={1} alignItems="center" flexWrap="wrap">
+    <Flex
+      border="1px solid #606060 "
+      flex={1}
+      alignItems="center"
+      flexWrap="wrap"
+    >
       <ShouldRender if={data && data.meetings}>
         {data?.meetings.meetings.map(({ __typename, ...reu }) => (
-          <MeetingCard {...reu}>
-            <Flex mt={"-15px"}>
-              <Link
-                to={`/datos/${reu.id}`}
-                className={MEETINGS_LIST.linkCitizenForm}
-              >
-                <Text mr={3}>
-                  <DisplayText
-                    id="app.buttons.reserve"
-                    defaultMessage="Reserve"
+          <Flex mt="0">
+            <MeetingCard {...reu}>
+              <Flex mt={"-15px"}>
+                <Link
+                  to={`/datos/${reu.id}`}
+                  className={MEETINGS_LIST.linkCitizenForm}
+                >
+                  <Text mr={3}>
+                    <DisplayText
+                      id="app.buttons.reserve"
+                      defaultMessage="Reserve"
+                    />
+                  </Text>
+                  <IconButton
+                    className={MEETINGS_LIST.btnReserve}
+                    aria-label="reservar"
+                    iconType="IconReservation"
+                    icon={<ArrowRightIcon />}
                   />
-                </Text>
-                <IconButton
-                  className={MEETINGS_LIST.btnReserve}
-                  aria-label="reservar"
-                  iconType="IconReservation"
-                  icon={<ArrowRightIcon />}
-                />
-              </Link>
-            </Flex>
-          </MeetingCard>
+                </Link>
+              </Flex>
+            </MeetingCard>
+          </Flex>
         ))}
         <ShouldRender if={data && data.meetings.hasMore}>
           <Flex>

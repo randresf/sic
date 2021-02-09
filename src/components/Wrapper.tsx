@@ -10,7 +10,7 @@ const Wrapper = ({ children, ...props }: wrapper) => {
     <Flex
       direction="column"
       //align="center"
-      maxW={{ xl: "1700px" }}
+      maxW={{ xl: "2000px" }}
       m="0 auto"
       {...props}
     >
