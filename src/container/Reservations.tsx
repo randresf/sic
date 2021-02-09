@@ -14,19 +14,26 @@ import { useIntl } from "react-intl"
 import { useGetUserMutation, Reservation } from "../generated/graphql"
 import ReservationCard from "./ReservationCard"
 import IconButton from "../components/formElements/IconButton"
+import useDebounce from "../hooks/useDebounce"
+import { useEffect } from "react"
 
 const Reservations = () => {
   const { formatMessage } = useIntl()
   const history = useHistory()
   const [, searchUser] = useGetUserMutation()
+  const [citizenId, setDocument] = useState("")
+  const debouced = useDebounce(citizenId, 500)
   const [reservationData, setReservationData] = useState<[Reservation] | any>(
     []
   )
 
-  const searchReservationByDocument = async (e: any) => {
-    const value = e.target.value
-    if (value.length >= 7 && value.length <= 10) {
-      const { data } = await searchUser({ citizenId: value })
+  useEffect(() => {
+    searchReservationByDocument(debouced)
+  }, [debouced])
+
+  const searchReservationByDocument = async (debouced: any) => {
+    if (debouced.length >= 7 && debouced.length <= 10) {
+      const { data } = await searchUser({ citizenId: debouced })
       if (data?.user.user) {
         setReservationData(data?.user.user.reservations)
       }
@@ -38,7 +45,7 @@ const Reservations = () => {
       <InputGroup w={["100%", "50%", "25%"]}>
         <Input
           type="number"
-          onChange={(e) => searchReservationByDocument(e)}
+          onChange={(e) => setDocument(e.target.value)}
           placeholder={formatMessage({ id: "form.document" })}
         />
         <InputRightElement children={<Search2Icon color="#3e4685" />} />
