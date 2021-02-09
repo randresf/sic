@@ -33,3 +33,4 @@ jobs:
           dokku-host: ${{ secrets.DROPLET_DOKKU }}
           app-name: "aforoweb"
           remote-branch: "master"
+          git-push-flags:  --force
