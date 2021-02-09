@@ -1,0 +1,18 @@
+.navbar {
+  width: 100%;
+  min-height: 6vh;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.7s ease-in;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  padding: 8px;
+}
+
+.scrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
