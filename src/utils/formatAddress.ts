@@ -4,11 +4,11 @@ export const jsonAddres = ({ name, address, isActive, ...values }: any) => {
 }
 
 export const formatAddress = ({ id, name, isActive, ...values }: any) => {
-  const finalAddress = `${values.way || ""}  ${values.firstWayNumber || ""} ${
-    values.firstLetter || ""
-  } ${values.secondLetter || ""} # ${values.secondWayNumber || ""} ${
-    values.cardinal || "-"
-  } ${values.thirdWayNumber || ""}`
+  const finalAddress = `${values.way || ""}  ${values.firstWayNumber || ""}  ${
+    values.firstcardinal || ""
+  } # ${values.secondWayNumber || ""} ${values.secondCardinal || "-"} ${
+    values.thirdWayNumber || ""
+  }`
 
   return finalAddress
 }

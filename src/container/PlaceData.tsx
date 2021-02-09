@@ -43,13 +43,12 @@ const PlaceData = ({ children, place, onDone }: any) => {
   const onSubmit = async ({ id, ...values }: any) => {
     values.jsonAddress = jsonAddres(values)
     const {
-      cardinal,
-      firstLetter,
-      firstWayNumber,
-      secondLetter,
-      secondWayNumber,
-      thirdWayNumber,
       way,
+      firstWayNumber,
+      firstcardinal,
+      secondWayNumber,
+      secondCardinal,
+      thirdWayNumber,
       ...valuesAddress
     } = values
 
@@ -101,27 +100,16 @@ const PlaceData = ({ children, place, onDone }: any) => {
                       id="firstWayNumber"
                       label={formatMessage({ id: "form.number" })}
                       name="firstWayNumber"
-                      type="number"
                       disabled={false}
                       required
                     />
                   </Box>
-                  <Box w="50%" mr={2}>
+                  <Box w="100%" mr={2}>
                     <Select
-                      id="firstLetter"
-                      label="A"
-                      name="firstLetter"
-                      placeholder=" "
-                      options={ADDRESS_VALUES?.letter}
-                    />
-                  </Box>
-                  <Box w="50%">
-                    <Select
-                      id="secondLetter"
-                      label="B"
-                      name="secondLetter"
-                      placeholder=" "
-                      options={ADDRESS_VALUES?.letter}
+                      id="firstcardinal"
+                      label="Cardinal"
+                      name="firstcardinal"
+                      options={ADDRESS_VALUES?.cardinal}
                     />
                   </Box>
                 </Flex>
@@ -129,7 +117,6 @@ const PlaceData = ({ children, place, onDone }: any) => {
                   <Box w="100%" mr={2}>
                     <FormikInput
                       id="secondWayNumber"
-                      type="number"
                       label={formatMessage({ id: "form.number" })}
                       name="secondWayNumber"
                       disabled={false}
@@ -138,9 +125,9 @@ const PlaceData = ({ children, place, onDone }: any) => {
                   </Box>
                   <Box w="100%" mr={2}>
                     <Select
-                      id="cardinal"
+                      id="secondCardinal"
                       label="Cardinal"
-                      name="cardinal"
+                      name="secondCardinal"
                       options={ADDRESS_VALUES?.cardinal}
                     />
                   </Box>
