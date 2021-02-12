@@ -1,5 +1,5 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons"
-import { Box, Flex, Stack, Text } from "@chakra-ui/react"
+import { Box, Flex, Stack, Text, useStyleConfig } from "@chakra-ui/react"
 import React, { ReactNode } from "react"
 import { Link } from "react-router-dom"
 import Account from "../components/Account"
@@ -8,7 +8,6 @@ import Logo from "../components/Logo"
 import ToggleDarkMode from "../components/ToggleDarkMode"
 import { app_brand } from "../theme/components/general"
 import { NAVABAR_LIST } from "../ui/formIds"
-import "./navBar.css"
 
 type MenuItemProps = {
   children?: ReactNode
@@ -30,15 +29,11 @@ const MenuItems = (props: MenuItemProps) => {
 }
 
 const NavBar = (props: any) => {
+  const style = useStyleConfig("NavBarMode", props)
   const [show, setShow] = React.useState(false)
   const toggleMenu = () => setShow(!show)
-  let navbarClasses = ["navbar", "scrolled"]
   return (
-    <Box
-      className={navbarClasses.join(" ")}
-      background={app_brand.section}
-      shadow="sm"
-    >
+    <Box background={app_brand.section} shadow="sm" sx={style}>
       <Flex
         align="center"
         justify="space-between"

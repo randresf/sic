@@ -26,7 +26,7 @@ export const app_brand = {
   darkActions: "#63b3ed",
   darkFont: "white",
   darkTitles: "#63b3ed",
-  darkSection: "white",
+  darkSection: "#414141",
   darkSecondIcon: "#8f6bbb",
 }
 
@@ -61,4 +61,23 @@ export const TabStyles = {
   },
   minHeight: "400px",
   shadow: "md",
+}
+
+export const NavBarStyles = {
+  width: "100%",
+  minHeight: "6vh",
+  boxSizing: "border-box",
+  display: "flex",
+  justifycontent: "space-between",
+  alignItems: "center",
+  transition: "all 0.7s ease-in",
+  flexWrap: "wrap",
+  marginBottom: "8px",
+  padding: "8px",
+}
+
+export const NavBarScrolled = {
+  position: "fixed",
+  top: 0,
+  left: 0,
 }
