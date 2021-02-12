@@ -4,10 +4,16 @@ import { extendTheme } from "@chakra-ui/react"
 import styles from "./styles"
 import { PrimaryButton, DefaultButton } from "./components/Buttons"
 import { brand } from "./components/general"
-import { IconReservation, IconEdit, IconDelete, IconPlus } from "./components/Icons"
+import {
+  IconReservation,
+  IconEdit,
+  IconDelete,
+  IconPlus,
+} from "./components/Icons"
 import { Tabs, TabSection } from "./components/Tabs"
 import { Card } from "./components/Card"
 import { Link } from "./components/Links"
+import { NavBarMode } from "./components/NavBar"
 
 const overrides = {
   styles,
@@ -38,6 +44,7 @@ const overrides = {
     brand,
   },
   components: {
+    NavBarMode,
     PrimaryButton,
     DefaultButton,
     IconReservation,
@@ -47,7 +54,7 @@ const overrides = {
     Tabs,
     TabSection,
     Card,
-    Link
+    Link,
   },
   //borders,
   // Other foundational style overrides go here
