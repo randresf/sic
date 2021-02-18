@@ -48,6 +48,9 @@ const App = () => {
           <Route path="/:client/reservations">
             <ReservationsPage />
           </Route>
+          <Route path="*">
+            <ErrorPage />
+          </Route>
         </Switch>
       </Router>
     </Provider>
@@ -77,9 +80,6 @@ const AppRoutes = () => {
         </Route>
         <Route path="/">
           <Landing />
-        </Route>
-        <Route path="*">
-          <ErrorPage />
         </Route>
       </Switch>
     </Router>

@@ -1,4 +1,4 @@
-import { Box, Flex, Radio } from "@chakra-ui/react"
+import { Box, Flex, Radio, Text } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import { RadioGroupControl } from "formik-chakra-ui"
 import React from "react"
@@ -91,7 +91,6 @@ const PlaceData = ({ children, place, onDone }: any) => {
                       id="way"
                       label={formatMessage({ id: "form.way" })}
                       name="way"
-                      placeholder=" "
                       options={ADDRESS_VALUES?.way}
                     />
                   </Box>
@@ -112,6 +111,9 @@ const PlaceData = ({ children, place, onDone }: any) => {
                       options={ADDRESS_VALUES?.cardinal}
                     />
                   </Box>
+                  <Box mt={10} mr={3}>
+                    <Text fontSize="20px">#</Text>
+                  </Box>
                 </Flex>
                 <Flex>
                   <Box w="100%" mr={2}>
@@ -130,6 +132,9 @@ const PlaceData = ({ children, place, onDone }: any) => {
                       name="secondCardinal"
                       options={ADDRESS_VALUES?.cardinal}
                     />
+                  </Box>
+                  <Box mt={10} mr={2}>
+                    <Text fontSize="25px">-</Text>
                   </Box>
                   <Box w="100%">
                     <FormikInput
