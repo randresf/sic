@@ -1,4 +1,5 @@
 import { PlaceDataType } from "../components/types"
+import { NUMBERADDRESS_RGX, FINALNUMBERADDRESS_RGX } from "./fieldsRegex"
 
 const isPlaceDataValid = ({
   name,
@@ -12,8 +13,6 @@ const isPlaceDataValid = ({
   const errors: any = {}
   const IS_REQUIRED = formatMessage({ id: "form.required" })
   const IS_INCORRECT = formatMessage({ id: "field.incorrect_value" })
-  const isValidNumber = /^[0-9]{1,3}?\s+[a-zA-Z]{0,2}?$/
-  const isValidThridNumber = /^[0-9]{1,3}?/
 
   if (!name) {
     errors.name = IS_REQUIRED
@@ -27,19 +26,19 @@ const isPlaceDataValid = ({
 
   if (!firstWayNumber) {
     errors.firstWayNumber = IS_REQUIRED
-  } else if (!isValidNumber.test(String(firstWayNumber))) {
+  } else if (!NUMBERADDRESS_RGX.test(String(firstWayNumber))) {
     errors.firstWayNumber = IS_INCORRECT
   }
 
   if (!secondWayNumber) {
     errors.secondWayNumber = IS_REQUIRED
-  } else if (!isValidNumber.test(String(secondWayNumber))) {
+  } else if (!NUMBERADDRESS_RGX.test(String(secondWayNumber))) {
     errors.secondWayNumber = IS_INCORRECT
   }
 
   if (!thirdWayNumber) {
     errors.thirdWayNumber = IS_REQUIRED
-  } else if (!isValidThridNumber.test(String(thirdWayNumber))) {
+  } else if (!FINALNUMBERADDRESS_RGX.test(String(thirdWayNumber))) {
     errors.thirdWayNumber = IS_INCORRECT
   }
 
