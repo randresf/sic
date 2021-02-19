@@ -52,20 +52,23 @@ const Reservations = () => {
       </InputGroup>
       <Flex
         mt={5}
-        border="1px solid #606060 "
+        boxShadow="0 0px 10px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);"
         flex={1}
         alignItems="center"
         height="500px"
         flexDir={["column", "column", "row"]}
       >
         <ShouldRender if={reservationData.length === 0}>
-          <Flex w="100%" height="500px" justifyContent="center">
-            <Box>
-              <DisplayText
-                id="app.reservations.noResults"
-                defaultMessage="settings"
-              />
-            </Box>
+          <Flex
+            alignItems="center"
+            w="100%"
+            height="500px"
+            justifyContent="center"
+          >
+            <DisplayText
+              id="app.reservations.noResults"
+              defaultMessage="settings"
+            />
           </Flex>
         </ShouldRender>
         <ShouldRender if={reservationData.length !== 0}>

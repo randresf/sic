@@ -1,6 +1,7 @@
 import { Flex, Heading } from "@chakra-ui/react"
 import React from "react"
 import { useHistory } from "react-router-dom"
+import DownArrow from "../assets/icons/DownArrow"
 import { MEETINGS_LIST } from "../ui/formIds"
 import DisplayText from "./formElements/DisplayMessage"
 
@@ -21,7 +22,7 @@ const BtnSearchReservation = () => {
         />
       </Heading>
       <Heading mt={2} as="h1" size="md" id={MEETINGS_LIST.title}>
-        &#11167;
+        <DownArrow />
       </Heading>
     </Flex>
   )

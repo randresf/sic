@@ -44,14 +44,15 @@ const Meetings = () => {
 
   return (
     <Flex
-      border="1px solid #606060 "
+      boxShadow="0 0px 10px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%)"
+      mt={2}
       flex={1}
       alignItems="center"
       flexWrap="wrap"
     >
       <ShouldRender if={data && data.meetings}>
         {data?.meetings.meetings.map(({ __typename, ...reu }) => (
-          <Flex mt="0">
+          <Flex mt={["0rem", "-4rem", "-10rem"]}>
             <MeetingCard {...reu}>
               <Flex mt={"-15px"}>
                 <Link
