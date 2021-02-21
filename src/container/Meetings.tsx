@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Flex, Spinner, Text } from "@chakra-ui/react"
+import { Flex, Spinner, Text } from "@chakra-ui/react"
 import {
   useMeetingsQuery,
   useMeetingUpdatedSubscription,
@@ -14,6 +14,7 @@ import DisplayText from "../components/formElements/DisplayMessage"
 import { ArrowRightIcon } from "@chakra-ui/icons"
 import { Link } from "react-router-dom"
 import PrimaryButton from "../components/formElements/PrimaryButton"
+import ShadowBox from "../components/ShadowBox"
 
 const Meetings = () => {
   const [variables, setVariables] = useState({
@@ -29,12 +30,20 @@ const Meetings = () => {
 
   if (error || !data || data.meetings.meetings.length === 0)
     return (
-      <Box id={MEETINGS_LIST.noMeetings}>
-        <DisplayText
-          id="app.meetings.empty"
-          defaultMessage="no hay reuniones"
-        />
-      </Box>
+      <ShadowBox>
+        <Flex
+          id={MEETINGS_LIST.noMeetings}
+          alignItems="center"
+          w="100%"
+          height="500px"
+          justifyContent="center"
+        >
+          <DisplayText
+            id="app.meetings.empty"
+            defaultMessage="no hay reuniones"
+          />
+        </Flex>
+      </ShadowBox>
     )
   const nextPage = {
     limit: variables.limit,
@@ -43,16 +52,10 @@ const Meetings = () => {
   }
 
   return (
-    <Flex
-      boxShadow="0 0px 10px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%)"
-      mt={2}
-      flex={1}
-      alignItems="center"
-      flexWrap="wrap"
-    >
+    <ShadowBox>
       <ShouldRender if={data && data.meetings}>
-        {data?.meetings.meetings.map(({ __typename, ...reu }) => (
-          <Flex mt={["0rem", "-4rem", "-10rem"]}>
+        <Flex flexDir={["column", "column", "row"]}>
+          {data?.meetings.meetings.map(({ __typename, ...reu }) => (
             <MeetingCard {...reu}>
               <Flex mt={"-15px"}>
                 <Link
@@ -74,8 +77,8 @@ const Meetings = () => {
                 </Link>
               </Flex>
             </MeetingCard>
-          </Flex>
-        ))}
+          ))}
+        </Flex>
         <ShouldRender if={data && data.meetings.hasMore}>
           <Flex>
             <PrimaryButton
@@ -90,7 +93,7 @@ const Meetings = () => {
           </Flex>
         </ShouldRender>
       </ShouldRender>
-    </Flex>
+    </ShadowBox>
   )
 }
 
