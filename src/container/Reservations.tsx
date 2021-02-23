@@ -16,6 +16,7 @@ import ReservationCard from "./ReservationCard"
 import IconButton from "../components/formElements/IconButton"
 import useDebounce from "../hooks/useDebounce"
 import { useEffect } from "react"
+import ShadowBox from "../components/ShadowBox"
 
 const Reservations = () => {
   const { formatMessage } = useIntl()
@@ -50,51 +51,40 @@ const Reservations = () => {
         />
         <InputRightElement children={<Search2Icon color="#3e4685" />} />
       </InputGroup>
-      <Flex
-        mt={5}
-        border="1px solid #606060 "
-        flex={1}
-        alignItems="center"
-        height="500px"
-        flexDir={["column", "column", "row"]}
-      >
+      <ShadowBox>
         <ShouldRender if={reservationData.length === 0}>
-          <Flex w="100%" height="500px" justifyContent="center">
-            <Box>
-              <DisplayText
-                id="app.reservations.noResults"
-                defaultMessage="settings"
-              />
-            </Box>
+          <Flex
+            alignItems="center"
+            w="100%"
+            height="500px"
+            justifyContent="center"
+          >
+            <DisplayText
+              id="app.reservations.noResults"
+              defaultMessage="settings"
+            />
           </Flex>
         </ShouldRender>
         <ShouldRender if={reservationData.length !== 0}>
-          {reservationData?.map((data: any) => (
-            <Flex height={["250px", "250px", "500px"]}>
-              <Box>
-                <ReservationCard {...data}>
-                  <Flex>
-                    <IconButton
-                      aria-label="reservar"
-                      iconType="IconReservation"
-                      mr={2}
-                      onClick={() => {
-                        history.push(`/reservation/${data.id}`)
-                      }}
-                      icon={<ViewIcon />}
-                    />
-                    {/* <IconButton
-                      aria-label="reservar"
-                      iconType="IconReservation"
-                      icon={<DeleteIcon />}
-                    /> */}
-                  </Flex>
-                </ReservationCard>
-              </Box>
-            </Flex>
-          ))}
+          <Flex flexDir={["column", "column", "row"]} height="100%">
+            {reservationData?.map((data: any) => (
+              <ReservationCard {...data}>
+                <Flex>
+                  <IconButton
+                    aria-label="reservar"
+                    iconType="IconReservation"
+                    mr={2}
+                    onClick={() => {
+                      history.push(`/reservation/${data.id}`)
+                    }}
+                    icon={<ViewIcon />}
+                  />
+                </Flex>
+              </ReservationCard>
+            ))}
+          </Flex>
         </ShouldRender>
-      </Flex>
+      </ShadowBox>
     </Flex>
   )
 }

@@ -7,8 +7,8 @@ const Footer = () => {
   return (
     <Box
       borderTopColor={app_brand.titles}
-      padding="1rem"
-      borderTop="1px solid rgb(62, 70, 133)"
+      padding="0.90rem"
+      boxShadow="0 -2px 5px -5px #333"
       display="flex"
     >
       <Flex

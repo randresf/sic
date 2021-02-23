@@ -70,7 +70,7 @@ export const NavBarStyles = {
   display: "flex",
   justifycontent: "space-between",
   alignItems: "center",
-  transition: "all 0.7s ease-in",
+  transition: "all 0.2s ease-in",
   flexWrap: "wrap",
   marginBottom: "8px",
   padding: "8px",
