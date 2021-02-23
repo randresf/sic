@@ -57,7 +57,7 @@ const Meetings = () => {
         <Flex flexDir={["column", "column", "row"]}>
           {data?.meetings.meetings.map(({ __typename, ...reu }) => (
             <MeetingCard {...reu}>
-              <Flex mt={"-15px"}>
+              <Flex mt={"-16px"}>
                 <Link
                   to={`/datos/${reu.id}`}
                   className={MEETINGS_LIST.linkCitizenForm}
