@@ -1,5 +1,5 @@
 import { mode } from "@chakra-ui/theme-tools"
-import { app_brand } from "./general"
+// import { app_brand } from "./general"
 
 export const Card = {
   baseStyle: (props: Record<string, any>) => ({
