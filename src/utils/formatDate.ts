@@ -17,4 +17,4 @@ export const formatDate = (strDate: string) =>
   moment(strDate).format(DATE_FORMAT)
 
 export const formatAgeDate = (strDate: string) =>
-  moment(strDate).format("YYYY-MM-DD")
+  moment(strDate).format("YYYY-MM-DDTHH:MM")

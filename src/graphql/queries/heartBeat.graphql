@@ -1,0 +1,7 @@
+query heartbeat {
+  heartBeat {
+    firstName
+    lastName
+    email
+  }
+}

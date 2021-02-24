@@ -1,0 +1,17 @@
+mutation saveMeeting($meetingId: String!, $data: MeetingInput!) {
+  saveMeeting(meetingId: $meetingId, data: $data) {
+    meeting {
+      id
+      title
+      spots
+      meetingDate
+      createdAt
+      updatedAt
+      isActive
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

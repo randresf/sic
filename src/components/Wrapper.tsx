@@ -1,22 +1,21 @@
-import { Box } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react"
 import React from "react"
 
 type wrapper = {
   children: "" | React.ReactNode
-  variant: "regular" | "small"
 }
 
-const Wrapper = ({ children, variant = "regular" }: wrapper) => {
+const Wrapper = ({ children, ...props }: wrapper) => {
   return (
-    <Box
-      mx="auto"
-      maxW={variant === "regular" ? "900px" : "500px"}
-      w="100%"
-      pr={4}
-      pl={4}
+    <Flex
+      direction="column"
+      //align="center"
+      maxW={{ xl: "2000px" }}
+      m="0 auto"
+      {...props}
     >
       {children}
-    </Box>
+    </Flex>
   )
 }
 

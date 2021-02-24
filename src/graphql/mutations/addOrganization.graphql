@@ -1,0 +1,17 @@
+# Write your query or mutation here
+mutation AddOrganization($key: String!, $data: AddOrgType!) {
+  addOrganization(data: $data, key: $key) {
+    org {
+      id
+      name
+      defaultAdmin {
+        username
+        password
+      }
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

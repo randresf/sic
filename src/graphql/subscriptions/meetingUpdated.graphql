@@ -1,0 +1,7 @@
+subscription MeetingUpdated {
+  meetingUpdated {
+    data {
+      ...MeetingQuery
+    }
+  }
+}

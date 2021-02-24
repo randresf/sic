@@ -10,16 +10,30 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 export type Query = {
   __typename?: 'Query';
-  meetings: Array<Meeting>;
+  meetings: PaginatedMeetings;
   meeting: MeetingRes;
   meetingsById: Array<Meeting>;
   questions: Array<Question>;
   searchReservation: ReservationResponse;
   userById: UserResponse;
+  heartBeat?: Maybe<Admin>;
+  getAdminsData: Array<Admin>;
+  getAdminData: Admin;
+  getUserPlaces: PlaceResponse;
+  getOrganizations: OrgListResponse;
+  getOrganizationByName: OrgNameResponse;
+};
+
+
+export type QueryMeetingsArgs = {
+  cursor?: Maybe<Scalars['String']>;
+  limit: Scalars['Int'];
 };
 
 
@@ -42,15 +56,45 @@ export type QueryUserByIdArgs = {
   userId: Scalars['String'];
 };
 
+
+export type QueryGetOrganizationsArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGetOrganizationByNameArgs = {
+  orgName: Scalars['String'];
+};
+
+export type PaginatedMeetings = {
+  __typename?: 'PaginatedMeetings';
+  meetings: Array<Meeting>;
+  hasMore: Scalars['Boolean'];
+};
+
 export type Meeting = {
   __typename?: 'Meeting';
   id: Scalars['String'];
   title: Scalars['String'];
   spots: Scalars['Float'];
-  meetingDate: Scalars['String'];
+  meetingDate: Scalars['DateTime'];
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
-  isActive: Scalars['Boolean'];
+  isActive: Scalars['String'];
+  hasReservation: Scalars['Boolean'];
+  place: Place;
+};
+
+
+export type Place = {
+  __typename?: 'Place';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  address: Scalars['String'];
+  jsonAddress?: Maybe<Scalars['String']>;
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  isActive: Scalars['String'];
 };
 
 export type MeetingRes = {
@@ -112,9 +156,53 @@ export type UserResponse = {
   userId: Scalars['String'];
 };
 
+export type Admin = {
+  __typename?: 'Admin';
+  id: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  phone: Scalars['Float'];
+  email: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  isActive: Scalars['Boolean'];
+};
+
+export type PlaceResponse = {
+  __typename?: 'PlaceResponse';
+  errors?: Maybe<Array<ErrorField>>;
+  place?: Maybe<Array<Place>>;
+};
+
+export type OrgListResponse = {
+  __typename?: 'OrgListResponse';
+  organization?: Maybe<Array<Organization>>;
+  errors?: Maybe<Array<ErrorField>>;
+};
+
+export type Organization = {
+  __typename?: 'Organization';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  logo?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  isActive: Scalars['Boolean'];
+};
+
+export type OrgNameResponse = {
+  __typename?: 'OrgNameResponse';
+  organization?: Maybe<Organization>;
+  errors?: Maybe<Array<ErrorField>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  createMeeting: Meeting;
+  saveMeeting: MeetingRes;
+  deleteMeeting: MeetingRes;
   registrerQuestion: QuestionResponse;
   addReservation: ReservationResponse;
   cancelReservation: Scalars['Boolean'];
@@ -122,11 +210,24 @@ export type Mutation = {
   createUser: UserResponse;
   saveUser: UserResponse;
   updateContactUser: UserResponse;
+  login: LoginResponse;
+  logout: Scalars['Boolean'];
+  register: LoginResponse;
+  updateAdmin: LoginResponse;
+  addPlace: PlaceResponse;
+  deletePlace: PlaceResponse;
+  addOrganization: OrgResponse;
 };
 
 
-export type MutationCreateMeetingArgs = {
+export type MutationSaveMeetingArgs = {
+  meetingId?: Maybe<Scalars['String']>;
   data: MeetingInput;
+};
+
+
+export type MutationDeleteMeetingArgs = {
+  meetingId?: Maybe<Scalars['String']>;
 };
 
 
@@ -168,10 +269,47 @@ export type MutationUpdateContactUserArgs = {
   userId: Scalars['String'];
 };
 
+
+export type MutationLoginArgs = {
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
+
+export type MutationRegisterArgs = {
+  options: AdminInput;
+};
+
+
+export type MutationUpdateAdminArgs = {
+  userData: UserUpdateInput;
+};
+
+
+export type MutationAddPlaceArgs = {
+  placeId?: Maybe<Scalars['String']>;
+  data: PlaceInput;
+};
+
+
+export type MutationDeletePlaceArgs = {
+  placeId: Scalars['String'];
+};
+
+
+export type MutationAddOrganizationArgs = {
+  data: AddOrgType;
+  key: Scalars['String'];
+};
+
 export type MeetingInput = {
+  id?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   spots: Scalars['Float'];
   meetingDate: Scalars['String'];
+  hasReservation?: Maybe<Scalars['Boolean']>;
+  place: Scalars['String'];
+  isActive: Scalars['String'];
 };
 
 export type QuestionResponse = {
@@ -206,9 +344,102 @@ export type UserContactType = {
   emergenceContact: Scalars['String'];
 };
 
+export type LoginResponse = {
+  __typename?: 'LoginResponse';
+  errors?: Maybe<Array<ErrorField>>;
+  admin?: Maybe<Admin>;
+};
+
+export type AdminInput = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  phone: Scalars['Float'];
+  email: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type UserUpdateInput = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  phone: Scalars['Float'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+  newPassword: Scalars['String'];
+};
+
+export type PlaceInput = {
+  id?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  jsonAddress: Scalars['String'];
+  address: Scalars['String'];
+  isActive?: Maybe<Scalars['String']>;
+};
+
+export type OrgResponse = {
+  __typename?: 'OrgResponse';
+  org?: Maybe<OrgType>;
+  errors?: Maybe<Array<ErrorField>>;
+};
+
+export type OrgType = {
+  __typename?: 'OrgType';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  defaultAdmin: AdminOutput;
+};
+
+export type AdminOutput = {
+  __typename?: 'AdminOutput';
+  id: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type AddOrgType = {
+  name: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  logo?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  meetingUpdated: MeetingUpdated;
+  newMeeting: MeetingUpdated;
+  meetingDelete: MeetingDeleted;
+  newReservation: SubsNewReservation;
+};
+
+export type MeetingUpdated = {
+  __typename?: 'MeetingUpdated';
+  data: Meeting;
+};
+
+export type MeetingDeleted = {
+  __typename?: 'MeetingDeleted';
+  data: Scalars['String'];
+};
+
+export type SubsNewReservation = {
+  __typename?: 'SubsNewReservation';
+  meetingId: Scalars['String'];
+};
+
 export type MeetingDataFragment = (
   { __typename?: 'Meeting' }
-  & Pick<Meeting, 'id' | 'title' | 'meetingDate' | 'spots'>
+  & Pick<Meeting, 'id' | 'title' | 'meetingDate' | 'spots' | 'isActive' | 'createdAt'>
+);
+
+export type MeetingQueryFragment = (
+  { __typename?: 'Meeting' }
+  & Pick<Meeting, 'hasReservation'>
+  & { place: (
+    { __typename?: 'Place' }
+    & Pick<Place, 'id' | 'name' | 'address'>
+  ) }
+  & MeetingDataFragment
 );
 
 export type UserDataFragment = (
@@ -222,6 +453,69 @@ export type UserDataFragment = (
       & Pick<Meeting, 'title' | 'meetingDate'>
     ) }
   )> }
+);
+
+export type AddAdminMutationVariables = Exact<{
+  data: AdminInput;
+}>;
+
+
+export type AddAdminMutation = (
+  { __typename?: 'Mutation' }
+  & { register: (
+    { __typename?: 'LoginResponse' }
+    & { admin?: Maybe<(
+      { __typename?: 'Admin' }
+      & Pick<Admin, 'id'>
+    )>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'message'>
+    )>> }
+  ) }
+);
+
+export type AddOrganizationMutationVariables = Exact<{
+  key: Scalars['String'];
+  data: AddOrgType;
+}>;
+
+
+export type AddOrganizationMutation = (
+  { __typename?: 'Mutation' }
+  & { addOrganization: (
+    { __typename?: 'OrgResponse' }
+    & { org?: Maybe<(
+      { __typename?: 'OrgType' }
+      & Pick<OrgType, 'id' | 'name'>
+      & { defaultAdmin: (
+        { __typename?: 'AdminOutput' }
+        & Pick<AdminOutput, 'username' | 'password'>
+      ) }
+    )>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'field' | 'message'>
+    )>> }
+  ) }
+);
+
+export type AddPlaceMutationVariables = Exact<{
+  placeId: Scalars['String'];
+  data: PlaceInput;
+}>;
+
+
+export type AddPlaceMutation = (
+  { __typename?: 'Mutation' }
+  & { addPlace: (
+    { __typename?: 'PlaceResponse' }
+    & { place?: Maybe<Array<(
+      { __typename?: 'Place' }
+      & Pick<Place, 'name' | 'address' | 'jsonAddress' | 'isActive'>
+    )>>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'field' | 'message'>
+    )>> }
+  ) }
 );
 
 export type CancelReservationMutationVariables = Exact<{
@@ -255,6 +549,44 @@ export type ConfirmReservationMutation = (
   ) }
 );
 
+export type DeleteMeetMutationVariables = Exact<{
+  meetingId: Scalars['String'];
+}>;
+
+
+export type DeleteMeetMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteMeeting: (
+    { __typename?: 'MeetingRes' }
+    & { meeting?: Maybe<(
+      { __typename?: 'Meeting' }
+      & Pick<Meeting, 'id' | 'title' | 'spots' | 'meetingDate' | 'createdAt' | 'updatedAt' | 'isActive'>
+    )>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'field' | 'message'>
+    )>> }
+  ) }
+);
+
+export type DeletePlaceMutationVariables = Exact<{
+  placeId: Scalars['String'];
+}>;
+
+
+export type DeletePlaceMutation = (
+  { __typename?: 'Mutation' }
+  & { deletePlace: (
+    { __typename?: 'PlaceResponse' }
+    & { place?: Maybe<Array<(
+      { __typename?: 'Place' }
+      & Pick<Place, 'id'>
+    )>>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'field' | 'message'>
+    )>> }
+  ) }
+);
+
 export type GetUserMutationVariables = Exact<{
   citizenId: Scalars['String'];
 }>;
@@ -270,6 +602,54 @@ export type GetUserMutation = (
     )>, errors?: Maybe<Array<(
       { __typename?: 'ErrorField' }
       & Pick<ErrorField, 'message'>
+    )>> }
+  ) }
+);
+
+export type LoginMutationVariables = Exact<{
+  usr: Scalars['String'];
+  pwd: Scalars['String'];
+}>;
+
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & { login: (
+    { __typename?: 'LoginResponse' }
+    & { admin?: Maybe<(
+      { __typename?: 'Admin' }
+      & Pick<Admin, 'firstName' | 'lastName' | 'email'>
+    )>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'message'>
+    )>> }
+  ) }
+);
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'logout'>
+);
+
+export type SaveMeetingMutationVariables = Exact<{
+  meetingId: Scalars['String'];
+  data: MeetingInput;
+}>;
+
+
+export type SaveMeetingMutation = (
+  { __typename?: 'Mutation' }
+  & { saveMeeting: (
+    { __typename?: 'MeetingRes' }
+    & { meeting?: Maybe<(
+      { __typename?: 'Meeting' }
+      & Pick<Meeting, 'id' | 'title' | 'spots' | 'meetingDate' | 'createdAt' | 'updatedAt' | 'isActive'>
+    )>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'field' | 'message'>
     )>> }
   ) }
 );
@@ -308,6 +688,25 @@ export type SaveUserMutation = (
   ) }
 );
 
+export type UpdateAdminMutationVariables = Exact<{
+  userData: UserUpdateInput;
+}>;
+
+
+export type UpdateAdminMutation = (
+  { __typename?: 'Mutation' }
+  & { updateAdmin: (
+    { __typename?: 'LoginResponse' }
+    & { errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'field' | 'message'>
+    )>>, admin?: Maybe<(
+      { __typename?: 'Admin' }
+      & Pick<Admin, 'firstName' | 'lastName' | 'email' | 'phone'>
+    )> }
+  ) }
+);
+
 export type UpdateContactUserMutationVariables = Exact<{
   userId: Scalars['String'];
   contactData: UserContactType;
@@ -319,6 +718,53 @@ export type UpdateContactUserMutation = (
   & { updateContactUser: (
     { __typename?: 'UserResponse' }
     & Pick<UserResponse, 'userId'>
+  ) }
+);
+
+export type GetAdminDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAdminDataQuery = (
+  { __typename?: 'Query' }
+  & { getAdminsData: Array<(
+    { __typename?: 'Admin' }
+    & Pick<Admin, 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'username'>
+  )> }
+);
+
+export type GetClientsQueryVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type GetClientsQuery = (
+  { __typename?: 'Query' }
+  & { getOrganizationByName: (
+    { __typename?: 'OrgNameResponse' }
+    & { organization?: Maybe<(
+      { __typename?: 'Organization' }
+      & Pick<Organization, 'id' | 'name'>
+    )>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'message'>
+    )>> }
+  ) }
+);
+
+export type GetPlacesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPlacesQuery = (
+  { __typename?: 'Query' }
+  & { getUserPlaces: (
+    { __typename?: 'PlaceResponse' }
+    & { place?: Maybe<Array<(
+      { __typename?: 'Place' }
+      & Pick<Place, 'id' | 'name' | 'address' | 'jsonAddress' | 'isActive'>
+    )>>, errors?: Maybe<Array<(
+      { __typename?: 'ErrorField' }
+      & Pick<ErrorField, 'field' | 'message'>
+    )>> }
   ) }
 );
 
@@ -341,6 +787,28 @@ export type GetUserByIdQuery = (
   ) }
 );
 
+export type AdminQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AdminQuery = (
+  { __typename?: 'Query' }
+  & { getAdminData: (
+    { __typename?: 'Admin' }
+    & Pick<Admin, 'firstName' | 'lastName' | 'email' | 'phone'>
+  ) }
+);
+
+export type HeartbeatQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HeartbeatQuery = (
+  { __typename?: 'Query' }
+  & { heartBeat?: Maybe<(
+    { __typename?: 'Admin' }
+    & Pick<Admin, 'firstName' | 'lastName' | 'email'>
+  )> }
+);
+
 export type GetMeetingQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -360,15 +828,22 @@ export type GetMeetingQuery = (
   ) }
 );
 
-export type MeetingsQueryVariables = Exact<{ [key: string]: never; }>;
+export type MeetingsQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  cursor?: Maybe<Scalars['String']>;
+}>;
 
 
 export type MeetingsQuery = (
   { __typename?: 'Query' }
-  & { meetings: Array<(
-    { __typename?: 'Meeting' }
-    & MeetingDataFragment
-  )> }
+  & { meetings: (
+    { __typename?: 'PaginatedMeetings' }
+    & Pick<PaginatedMeetings, 'hasMore'>
+    & { meetings: Array<(
+      { __typename?: 'Meeting' }
+      & MeetingQueryFragment
+    )> }
+  ) }
 );
 
 export type GetMeetingsByIdQueryVariables = Exact<{
@@ -410,14 +885,77 @@ export type SearchReservationQuery = (
   ) }
 );
 
+export type MeetingDeleteSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeetingDeleteSubscription = (
+  { __typename?: 'Subscription' }
+  & { meetingDelete: (
+    { __typename?: 'MeetingDeleted' }
+    & Pick<MeetingDeleted, 'data'>
+  ) }
+);
+
+export type MeetingUpdatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeetingUpdatedSubscription = (
+  { __typename?: 'Subscription' }
+  & { meetingUpdated: (
+    { __typename?: 'MeetingUpdated' }
+    & { data: (
+      { __typename?: 'Meeting' }
+      & MeetingQueryFragment
+    ) }
+  ) }
+);
+
+export type NewMeetingSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewMeetingSubscription = (
+  { __typename?: 'Subscription' }
+  & { newMeeting: (
+    { __typename?: 'MeetingUpdated' }
+    & { data: (
+      { __typename?: 'Meeting' }
+      & MeetingQueryFragment
+    ) }
+  ) }
+);
+
+export type NewReservationSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewReservationSubscription = (
+  { __typename?: 'Subscription' }
+  & { newReservation: (
+    { __typename?: 'SubsNewReservation' }
+    & Pick<SubsNewReservation, 'meetingId'>
+  ) }
+);
+
 export const MeetingDataFragmentDoc = gql`
     fragment MeetingData on Meeting {
   id
   title
   meetingDate
   spots
+  isActive
+  createdAt
 }
     `;
+export const MeetingQueryFragmentDoc = gql`
+    fragment MeetingQuery on Meeting {
+  ...MeetingData
+  hasReservation
+  place {
+    id
+    name
+    address
+  }
+}
+    ${MeetingDataFragmentDoc}`;
 export const UserDataFragmentDoc = gql`
     fragment UserData on User {
   id
@@ -438,6 +976,64 @@ export const UserDataFragmentDoc = gql`
   }
 }
     `;
+export const AddAdminDocument = gql`
+    mutation addAdmin($data: AdminInput!) {
+  register(options: $data) {
+    admin {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}
+    `;
+
+export function useAddAdminMutation() {
+  return Urql.useMutation<AddAdminMutation, AddAdminMutationVariables>(AddAdminDocument);
+};
+export const AddOrganizationDocument = gql`
+    mutation AddOrganization($key: String!, $data: AddOrgType!) {
+  addOrganization(data: $data, key: $key) {
+    org {
+      id
+      name
+      defaultAdmin {
+        username
+        password
+      }
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+
+export function useAddOrganizationMutation() {
+  return Urql.useMutation<AddOrganizationMutation, AddOrganizationMutationVariables>(AddOrganizationDocument);
+};
+export const AddPlaceDocument = gql`
+    mutation addPlace($placeId: String!, $data: PlaceInput!) {
+  addPlace(placeId: $placeId, data: $data) {
+    place {
+      name
+      address
+      jsonAddress
+      isActive
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+
+export function useAddPlaceMutation() {
+  return Urql.useMutation<AddPlaceMutation, AddPlaceMutationVariables>(AddPlaceDocument);
+};
 export const CancelReservationDocument = gql`
     mutation cancelReservation($reservationId: String!, $userId: String!) {
   cancelReservation(reservationId: $reservationId, userId: $userId)
@@ -463,6 +1059,46 @@ export const ConfirmReservationDocument = gql`
 export function useConfirmReservationMutation() {
   return Urql.useMutation<ConfirmReservationMutation, ConfirmReservationMutationVariables>(ConfirmReservationDocument);
 };
+export const DeleteMeetDocument = gql`
+    mutation deleteMeet($meetingId: String!) {
+  deleteMeeting(meetingId: $meetingId) {
+    meeting {
+      id
+      title
+      spots
+      meetingDate
+      createdAt
+      updatedAt
+      isActive
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+
+export function useDeleteMeetMutation() {
+  return Urql.useMutation<DeleteMeetMutation, DeleteMeetMutationVariables>(DeleteMeetDocument);
+};
+export const DeletePlaceDocument = gql`
+    mutation deletePlace($placeId: String!) {
+  deletePlace(placeId: $placeId) {
+    place {
+      id
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+
+export function useDeletePlaceMutation() {
+  return Urql.useMutation<DeletePlaceMutation, DeletePlaceMutationVariables>(DeletePlaceDocument);
+};
 export const GetUserDocument = gql`
     mutation getUser($citizenId: String!) {
   user(document: $citizenId) {
@@ -478,6 +1114,56 @@ export const GetUserDocument = gql`
 
 export function useGetUserMutation() {
   return Urql.useMutation<GetUserMutation, GetUserMutationVariables>(GetUserDocument);
+};
+export const LoginDocument = gql`
+    mutation login($usr: String!, $pwd: String!) {
+  login(password: $pwd, username: $usr) {
+    admin {
+      firstName
+      lastName
+      email
+    }
+    errors {
+      message
+    }
+  }
+}
+    `;
+
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
+export const LogoutDocument = gql`
+    mutation logout {
+  logout
+}
+    `;
+
+export function useLogoutMutation() {
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
+};
+export const SaveMeetingDocument = gql`
+    mutation saveMeeting($meetingId: String!, $data: MeetingInput!) {
+  saveMeeting(meetingId: $meetingId, data: $data) {
+    meeting {
+      id
+      title
+      spots
+      meetingDate
+      createdAt
+      updatedAt
+      isActive
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+
+export function useSaveMeetingMutation() {
+  return Urql.useMutation<SaveMeetingMutation, SaveMeetingMutationVariables>(SaveMeetingDocument);
 };
 export const SaveQuestionDocument = gql`
     mutation saveQuestion($questions: [QuestionType!]!, $userId: String!) {
@@ -507,6 +1193,26 @@ export const SaveUserDocument = gql`
 export function useSaveUserMutation() {
   return Urql.useMutation<SaveUserMutation, SaveUserMutationVariables>(SaveUserDocument);
 };
+export const UpdateAdminDocument = gql`
+    mutation updateAdmin($userData: userUpdateInput!) {
+  updateAdmin(userData: $userData) {
+    errors {
+      field
+      message
+    }
+    admin {
+      firstName
+      lastName
+      email
+      phone
+    }
+  }
+}
+    `;
+
+export function useUpdateAdminMutation() {
+  return Urql.useMutation<UpdateAdminMutation, UpdateAdminMutationVariables>(UpdateAdminDocument);
+};
 export const UpdateContactUserDocument = gql`
     mutation updateContactUser($userId: String!, $contactData: userContactType!) {
   updateContactUser(userId: $userId, contactData: $contactData) {
@@ -517,6 +1223,60 @@ export const UpdateContactUserDocument = gql`
 
 export function useUpdateContactUserMutation() {
   return Urql.useMutation<UpdateContactUserMutation, UpdateContactUserMutationVariables>(UpdateContactUserDocument);
+};
+export const GetAdminDataDocument = gql`
+    query getAdminData {
+  getAdminsData {
+    id
+    firstName
+    lastName
+    email
+    phone
+    username
+  }
+}
+    `;
+
+export function useGetAdminDataQuery(options: Omit<Urql.UseQueryArgs<GetAdminDataQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<GetAdminDataQuery>({ query: GetAdminDataDocument, ...options });
+};
+export const GetClientsDocument = gql`
+    query GetClients($name: String!) {
+  getOrganizationByName(orgName: $name) {
+    organization {
+      id
+      name
+    }
+    errors {
+      message
+    }
+  }
+}
+    `;
+
+export function useGetClientsQuery(options: Omit<Urql.UseQueryArgs<GetClientsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<GetClientsQuery>({ query: GetClientsDocument, ...options });
+};
+export const GetPlacesDocument = gql`
+    query getPlaces {
+  getUserPlaces {
+    place {
+      id
+      name
+      address
+      jsonAddress
+      isActive
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+
+export function useGetPlacesQuery(options: Omit<Urql.UseQueryArgs<GetPlacesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<GetPlacesQuery>({ query: GetPlacesDocument, ...options });
 };
 export const GetUserByIdDocument = gql`
     query getUserById($userId: String!) {
@@ -533,6 +1293,33 @@ export const GetUserByIdDocument = gql`
 
 export function useGetUserByIdQuery(options: Omit<Urql.UseQueryArgs<GetUserByIdQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<GetUserByIdQuery>({ query: GetUserByIdDocument, ...options });
+};
+export const AdminDocument = gql`
+    query Admin {
+  getAdminData {
+    firstName
+    lastName
+    email
+    phone
+  }
+}
+    `;
+
+export function useAdminQuery(options: Omit<Urql.UseQueryArgs<AdminQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<AdminQuery>({ query: AdminDocument, ...options });
+};
+export const HeartbeatDocument = gql`
+    query heartbeat {
+  heartBeat {
+    firstName
+    lastName
+    email
+  }
+}
+    `;
+
+export function useHeartbeatQuery(options: Omit<Urql.UseQueryArgs<HeartbeatQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<HeartbeatQuery>({ query: HeartbeatDocument, ...options });
 };
 export const GetMeetingDocument = gql`
     query getMeeting($id: String!) {
@@ -551,12 +1338,15 @@ export function useGetMeetingQuery(options: Omit<Urql.UseQueryArgs<GetMeetingQue
   return Urql.useQuery<GetMeetingQuery>({ query: GetMeetingDocument, ...options });
 };
 export const MeetingsDocument = gql`
-    query Meetings {
-  meetings {
-    ...MeetingData
+    query Meetings($limit: Int!, $cursor: String) {
+  meetings(limit: $limit, cursor: $cursor) {
+    meetings {
+      ...MeetingQuery
+    }
+    hasMore
   }
 }
-    ${MeetingDataFragmentDoc}`;
+    ${MeetingQueryFragmentDoc}`;
 
 export function useMeetingsQuery(options: Omit<Urql.UseQueryArgs<MeetingsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeetingsQuery>({ query: MeetingsDocument, ...options });
@@ -600,4 +1390,52 @@ export const SearchReservationDocument = gql`
 
 export function useSearchReservationQuery(options: Omit<Urql.UseQueryArgs<SearchReservationQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<SearchReservationQuery>({ query: SearchReservationDocument, ...options });
+};
+export const MeetingDeleteDocument = gql`
+    subscription MeetingDelete {
+  meetingDelete {
+    data
+  }
+}
+    `;
+
+export function useMeetingDeleteSubscription<TData = MeetingDeleteSubscription>(options: Omit<Urql.UseSubscriptionArgs<MeetingDeleteSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<MeetingDeleteSubscription, TData>) {
+  return Urql.useSubscription<MeetingDeleteSubscription, TData, MeetingDeleteSubscriptionVariables>({ query: MeetingDeleteDocument, ...options }, handler);
+};
+export const MeetingUpdatedDocument = gql`
+    subscription MeetingUpdated {
+  meetingUpdated {
+    data {
+      ...MeetingQuery
+    }
+  }
+}
+    ${MeetingQueryFragmentDoc}`;
+
+export function useMeetingUpdatedSubscription<TData = MeetingUpdatedSubscription>(options: Omit<Urql.UseSubscriptionArgs<MeetingUpdatedSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<MeetingUpdatedSubscription, TData>) {
+  return Urql.useSubscription<MeetingUpdatedSubscription, TData, MeetingUpdatedSubscriptionVariables>({ query: MeetingUpdatedDocument, ...options }, handler);
+};
+export const NewMeetingDocument = gql`
+    subscription NewMeeting {
+  newMeeting {
+    data {
+      ...MeetingQuery
+    }
+  }
+}
+    ${MeetingQueryFragmentDoc}`;
+
+export function useNewMeetingSubscription<TData = NewMeetingSubscription>(options: Omit<Urql.UseSubscriptionArgs<NewMeetingSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<NewMeetingSubscription, TData>) {
+  return Urql.useSubscription<NewMeetingSubscription, TData, NewMeetingSubscriptionVariables>({ query: NewMeetingDocument, ...options }, handler);
+};
+export const NewReservationDocument = gql`
+    subscription NewReservation {
+  newReservation {
+    meetingId
+  }
+}
+    `;
+
+export function useNewReservationSubscription<TData = NewReservationSubscription>(options: Omit<Urql.UseSubscriptionArgs<NewReservationSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<NewReservationSubscription, TData>) {
+  return Urql.useSubscription<NewReservationSubscription, TData, NewReservationSubscriptionVariables>({ query: NewReservationDocument, ...options }, handler);
 };

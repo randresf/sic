@@ -1,0 +1,15 @@
+query getPlaces {
+  getUserPlaces {
+    place {
+      id
+      name
+      address
+      jsonAddress
+      isActive
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

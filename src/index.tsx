@@ -1,14 +1,18 @@
+import { ChakraProvider } from "@chakra-ui/react"
 import React from "react"
 import ReactDOM from "react-dom"
-import { ChakraProvider } from "@chakra-ui/react"
 import App from "./App"
+import LangContext from "./context/LangWrapper"
 import reportWebVitals from "./reportWebVitals"
+import theme from "./theme"
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
+    <LangContext>
+      <ChakraProvider theme={theme}>
+        <App />
+      </ChakraProvider>
+    </LangContext>
   </React.StrictMode>,
   document.getElementById("root")
 )

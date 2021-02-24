@@ -1,19 +1,24 @@
 import React from "react"
-import { Box, Flex, Heading } from "@chakra-ui/react"
+import { Flex, Heading } from "@chakra-ui/react"
 import { MEETINGS_LIST } from "../ui/formIds"
+import DisplayText from "./formElements/DisplayMessage"
 
 export const Title = () => (
   <Flex
-    justifyItems="flex-start"
+    alignItems="center"
     justifyContent="center"
     flexDir="column"
     mt={2}
     mb={2}
   >
-    <Box>
-      <Heading as="h3" size="md" id={MEETINGS_LIST.topTitle}>
-        Revisa muy bien la fecha y hora de la reunión que vas a seleccionar
-      </Heading>
-    </Box>
+    <Heading as="h1" size="3xl" id={MEETINGS_LIST.topTitle}>
+      <DisplayText id="app.reservation.title" defaultMessage="Welcome" />
+    </Heading>
+    <Heading mt={4} as="h3" size="md" id={MEETINGS_LIST.topTitle}>
+      <DisplayText
+        id="app.subTitle"
+        defaultMessage="Reserve space for your next meetings"
+      />
+    </Heading>
   </Flex>
 )

@@ -1,0 +1,14 @@
+mutation addPlace($placeId: String!, $data: PlaceInput!) {
+  addPlace(placeId: $placeId, data: $data) {
+    place {
+      name
+      address
+      jsonAddress
+      isActive
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
