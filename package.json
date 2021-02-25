@@ -39,6 +39,7 @@
     "start": "react-scripts start",
     "build": "env-cmd react-scripts build",
     "test": "react-scripts test",
+    "e2e": "npx cypress run",
     "generate": "graphql-codegen"
   },
   "eslintConfig": {
@@ -71,6 +72,7 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/socket.io-client": "^1.4.34",
     "@types/uuid": "^8.3.0",
+    "netlify-plugin-cypress": "^1.11.1",
     "typescript": "^4.0.5"
   }
 }

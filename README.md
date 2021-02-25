@@ -6,6 +6,7 @@ Reactjs application with:
 - typescript
 - urql
 - urql code generator
+- netlify
 - deploy with dokku to DO droplet
 
 ## Available Scripts
@@ -34,9 +35,18 @@ Your app is ready to be deployed!
 
 Right now we are adding the build folder to the git repo since we need it for the deploy to nginx base dokku app
 
+## Netlify build
+
+- all PR to dev/main will have a preview branch created, see the `checks` section in PR for more info
+- dev branch will run cypress test and will me marked as a check
+- dev branch is deployed to [dev.aforo](https://dev.aforo.website/)
+- main branch is deployed to [app.aforo](https://app.aforo.website/)
+
 ## Dokku build
 
-- so, for this to work we need a `.static` file in the root folder and in the `.env` a `BUILDPACK_URL=https://github.com/dokku/buildpack-nginx` make sure there is a new line after this variable, the deploy will use the latest version of the nginx build configuration for static apps [more info](https://github.com/dokku/buildpack-nginx).
+_Note: check if dropet is still online with repo owner before proceeding_
+
+- add a `.static` file in the root folder and in the `.env` a `BUILDPACK_URL=https://github.com/dokku/buildpack-nginx` make sure there is a new line after this variable, the deploy will use the latest version of the nginx build configuration for static apps [more info](https://github.com/dokku/buildpack-nginx).
 - create a remote repo for you local `git remote add dokku ${user:ip_server}:aforoweb`
   - dokku: default name for the user that executes the dokku commands on server
   - user: user to authenticate the droplet
