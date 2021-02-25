@@ -1,11 +1,12 @@
 import { Select } from "@chakra-ui/react"
 import React from "react"
 import { useHistory } from "react-router-dom"
-import { useHeartbeatQuery } from "../generated/graphql"
+import { useHeartbeatQuery } from "../../generated/graphql"
 
 export const ClientListPage = () => {
   const [{ data }] = useHeartbeatQuery()
   const history = useHistory()
+  console.log(data)
   if (data && data.heartBeat) {
     history.replace("/dashboard")
   }

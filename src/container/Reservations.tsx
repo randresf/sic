@@ -1,12 +1,6 @@
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
-import {
-  Box,
-  Flex,
-  Input,
-  InputGroup,
-  InputRightElement,
-} from "@chakra-ui/react"
+import { Flex, Input, InputGroup, InputRightElement } from "@chakra-ui/react"
 import { Search2Icon, ViewIcon } from "@chakra-ui/icons"
 import ShouldRender from "../components/ShouldRender"
 import DisplayText from "../components/formElements/DisplayMessage"
@@ -30,6 +24,7 @@ const Reservations = () => {
 
   useEffect(() => {
     searchReservationByDocument(debouced)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouced])
 
   const searchReservationByDocument = async (debouced: any) => {
