@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik"
 import React, { useState } from "react"
-import { useIntl } from "react-intl"
+// import { useIntl } from "react-intl"
 import DisplayText from "../../components/formElements/DisplayMessage"
 import FormikInput from "../../components/formElements/FormikInput"
 import PrimaryButton from "../../components/formElements/PrimaryButton"
@@ -11,7 +11,7 @@ import Notify from "../../utils/notify"
 import { AccountCreated } from "./AccountCreated"
 
 export const AdminForm = () => {
-  const { formatMessage } = useIntl()
+  // const { formatMessage } = useIntl()
   const [created, setCreated] = useState(false)
   const [loading, setLoading] = useState(false)
   const [{ data }, addOrg] = useAddOrganizationMutation()
@@ -27,7 +27,7 @@ export const AdminForm = () => {
       validationSchema={OrgAdminSchema}
       onSubmit={async ({ name, username, key, email }) => {
         setLoading(true)
-        const { data, error } = await addOrg({
+        const { data } = await addOrg({
           data: { name, username, email },
           key,
         })

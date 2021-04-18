@@ -12,7 +12,7 @@ import Layout from "../layouts"
 
 const Login = () => {
   const [, login] = useLoginMutation()
-  const [{ data, fetching }] = useHeartbeatQuery()
+  const [{ data }] = useHeartbeatQuery()
   const { formatMessage } = useIntl()
   const IS_REQUIRED = formatMessage({ id: "form.required" })
   const history = useHistory()

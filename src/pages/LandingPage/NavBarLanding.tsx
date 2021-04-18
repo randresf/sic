@@ -1,6 +1,9 @@
-import { Box, Container, Flex, Link } from "@chakra-ui/react"
+import { Box, Container, Flex, Link, Stack } from "@chakra-ui/react"
 import React from "react"
 import Logo from "../../components/Logo"
+import { Link as ScrollLink } from "react-scroll"
+import LangDropDown from "../../components/LangDropDown"
+import ToggleDarkMode from "../../components/ToggleDarkMode"
 
 const NavBarLanding = () => {
   const styles = {
@@ -28,7 +31,6 @@ const NavBarLanding = () => {
       left: 0,
       backgroundColor: "transparent",
       transition: "all 0.4s ease",
-
       "&.sticky": {
         backgroundColor: "background",
         color: "text",
@@ -52,7 +54,7 @@ const NavBarLanding = () => {
       navLink: {
         fontSize: "16px",
         color: "#02073E",
-        fontWeight: "400",
+        fontWeight: 400,
         cursor: "pointer",
         lineHeight: "1.2",
         mr: "48px",
@@ -92,25 +94,26 @@ const NavBarLanding = () => {
 
   return (
     <Flex as="header" sx={styles.header}>
-      <Container sx={styles.container}>
+      <Box w="100px">
         <Logo />
-
-        <Box as="nav" sx={styles.nav}>
+      </Box>
+      <Container sx={styles.container}>
+        <Flex as="nav" sx={styles.nav}>
           {menuItems.map(({ path, label }, i) => (
-            <Link
+            <ScrollLink
               activeClass="active"
-              sx={styles.nav.navLink}
-              to={path}
+              to={`${path}`}
               spy={true}
               smooth={true}
               offset={-70}
               duration={500}
+              style={{ ...styles.nav.navLink }}
               key={i}
             >
               {label}
-            </Link>
+            </ScrollLink>
           ))}
-        </Box>
+        </Flex>
         <Link
           path="/"
           ml={2}
@@ -119,6 +122,21 @@ const NavBarLanding = () => {
           variant="buttons.primary"
         />
       </Container>
+      <Flex>
+        <Flex
+          display={["none", "none", "flex"]}
+          align={"center"}
+          justify={"flex-end"}
+          direction={"row"}
+          pt={[4, 4, 0, 0]}
+          mr="1rem"
+        >
+          <Stack spacing="1rem" direction="row">
+            <LangDropDown />
+            <ToggleDarkMode />
+          </Stack>
+        </Flex>
+      </Flex>
     </Flex>
   )
 }

@@ -1,16 +1,15 @@
-import React, { useState } from "react"
-import { useHistory } from "react-router-dom"
 import { Flex, Input, InputGroup, InputRightElement } from "@chakra-ui/react"
 import { Search2Icon, ViewIcon } from "@chakra-ui/icons"
-import ShouldRender from "../components/ShouldRender"
-import DisplayText from "../components/formElements/DisplayMessage"
+import React, { useCallback, useEffect, useState } from "react"
 import { useIntl } from "react-intl"
-import { useGetUserMutation, Reservation } from "../generated/graphql"
-import ReservationCard from "./ReservationCard"
+import { useHistory } from "react-router-dom"
+import DisplayText from "../components/formElements/DisplayMessage"
 import IconButton from "../components/formElements/IconButton"
-import useDebounce from "../hooks/useDebounce"
-import { useEffect } from "react"
 import ShadowBox from "../components/ShadowBox"
+import ShouldRender from "../components/ShouldRender"
+import { Reservation, useGetUserMutation } from "../generated/graphql"
+import useDebounce from "../hooks/useDebounce"
+import ReservationCard from "./ReservationCard"
 
 const Reservations = () => {
   const { formatMessage } = useIntl()
@@ -22,19 +21,22 @@ const Reservations = () => {
     []
   )
 
+  const searchReservationByDocument = useCallback(
+    async (debouced: any) => {
+      if (debouced.length >= 7 && debouced.length <= 10) {
+        const { data } = await searchUser({ citizenId: debouced })
+        if (data?.user.user) {
+          setReservationData(data?.user.user.reservations)
+        }
+      }
+    },
+    [searchUser]
+  )
+
   useEffect(() => {
     searchReservationByDocument(debouced)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouced])
-
-  const searchReservationByDocument = async (debouced: any) => {
-    if (debouced.length >= 7 && debouced.length <= 10) {
-      const { data } = await searchUser({ citizenId: debouced })
-      if (data?.user.user) {
-        setReservationData(data?.user.user.reservations)
-      }
-    }
-  }
 
   return (
     <Flex flexDir="column">
