@@ -6,6 +6,7 @@ import { app_brand } from "../../theme/components/general"
 const FooterLanding = () => {
   return (
     <Box
+      height="10pc"
       borderTopColor={app_brand.titles}
       padding="0.90rem"
       boxShadow="0 -2px 5px -5px #333"

@@ -1,30 +1,55 @@
+import { Accordion } from "@chakra-ui/accordion"
 import { Flex, Heading, Text } from "@chakra-ui/layout"
 import React from "react"
 import AccordionTab from "../../components/Accordion"
+import DisplayText from "../../components/formElements/DisplayMessage"
 
 const PQR = () => {
+  const data = [
+    { title: "prueba", content: "content" },
+    { title: "prueba", content: "content" },
+  ]
+
   return (
-    <Flex alignItems="center" flexDir="column" h="100vh">
-      <Flex mt={10} alignItems="center" flexDir="column">
-        <Heading>Preguntas frecuentes</Heading>
-        <Text>Haz tu pregunta y conoce</Text>
-      </Flex>
-      <Flex mt="10px" flexDir="row">
-        <Flex w="50%" flexDir="column">
+    <section id="PQR">
+      <Flex alignItems="center" flexDir="column" h="70vh">
+        <Flex mt={10} alignItems="center" flexDir="column">
           <Heading>
-            ¿Tiene alguna pregunta? Por favor pregunte aquí estamos listos para
-            apoyar
+            <DisplayText
+              id="landing.pqr.title"
+              defaultMessage="Frequent questions"
+            />
           </Heading>
           <Text>
-            Si su pregunta no está en la lista aquí, no dude en hacer un soporte
-            manual.
+            <DisplayText
+              id="landing.pqr.subtitle"
+              defaultMessage="Ask your question and know"
+            />
           </Text>
         </Flex>
-        <Flex w="50%">
-          <AccordionTab />
+        <Flex mt="10px" flexDir="row">
+          <Flex w="50%" textAlign="center" flexDir="column">
+            <Heading>
+              <DisplayText
+                id="landing.pqr.introduction"
+                defaultMessage="Do you have any questions? Please ask here we are ready to support"
+              />
+            </Heading>
+            <Text>
+              <DisplayText
+                id="landing.pqr.resume"
+                defaultMessage="If your question is not listed here, feel free to do manual support"
+              />
+            </Text>
+          </Flex>
+          <Flex mt="30px" w="50%">
+            <Accordion w="100%">
+              {data ? data.map((item) => <AccordionTab {...item} />) : null}
+            </Accordion>
+          </Flex>
         </Flex>
       </Flex>
-    </Flex>
+    </section>
   )
 }
 

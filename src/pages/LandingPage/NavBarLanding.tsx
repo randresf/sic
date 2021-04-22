@@ -4,10 +4,15 @@ import Logo from "../../components/Logo"
 import { Link as ScrollLink } from "react-scroll"
 import LangDropDown from "../../components/LangDropDown"
 import ToggleDarkMode from "../../components/ToggleDarkMode"
+import { useIntl } from "react-intl"
+import DisplayText from "../../components/formElements/DisplayMessage"
 
 const NavBarLanding = () => {
+  const { formatMessage } = useIntl()
+
   const styles = {
     headerBtn: {
+      cursor: "pointer",
       backgroundColor: "black",
       fontSize: "16px",
       fontWeight: "bold",
@@ -52,18 +57,32 @@ const NavBarLanding = () => {
         display: "none",
       },
       navLink: {
-        fontSize: "16px",
-        color: "#02073E",
-        fontWeight: 400,
         cursor: "pointer",
-        lineHeight: "1.2",
-        mr: "48px",
+        fontFamily: "Lato",
+        textDecoration: "none",
+        fontSize: "20px",
+        color: "#000",
+        fontWeight: 900,
+        margin: "0 20px 0 0",
         transition: "500ms",
         ":last-child": {
           mr: "0",
         },
         "&:hover, &.active": {
-          color: "primary",
+          position: "absolute",
+          top: "100%",
+          left: 0,
+          width: "100%",
+          height: "3px",
+          backgroundColor: "#000",
+          opacity: 0,
+          " -webkit-transform": "translateY(8px)",
+          transitionProperty: "-webkit-transform, opacity",
+          transitionDuration: ".3s",
+        },
+        "&:hover, &:before": {
+          "-webkit-transform": "translateY(0)",
+          opacity: 1,
         },
       },
     },
@@ -72,23 +91,19 @@ const NavBarLanding = () => {
   const menuItems = [
     {
       path: "banner",
-      label: "Home",
+      label: formatMessage({ id: "landing.navbar.home" }),
     },
     {
       path: "services",
-      label: "Services",
+      label: formatMessage({ id: "landing.navbar.services" }),
     },
     {
-      path: "pricing",
-      label: "Pricing",
+      path: "customers",
+      label: formatMessage({ id: "landing.navbar.custumer" }),
     },
     {
-      path: "testimonials",
-      label: "Testimonials",
-    },
-    {
-      path: "news",
-      label: "News",
+      path: "PQR",
+      label: formatMessage({ id: "landing.navbar.pqr" }),
     },
   ]
 
@@ -114,13 +129,9 @@ const NavBarLanding = () => {
             </ScrollLink>
           ))}
         </Flex>
-        <Link
-          path="/"
-          ml={2}
-          label="Purchase Now"
-          sx={styles.headerBtn}
-          variant="buttons.primary"
-        />
+        <Link path="/" ml={2} sx={styles.headerBtn} variant="buttons.primary">
+          <DisplayText id="landing.navbar.btn" defaultMessage="Login" />
+        </Link>
       </Container>
       <Flex>
         <Flex

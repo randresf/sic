@@ -2,6 +2,7 @@ import { Flex, Heading, Text } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 import DownArrow from "../../assets/icons/DownArrow"
 import UpArrow from "../../assets/icons/UpArrow"
+import DisplayText from "../../components/formElements/DisplayMessage"
 import ServiceCard from "../../components/ServiceCard"
 
 const Icons: any = {
@@ -11,25 +12,11 @@ const Icons: any = {
 
 const AboutProduct = () => {
   const [services, setServices] = useState<any[]>([])
-
-  const PrincipalServices = [
-    {
-      title: "title",
-      description:
-        "Reciba sus pruebas de información en casa y recolecte una muestra de sus pruebas de progreso.",
-      icon: <DownArrow />,
-    },
-    {
-      title: "title 2",
-      description:
-        "Reciba sus pruebas de información en casa y recolecte una muestra de sus pruebas de progreso.",
-      icon: <UpArrow />,
-    },
-  ]
+  const [PrincipalServices, setPrincipalServices] = useState<any[]>([])
 
   useEffect(() => {
     const getServices = async () => {
-      await fetch("/Template.json")
+      await fetch("data/Services.json")
         .then(function (res) {
           return res.json()
         })
@@ -42,15 +29,40 @@ const AboutProduct = () => {
         })
     }
 
+    const getPrincipalServices = async () => {
+      await fetch("data/PrincipalServices.json")
+        .then(function (res) {
+          return res.json()
+        })
+        .then(function (data) {
+          // store Data in State Data Variable
+          setPrincipalServices(data)
+        })
+        .catch(function (err) {
+          console.log(err, " error")
+        })
+    }
+
     getServices()
-  }, [services])
+    getPrincipalServices()
+  }, [])
 
   return (
     <section id="services">
       <Flex alignItems="center" flexDir="column" h="100vh">
         <Flex mt={10} alignItems="center" flexDir="column">
-          <Heading>Cuáles son las características del producto</Heading>
-          <Text>Las características se destacan aquí</Text>
+          <Heading>
+            <DisplayText
+              id="landing.aboutProduc.title"
+              defaultMessage="Capacity characteristics"
+            />
+          </Heading>
+          <Text>
+            <DisplayText
+              id="landing.aboutProduc.subtitle"
+              defaultMessage="features are highlighted here"
+            />
+          </Text>
         </Flex>
         <Flex justifyContent="center" flexWrap="wrap" mt={10}>
           {services
@@ -68,9 +80,16 @@ const AboutProduct = () => {
             <img src="aforoImg.jfif" alt="aforoImg" />
           </Flex>
           <Flex flexDir="column">
-            <h1>Hola</h1>
+            <Heading>
+              <DisplayText
+                id="landing.aboutProduc.principalTitle"
+                defaultMessage="Main characteristics of Aforo"
+              />
+            </Heading>
             {PrincipalServices
-              ? PrincipalServices.map((item) => <ServiceCard {...item} />)
+              ? PrincipalServices.map((item) => (
+                  <ServiceCard {...item} icon={Icons[item.icon]} />
+                ))
               : null}
           </Flex>
         </Flex>
