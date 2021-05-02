@@ -103,5 +103,21 @@
   "radio.question.yes": "Yes",
   "app.settings.title": "Settings",
   "form.way": "Way",
-  "form.finalAddress": "Final address"
+  "form.finalAddress": "Final address",
+  "landing.navbar.home": "Home",
+  "landing.navbar.services": "Services",
+  "landing.navbar.custumer": "Customers",
+  "landing.navbar.pqr": "PQR",
+  "landing.navbar.btn": "Login",
+  "landing.home.welcome": "Welcome to Aforo",
+  "landing.home.subtitle": "Plan your meetings and manage the capacity",
+  "landing.aboutProduc.title": "Aforo characteristics",
+  "landing.aboutProduc.subtitle": "features are highlighted here",
+  "landing.aboutProduc.principalTitle": "Main characteristics of Aforo",
+  "landing.clientListPage.title": "Some clients of Aforo",
+  "landing.clientListPage.subtitle": "They have our services and they are already controlling their Aforo",
+  "landing.pqr.title": "Frequent questions",
+  "landing.pqr.subtitle": "Ask your question and know",
+  "landing.pqr.introduction": "Do you have any questions? Please ask here we are ready to support",
+  "landing.pqr.resume": "If your question is not listed here, feel free to do manual support"
 }

@@ -10,7 +10,7 @@ import { MEETINGS_LIST } from "../ui/formIds"
 import BtnSearchReservation from "../components/BtnSearchReservation"
 import Slider from "../components/Slide"
 
-const Landing = () => {
+const MeetingPage = () => {
   const [{ data }] = useHeartbeatQuery()
   const history = useHistory()
   if (data && data.heartBeat) {
@@ -30,4 +30,4 @@ const Landing = () => {
   )
 }
 
-export default Landing
+export default MeetingPage

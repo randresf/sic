@@ -1,5 +1,5 @@
-import { Search2Icon, ViewIcon } from "@chakra-ui/icons"
 import { Flex, Input, InputGroup, InputRightElement } from "@chakra-ui/react"
+import { Search2Icon, ViewIcon } from "@chakra-ui/icons"
 import React, { useCallback, useEffect, useState } from "react"
 import { useIntl } from "react-intl"
 import { useHistory } from "react-router-dom"
@@ -35,7 +35,8 @@ const Reservations = () => {
 
   useEffect(() => {
     searchReservationByDocument(debouced)
-  }, [debouced, searchReservationByDocument])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouced])
 
   return (
     <Flex flexDir="column">

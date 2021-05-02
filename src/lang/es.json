@@ -113,5 +113,21 @@
   "form.way": "Dirección",
   "radio.question.no": "No",
   "radio.question.yes": "Si",
-  "app.settings.title": "Configuración"
+  "app.settings.title": "Configuración",
+  "landing.navbar.home": "Home",
+  "landing.navbar.services": "Servicios",
+  "landing.navbar.custumer": "Clientes",
+  "landing.navbar.pqr": "PQR",
+  "landing.navbar.btn": "Ingresar",
+  "landing.home.welcome": "Bienvenido a Aforo",
+  "landing.home.subtitle": "Planifica tus reuniones y maneja el aforo",
+  "landing.aboutProduc.title": "Caracteristicas de Aforo",
+  "landing.aboutProduc.subtitle": "las características se destacan aquí",
+  "landing.aboutProduc.principalTitle": "Características principales de Aforo",
+  "landing.clientListPage.title": "Varios clientes de Aforo",
+  "landing.clientListPage.subtitle": "tienen nuestro servicios y ya estan controlando su Aforo",
+  "landing.pqr.title": "Preguntas frecuentes",
+  "landing.pqr.subtitle": "Haz tu pregunta y conoce",
+  "landing.pqr.introduction": "¿Tiene alguna pregunta? Por favor pregunte aquí estamos listos para apoyar",
+  "landing.pqr.resume": "Si su pregunta no está en la lista aquí, no dude en hacer un soporte manual"
 }
